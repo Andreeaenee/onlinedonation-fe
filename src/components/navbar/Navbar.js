@@ -9,7 +9,7 @@ import {
   ListItem,
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Logo } from '../../assets/icons'
+import { Logo } from '../../assets/icons/index'
 import { Link, useLocation } from 'react-router-dom'
 import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
@@ -81,16 +81,10 @@ const NavBar = () => {
               }),
             }}
           >
-            <ListItemText
-              sx={{
-                ...(!isMobile && {
-                  fontSize: activeButton === id ? '25px' : '18px',
-                }),
-              }}
-            >
-              {label}
+            <div style={{ display: 'inline-block' }}>
+              <ListItemText>{label}</ListItemText>
               {activeButton === id && <hr style={{ ...NavbBarStyles.hr }}></hr>}
-            </ListItemText>
+            </div>
           </Button>
         </Link>
       </ListItem>

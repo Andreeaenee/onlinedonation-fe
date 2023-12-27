@@ -27,7 +27,7 @@ const NavbBarStyles = {
     backgroundColor: White100,
   },
   button: {
-    width: '90px',
+    width: '100px',
     textTransform: 'capitalize',
     marginBottom: '10px',
     fontWeight: 'normal',
@@ -42,7 +42,7 @@ const NavbBarStyles = {
     },
   },
   hr: {
-    width: '100%',
+    width: 'auto',
     color: Black400,
     marginTop: '5px',
   },

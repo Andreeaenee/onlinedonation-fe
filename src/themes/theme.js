@@ -1,7 +1,7 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 import { Wenge, PersianPink } from '../constants/colors'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: Wenge,
@@ -11,7 +11,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Montserrat, sans-serif',
   },
 })
 

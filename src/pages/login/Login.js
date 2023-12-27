@@ -1,10 +1,11 @@
 import React from 'react'
 import WrapperPage from '../../components/WrapperPage'
+import { Typography } from '@mui/material'
 
 const Login = () => {
   return (
     <WrapperPage>
-      <div>Login</div>
+      <Typography>Login</Typography>
     </WrapperPage>
   )
 }
