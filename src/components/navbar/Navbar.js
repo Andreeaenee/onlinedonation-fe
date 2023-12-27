@@ -1,124 +1,141 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { ArrowDown, Devices, Logo, Payments, UsersManagement } from '../../assets/icons';
-import NavbarStyles from './navbarStyles.js';
-import { White100 } from '../../constants/colors.js';
-import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  ListItemText,
+  useMediaQuery,
+  List,
+  ListItem,
+} from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Logo } from '../../assets/icons'
+import { Link, useLocation } from 'react-router-dom'
+import { Black400, Black800 } from '../../constants/colors'
+import { ThemeProvider } from '@emotion/react'
+import theme from '../../themes/theme'
+import { Menu as MenuIcon } from '@mui/icons-material'
+import NavbBarStyles from './NavBarStyles'
+import { MOBILE_BREAKPOINT } from '../../constants/constants'
 
-const pages = ['Platform', 'Learn', 'Support', 'Login'];
-const platformButtons = [
+const buttons = [
   {
     id: 1,
-    label: "Online Donation",
-    description: "Discover all the NGO’s ",
-    link: '/online-donation',
-    icon: <Devices />
+    label: 'Platform',
+    path: '/platform',
   },
   {
     id: 2,
-    label: "Donor Management",
-    description: "Donor Management and Report",
-    link: '/donor-management',
-    icon: <UsersManagement />
+    label: 'About Us',
+    path: '/about-us',
   },
   {
     id: 3,
-    label: "Payments",
-    description: "Payment processing management",
-    link: '/payments',
-    icon: <Payments />
-  }
-];
+    label: 'Campaigns',
+    path: '/campaigns',
+  },
+  {
+    id: 4,
+    label: 'Login',
+    path: '/login',
+  },
+]
 
 const NavBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const nav = useNavigate();
+  const [activeButton, setActiveButton] = useState()
+  const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
+  const [isDrawerOpen, setDrawerOpen] = useState(false)
+  const location = useLocation()
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    const matchingButton =
+      location.pathname === '/'
+        ? buttons.findIndex((button) => button.label === 'About Us') + 1
+        : buttons.findIndex((button) => button.path === location.pathname) + 1
+    setActiveButton(matchingButton)
+  }, [location])
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleButtonClick = (index) => {
+    setActiveButton(index)
+    setDrawerOpen(false)
+  }
 
-  const handleMenuItemClick = (link) => {
-    setAnchorEl(null);
-    nav(link);
-  };
+  const toggleDrawer = () => {
+    setDrawerOpen(!isDrawerOpen)
+  }
 
-  return (
-    <AppBar position="static" sx={NavbarStyles.appBar}>
-      <Container maxWidth="xxl">
-        <Toolbar disableGutters>
-          <Logo sx={NavbarStyles.logo} width={'110px'} height={'50px'} />
-          <Box sx={{ ...NavbarStyles.pagesBox, ...NavbarStyles.responsivePagesBox }}>
-            <Button
-              aria-controls="platform-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-              sx={{ ...NavbarStyles.pageButton, ...NavbarStyles.responsivePageButton }}
-            >
-              {pages[0]}
-              <ArrowDown
-                width={'20px'}
-                height={'20px'}
-                style={NavbarStyles.arrowButton}
-              />
-            </Button>
-            <Menu
-              id="platform-menu"
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  width: '320px',
-                  borderRadius: '8px',
-                  backgroundColor: White100,
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-                },
+  const renderButtons = (isMobile) => {
+    return buttons.map(({ path, id, label }) => (
+      <ListItem key={id} sx={NavbBarStyles.buttonHover}>
+        <Link to={path}>
+          <Button
+            disableRipple
+            onClick={() => handleButtonClick(id)}
+            sx={{
+              ...NavbBarStyles.button,
+              ...NavbBarStyles.buttonHover,
+              color: activeButton === id ? Black800 : Black400,
+              ...(!isMobile && {
+                fontWeight: activeButton === id ? 'bold' : 'normal',
+                marginTop: activeButton === id ? '10px' : '0px',
+              }),
+            }}
+          >
+            <ListItemText
+              sx={{
+                ...(!isMobile && {
+                  fontSize: activeButton === id ? '25px' : '18px',
+                }),
               }}
             >
-              {platformButtons.map((button) => (
-                <MenuItem key={button.id} onClick={() => handleMenuItemClick(button.link)}>
-                  <Box sx={NavbarStyles.menuItemBox}>
-                    {button.icon}
-                    <Box sx={{ marginLeft: '5px' }}>
-                      <Typography sx={NavbarStyles.buttonTitle}>{button.label}</Typography>
-                      <Typography sx={NavbarStyles.buttonDescription}>{button.description}</Typography>
-                    </Box>
-                  </Box>
-                </MenuItem>
-              ))}
-            </Menu>
-            {pages.slice(1, 3).map((page) => (
-              <Button key={page} sx={NavbarStyles.pageButton}>
-                <ArrowDown
-                  width={'20px'}
-                  height={'20px'}
-                  style={NavbarStyles.arrowButton}
-                />{page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={NavbarStyles.loginBox}>
-            <Button sx={{ ...NavbarStyles.pageButton, ...NavbarStyles.responsivePageButton }} onClick={() => nav('/login')}>
-              {pages[3]}
-            </Button>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
-};
+              {label}
+              {activeButton === id && <hr style={{ ...NavbBarStyles.hr }}></hr>}
+            </ListItemText>
+          </Button>
+        </Link>
+      </ListItem>
+    ))
+  }
 
-export default NavBar;
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={NavbBarStyles.navBar}>
+        {isMobile ? (
+          <>
+            <Box sx={NavbBarStyles.logoBox}>
+              <Logo width={'75px'} height={'75px'} />
+            </Box>
+            <Box sx={NavbBarStyles.buttonsBox}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                edge="start"
+              >
+                <MenuIcon width={'20px'} height={'20px'} />
+              </IconButton>
+              <Drawer
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={() => setDrawerOpen(false)}
+              >
+                <Box sx={NavbBarStyles.drawer}>
+                  <List>{renderButtons(true)}</List>
+                </Box>
+              </Drawer>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Box sx={NavbBarStyles.logoBox}>
+              <Logo width={'100px'} height={'100px'} />
+            </Box>
+            <Box sx={NavbBarStyles.buttonsBox}>{renderButtons(false)}</Box>
+          </>
+        )}
+      </Box>
+    </ThemeProvider>
+  )
+}
+
+export default NavBar
