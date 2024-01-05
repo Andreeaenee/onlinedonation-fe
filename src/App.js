@@ -10,48 +10,8 @@ import Platform from './pages/platform/Platform'
 import Campaigns from './pages/campaigns/Campaigns'
 import Login from './pages/login/Login'
 import NavBar from './components/navbar/NavBar'
-// const ngoslist = [
-//   {
-//     title: 'ONG1',
-//     description: 'description1',
-//   },
-//   {
-//     title: 'ONG2',
-//     description: 'description2',
-//   },
-//   {
-//     title: 'ONG3',
-//     description: 'description3',
-//   },
-//   {
-//     title: 'ONG4',
-//     description: 'description4',
-//   },
-//   {
-//     title: 'ONG5',
-//     description: 'description5',
-//   },
-//   {
-//     title: 'ONG6',
-//     description: 'description6',
-//   },
-//   {
-//     title: 'ONG7',
-//     description: 'description7',
-//   },
-//   {
-//     title: 'ONG8',
-//     description: 'description8',
-//   },
-//   {
-//     title: 'ONG9',
-//     description: 'description9',
-//   },
-//   {
-//     title: 'ONG10',
-//     description: 'description10',
-//   },
-// ]
+import Footer from './components/footer/Footer'
+
 
 function App() {
   return (
@@ -62,6 +22,7 @@ function App() {
             <div>
               <NavBar />
               <Outlet />
+              <Footer />
             </div>
           }
         >

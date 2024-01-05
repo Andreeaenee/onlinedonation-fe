@@ -37,6 +37,7 @@ const styles = (theme) => ({
     lineHeight: '55px',
     color: Wenge,
     marginTop: '10px',
+    marginBottom: '20px',
     [theme.breakpoints.down('md')]: {
       fontSize: '22px',
     },
@@ -70,6 +71,13 @@ const styles = (theme) => ({
       marginTop: '10px',
       textAlign: 'center',
     },
+  },
+  verticalHr: {
+    marginLeft: '20px',
+    marginRight: '10px',
+    borderLeft: '1.5px solid',
+    borderColor: Wenge,
+    alignSelf: 'stretch',
   },
   tabStyles: {
     width: '50%',

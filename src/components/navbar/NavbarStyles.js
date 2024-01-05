@@ -11,6 +11,13 @@ const NavbBarStyles = {
     position: 'relative',
     zIndex: 1000,
   },
+  fixedNavBar: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    zIndex: 1000,
+  },
   logoBox: {
     marginLeft: '25px',
     display: 'flex',

@@ -93,7 +93,12 @@ const NavBar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={NavbBarStyles.navBar}>
+       <Box
+        sx={{
+          ...NavbBarStyles.navBar,
+          ...NavbBarStyles.fixedNavBar,
+        }}
+      >
         {isMobile ? (
           <>
             <Box sx={NavbBarStyles.logoBox}>
