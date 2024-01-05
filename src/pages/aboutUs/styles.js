@@ -1,4 +1,4 @@
-import { Wenge } from '../../constants/colors'
+import { Wenge, PersianPink } from '../../constants/colors'
 
 const styles = (theme) => ({
   title: {
@@ -39,6 +39,57 @@ const styles = (theme) => ({
     marginTop: '10px',
     [theme.breakpoints.down('md')]: {
       fontSize: '22px',
+    },
+  },
+  gridBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '20px',
+  },
+  gridTitle: {
+    fontSize: '26px',
+    fontWeight: 600,
+    lineHeight: '55px',
+    color: Wenge,
+    marginLeft: '10px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '16px',
+      lineHeight: '20px',
+    },
+  },
+  gridText: {
+    fontSize: '22px',
+    fontWeight: 500,
+    lineHeight: '46px',
+    color: Wenge,
+    marginRight: '10px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '14px',
+      lineHeight: '22px',
+      marginTop: '10px',
+      textAlign: 'center',
+    },
+  },
+  tabStyles: {
+    width: '50%',
+    maxWidth: 'none',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+    color: PersianPink,
+    textTransform: 'capitalize',
+    fontSize: '18px',
+    borderRadius: '10px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '20px',
+    },
+  },
+  tabs: {
+    width: '68%',
+    marginLeft: '15%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      marginLeft: '0%',
     },
   },
 })
