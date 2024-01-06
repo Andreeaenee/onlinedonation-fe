@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import React from 'react'
 import Review from './Review'
-import './styles.css'
+import '../../styles.css'
 
 const ReviewCarousel = ({ reviews }) => {
   //fix the width of the carousel

@@ -8,9 +8,9 @@ const styles = (theme) => ({
     lineHeight: '55px',
     color: Wenge,
     [theme.breakpoints.down('md')]: {
-      fontSize: '18px',
+      fontSize: '16px',
       margin: '0 10px',
-      lineHeight: '20px',
+      lineHeight: '30px',
     },
   },
   smallText: {
@@ -21,7 +21,7 @@ const styles = (theme) => ({
     color: Wenge,
     [theme.breakpoints.down('md')]: {
       fontSize: '14px',
-      margin: '15px 10px',
+      margin: '25px 5px',
       lineHeight: '20px',
     },
   },

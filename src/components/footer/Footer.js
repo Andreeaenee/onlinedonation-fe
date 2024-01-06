@@ -20,10 +20,10 @@ const Footer = () => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'column', // Adjust to column direction
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '40vh',
+          height: '400px',
         }}
       >
         <Typography sx={classes.mainText}>Follow us on social media</Typography>

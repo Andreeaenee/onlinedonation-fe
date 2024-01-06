@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 
 const WrapperPage = ({ children }) => {
   return (
-    <Box>
+    <Box sx={{zIndex: 10}}>
       {children}
     </Box>
   )

@@ -23,7 +23,7 @@ const MainButton = ({
   mobileStylesText,
 }) => {
   const nav = useNavigate()
-  const isMobile = useMediaQuery(MOBILE_BREAKPOINT);
+  const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
   return (
     <Button
       onClick={(event) => {
@@ -41,7 +41,7 @@ const MainButton = ({
       sx={{
         backgroundColor: backgroundColor,
         padding: '12px 24px',
-        borderRadius: '15px',
+        borderRadius: '12px',
         gap: '8px',
         '&:hover': {
           backgroundColor: backgroundColorHover,

@@ -9,6 +9,9 @@ import {ReactComponent as InstagramIcon} from './social-media/instagram.svg'
 import {ReactComponent as TwitterIcon} from './social-media/twitter.svg'
 import {ReactComponent as YoutubeIcon} from './social-media/youtube.svg'
 import {ReactComponent as LinkedinIcon} from './social-media/linkedin.svg'
+import {ReactComponent as FilterIcon} from './filter.svg'
+import {ReactComponent as SearchIcon} from './search-icon.svg'
+import {ReactComponent as SortIcon} from './sort-icon.svg'
 
 export { Logo }
 export {Restaurants}
@@ -21,3 +24,6 @@ export {InstagramIcon}
 export {TwitterIcon}
 export {YoutubeIcon}
 export {LinkedinIcon}
+export {FilterIcon}
+export {SearchIcon}
+export {SortIcon}

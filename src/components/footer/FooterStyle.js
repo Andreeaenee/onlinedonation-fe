@@ -7,7 +7,7 @@ const FooterStyle = (theme) => ({
     lineHeight: '55px',
     color: Wenge,
     marginTop: '10px',
-    marginBottom: '20px',
+    marginBottom: '0px',
     [theme.breakpoints.down('md')]: {
       fontSize: '22px',
     },

@@ -15,6 +15,8 @@ import UvtJpg from '../../assets/photos/cardPhoto/uvt.jpg'
 import ListCards from '../../components/listCards/ListCards'
 import CountCard from '../../components/countCards/CountCard'
 import ReviewCarousel from '../../components/reviews/ReviewCarousel'
+import OrganisationKeyPoint from './OrganisationKeyPoint'
+import SponsorLogo from './SponsorLogo'
 
 const cards = [
   {
@@ -61,46 +63,6 @@ const reviews = [
     date: '12.12.2021',
   },
 ]
-
-const SponsorLogo = ({ src, alt }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-  return (
-    <Grid item xs={4} sm={3}>
-      <img
-        src={src}
-        alt={alt}
-        style={{ height: 'auto', width: isMobile ? '150px' : '300px' }}
-      />
-    </Grid>
-  )
-}
-
-const OrganisationKeyPoint = ({
-  title,
-  icon,
-  text1,
-  text2,
-  text3,
-  button,
-  buttonAction,
-}) => {
-  const theme = useTheme()
-  const classes = styles(theme)
-  return (
-    <Grid item xs={4} sm={4}>
-      <Box sx={classes.gridBox}>
-        {icon}
-        <Typography sx={classes.gridTitle}>{title}</Typography>
-      </Box>
-      <Typography sx={classes.gridText}>{text1}</Typography> <br />
-      <Typography sx={classes.gridText}>{text2}</Typography>
-      <br />
-      <Typography sx={classes.gridText}>{text3}</Typography>
-    </Grid>
-  )
-}
 
 const AboutUs = () => {
   const theme = useTheme()
@@ -185,7 +147,7 @@ const AboutUs = () => {
           />
         </Tabs>
       </Box>
-      {activeTab === 1 && <ListCards cards={cards} />}
+      {activeTab === 1 && <ListCards cards={cards} page={'About Us'} type={'MainCard'}/>}
       <Box
         sx={{
           marginTop: '50px',

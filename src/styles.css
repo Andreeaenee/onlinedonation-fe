@@ -2,4 +2,6 @@
   width: 100% !important; /* Override the default width */
 }
 
-
+.css-17x3bo0-MuiGrid-root>.MuiGrid-item {
+  padding: 0 8px !important;
+}
