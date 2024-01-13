@@ -12,9 +12,9 @@ const MainCardStyles = (theme) => ({
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.45)',
     margin: '0px 20px 20px 20px',
     borderRadius: '10px',
-    transition: 'transform 0.3s ease-in-out', // Add a transition for smooth effect
+    transition: 'transform 0.3s ease-in-out', 
     '&:hover': {
-      transform: 'scale(1.1)', // Scale the card on hover
+      transform: 'scale(1.1)', 
     },
     [theme.breakpoints.down('md')]: {
       width: '200px',

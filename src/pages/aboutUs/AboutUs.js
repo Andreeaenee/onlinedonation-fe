@@ -147,7 +147,9 @@ const AboutUs = () => {
           />
         </Tabs>
       </Box>
-      {activeTab === 1 && <ListCards cards={cards} page={'About Us'} type={'MainCard'}/>}
+      {activeTab === 1 && (
+        <ListCards cards={cards} page={'About Us'} type={'MainCard'} />
+      )}
       <Box
         sx={{
           marginTop: '50px',

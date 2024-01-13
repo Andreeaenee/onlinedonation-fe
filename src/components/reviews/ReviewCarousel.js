@@ -13,7 +13,6 @@ const ReviewCarousel = ({ reviews }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    width: '100%',
     responsive: [
       {
         breakpoint: 1024,

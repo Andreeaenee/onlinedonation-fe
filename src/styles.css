@@ -1,7 +1,7 @@
 .slick-slider {
-  width: 100% !important; /* Override the default width */
+  width: 90% !important;
 }
 
-.css-17x3bo0-MuiGrid-root>.MuiGrid-item {
+.css-17x3bo0-MuiGrid-root > .MuiGrid-item {
   padding: 0 8px !important;
 }

@@ -28,10 +28,10 @@ const DonationCardStyles = (theme) => ({
     padding: '5px',
     display: 'flex',
     flexDirection: 'column',
-    transition: 'transform 0.3s ease-in-out', // Add a transition for smooth effect
+    transition: 'transform 0.3s ease-in-out', 
     '&:hover': {
       cursor: 'pointer',
-      transform: 'scale(1.1)', // Scale the card on hover
+      transform: 'scale(1.1)', 
     },
     [theme.breakpoints.down('md')]: {
       width: '400px',

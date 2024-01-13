@@ -12,8 +12,10 @@ const Review = ({ avatar, name, review, date }) => {
         container
         alignItems="center"
         spacing={2}
-        justifyContent="flex-start"
-        sx={{ width: '100%', marginTop: '25px', marginLeft: '20px' }}
+        sx={{
+          width: '100%',
+          margin: '25px 0 0 20px', // Adjust margin values as needed
+        }}
       >
         <Grid item xs={2}>
           <Avatar sx={classes.avatar} src={avatar} />
@@ -21,12 +23,7 @@ const Review = ({ avatar, name, review, date }) => {
         <Grid item xs={4}>
           <Typography sx={classes.name}>{name}</Typography>
         </Grid>
-        <Grid
-          item
-          xs={4}
-          sm={6}
-          textAlign="right"
-        >
+        <Grid item xs={4} sm={6} textAlign="right">
           <Typography sx={classes.date}>Date: {date}</Typography>
         </Grid>
       </Grid>

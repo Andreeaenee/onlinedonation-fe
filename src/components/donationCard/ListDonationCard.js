@@ -14,12 +14,7 @@ const ListDonationCard = ({ donations }) => {
     <Box sx={classes.cardList}>
       {donations.map((donation) => (
         <DonationCard
-          icon={donation.icon}
-          title={donation.title}
-          photo={donation.photo}
-          name={donation.name}
-          description={donation.description}
-          date={donation.date}
+          donation={donation}
         />
       ))}
     </Box>

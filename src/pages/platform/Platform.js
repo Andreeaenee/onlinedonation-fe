@@ -101,7 +101,8 @@ const oferta = [
     icon: RestaurantLogo,
     photo: Meal,
     name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     date: '12.12.2021',
   },
 ]
