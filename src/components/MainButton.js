@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { MOBILE_BREAKPOINT } from '../constants/constants'
 
 const MainButton = ({
+  icon,
   buttonText,
   width,
   height,
@@ -38,6 +39,7 @@ const MainButton = ({
         }
       }}
       variant="contained"
+      startIcon={icon}
       sx={{
         backgroundColor: backgroundColor,
         padding: '12px 24px',

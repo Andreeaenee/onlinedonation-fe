@@ -9,10 +9,11 @@ const ListCards = ({ cards, page }) => {
   const classes = ListCardStyles(theme)
 
   return (
-    <Box sx={page === 'Platform'? classes.cardsBoxPlatform : classes.cardsBox}>
+    <Box sx={page === 'Platform' ? classes.cardsBoxPlatform : classes.cardsBox}>
       {cards.map((card) => (
-        <Box sx={page === 'Platform'? classes.cardPlatform : classes.card}>
+        <Box sx={page === 'Platform' ? classes.cardPlatform : classes.card}>
           <MainCard
+            page={page}
             title={card.title}
             avatar={card.avatar}
             image={card.image}

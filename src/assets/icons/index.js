@@ -12,6 +12,9 @@ import {ReactComponent as LinkedinIcon} from './social-media/linkedin.svg'
 import {ReactComponent as FilterIcon} from './filter.svg'
 import {ReactComponent as SearchIcon} from './search-icon.svg'
 import {ReactComponent as SortIcon} from './sort-icon.svg'
+import {ReactComponent as UploadIcon} from './upload.svg'
+import {ReactComponent as IntervalIcon} from './interval-icon.svg'
+import {ReactComponent as LocationIcon} from './location-icon.svg'
 
 export { Logo }
 export {Restaurants}
@@ -27,3 +30,6 @@ export {LinkedinIcon}
 export {FilterIcon}
 export {SearchIcon}
 export {SortIcon}
+export {UploadIcon}
+export {IntervalIcon}
+export {LocationIcon}
