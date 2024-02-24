@@ -10,9 +10,9 @@ import MainButton from '../../components/MainButton'
 import OraLuiRobertJPG from '../../assets/photos/cardPhoto/OraLuiRobert.jpg'
 import OraluiRobert from '../../assets/photos/sponsors/Logo-oraluirobert.png'
 import ListCards from '../../components/listCards/ListCards'
-import Meal from '../../assets/photos/cardPhoto/meal.png'
-import RestaurantLogo from '../../assets/photos/cardPhoto/restaurantLogo.png'
 import ListDonationCard from '../../components/donationCard/ListDonationCard'
+import { useEffect, useState } from 'react'
+import { fetchDonationsData } from '../../api/getDonations'
 
 const restaurants = [
   {
@@ -47,70 +47,21 @@ const restaurants = [
   },
 ]
 
-const oferta = [
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-  {
-    title: '15 Menus Available',
-    icon: RestaurantLogo,
-    photo: Meal,
-    name: 'Restaurant Nora',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '12.12.2021',
-  },
-]
-
 const Platform = () => {
   const theme = useTheme()
   const classes = PlatformStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetchDonationsData()
+      .then((response) => {
+        setData(response)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+  }, [])
 
   return (
     <WrapperPage>
@@ -164,6 +115,7 @@ const Platform = () => {
             height={'50px'}
             fontSize={18}
             margin={'50px'}
+            to={'/new-donation'}
           />
         )}
       </Box>
@@ -175,14 +127,15 @@ const Platform = () => {
           fontSize={14}
           margin={'20px'}
           borderRadius={'10px'}
+          to={'/new-donation'}
         />
       )}
       <Typography sx={classes.mainText}>
         Restaurants that are donating today
       </Typography>
       <ListCards cards={restaurants} page={'Platform'} />
-      <Typography sx={classes.mainText}>Oferte</Typography>
-      <ListDonationCard donations={oferta} />
+      <Typography sx={classes.mainText}>Donations</Typography>
+      <ListDonationCard donations={data} />
     </WrapperPage>
   )
 }

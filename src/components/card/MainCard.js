@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import MainCardStyles from './MainCardStyle'
 import { MountbattenPink, PersianPink } from '../../constants/colors'
 
-const MainCard = ({ title, avatar, image, link }) => {
+const MainCard = ({ title, avatar, image, link, page }) => {
   const theme = useTheme()
   const classes = MainCardStyles(theme)
 
@@ -20,7 +20,7 @@ const MainCard = ({ title, avatar, image, link }) => {
       ></Box>
       <Typography sx={classes.title}>{title}</Typography>
       <MainButton
-        buttonText={'Donate Now'}
+        buttonText={page === 'Platform' ? 'Donations' : 'Donate Now'}
         width={'150px'}
         height={'35px'}
         to={link}

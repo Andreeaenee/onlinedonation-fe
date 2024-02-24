@@ -28,10 +28,10 @@ const DonationCardStyles = (theme) => ({
     padding: '5px',
     display: 'flex',
     flexDirection: 'column',
-    transition: 'transform 0.3s ease-in-out', 
+    transition: 'transform 0.3s ease-in-out',
     '&:hover': {
       cursor: 'pointer',
-      transform: 'scale(1.1)', 
+      transform: 'scale(1.1)',
     },
     [theme.breakpoints.down('md')]: {
       width: '400px',
@@ -72,12 +72,14 @@ const DonationCardStyles = (theme) => ({
     color: Black400,
     fontSize: '18px',
     textAlign: 'left',
+    marginLeft: '10px',
   },
   description: {
     fontWeight: 300,
     color: Black100,
     fontSize: '14px',
     textAlign: 'left',
+    marginLeft: '10px',
   },
   date: {
     fontWeight: 500,
@@ -85,6 +87,7 @@ const DonationCardStyles = (theme) => ({
     fontSize: '16px',
     marginTop: 'auto',
     textAlign: 'left',
+    marginLeft: '10px',
   },
 })
 

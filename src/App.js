@@ -11,6 +11,7 @@ import Campaigns from './pages/campaigns/Campaigns'
 import Login from './pages/login/Login'
 import NavBar from './components/navbar/NavBar'
 import Footer from './components/footer/Footer'
+import NewDonation from './pages/NewDonation/NewDonation'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/platform" element={<Platform />}></Route>
           <Route path="/campaigns" element={<Campaigns />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path='/new-donation' element={<NewDonation />} />
 
           {/* <Route
           path="/ong-details/:id"

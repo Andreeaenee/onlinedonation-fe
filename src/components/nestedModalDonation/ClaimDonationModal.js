@@ -1,21 +1,35 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import { Modal, Box, Avatar, Typography, Grid, TextField } from '@mui/material'
+import {
+  Modal,
+  Box,
+  Avatar,
+  Typography,
+  Grid,
+  TextField,
+  useMediaQuery,
+} from '@mui/material'
 import MainButton from '../MainButton'
 import { useTheme } from '@mui/material/styles'
 import NestedModalStyles from './NestedModalStyles'
 import { MountbattenPink, PersianPink, Wenge } from '../../constants/colors'
 import { FormField } from '../../utils/FormField'
+import Meal from '../../assets/photos/cardPhoto/meal.png'
+import { format } from 'date-fns'
+import { IntervalIcon, LocationIcon } from '../../assets/icons'
+import { deleteDonationData } from '../../api/getDonations'
 
-const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
+const ClaimDonationModal = ({ open, onClose, donation }) => {
   const theme = useTheme()
   const classes = NestedModalStyles(theme)
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [boxHeight, setBoxHeight] = useState('60%')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [contactNumber, setContactNumber] = useState('')
   const [aproxTime, setAproxTime] = useState('')
   const [isFormComplete, setIsFormComplete] = useState(false)
+  let isTransportProvided = donation.transport_provided
 
   useEffect(() => {
     setIsFormComplete(
@@ -27,7 +41,15 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
   }, [firstName, lastName, contactNumber, aproxTime])
 
   const handleButtonClick = () => {
-    setBoxHeight((prevHeight) => (prevHeight === '60%' ? '95%' : '60%'))
+    setBoxHeight((prevHeight) => {
+      if (prevHeight === '60%') {
+        return isTransportProvided ? '70%' : '95%'
+      } else if (prevHeight === '70%') {
+        return '60%'
+      } else {
+        return '60%'
+      }
+    })
   }
 
   const handleFirstNameChange = (e) => {
@@ -48,11 +70,13 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(firstName, lastName, contactNumber, aproxTime)
     setAproxTime('')
     setContactNumber('')
     setLastName('')
     setFirstName('')
+    deleteDonationData(donation.donation_id)
+    onClose()
+    window.location.reload()
   }
 
   const textField = ({ label, textValue, onChangeAction, helperText }) => {
@@ -68,7 +92,12 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
           value={textValue}
           fullWidth
           required
-          sx={{ mb: 2, marginLeft: '20px', ...FormField.field }}
+          sx={{
+            mb: 2,
+            marginLeft: '20px',
+            ...FormField.field,
+            [theme.breakpoints.down('md')]: { width: '80%' },
+          }}
           helperText={helperText}
         />
       </>
@@ -87,24 +116,55 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
         sx={{
           ...classes.imagesBox,
           height: boxHeight,
-          transition: 'height 0.3s ease', // Smooth transition for height change
+          transition: 'height 0.3s ease',
+          overflowY: 'auto',
         }}
       >
         <Grid container spacing={2}>
           {/* Left Column */}
           <Grid item xs={12} sm={6}>
-            <Typography sx={classes.title}>{donation.title}</Typography>
-            <Typography sx={classes.interval}>Interval: {interval}</Typography>
-            <Typography sx={classes.date}>
+            <Typography sx={classes.title}>{donation.name}</Typography>
+            <Box
+              sx={{ display: 'flex', marginLeft: '15px', alignItems: 'center' }}
+            >
+              <IntervalIcon
+                width={isMobile ? '20px' : '25px'}
+                height={isMobile ? '20px' : '25px'}
+              />
+              <Typography sx={classes.interval}>
+                Interval:{' '}
+                <span style={{ fontWeight: 300, fontSize: '16px' }}>
+                  {format(new Date(donation.start_date), 'dd/MM/yyyy')} -{' '}
+                  {format(new Date(donation.end_date), 'dd/MM/yyyy')}
+                </span>
+              </Typography>
+            </Box>
+
+            {/* <Typography sx={classes.date}>
               Date: <span style={{ fontWeight: 300 }}>{donation.date}</span>
-            </Typography>
+            </Typography> */}
+            <Box
+              sx={{ display: 'flex', marginLeft: '15px', alignItems: 'center' }}
+            >
+              <LocationIcon
+                width={isMobile ? '30px' : '35px'}
+                height={isMobile ? '30px' : '35px'}
+              />
+              <Typography sx={classes.date}>
+                Pickup Point:{' '}
+                <span style={{ fontWeight: 300 }}>
+                  {donation.pick_up_point}
+                </span>
+              </Typography>
+            </Box>
+
             <Typography sx={classes.description}>
               {donation.description}
             </Typography>
           </Grid>
           {/* Right Column */}
           <Grid item xs={12} sm={6}>
-            <Avatar src={donation.photo} sx={classes.avatar}></Avatar>
+            <Avatar src={Meal} sx={classes.avatar}></Avatar>
           </Grid>
         </Grid>
 
@@ -114,8 +174,13 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
           marginLeft={'10%'}
           marginTop={'20px'}
           onClick={handleButtonClick}
+          mobileStyles={{
+            height: '30px',
+            marginTop: '15px',
+            margin: '0px 0px 20px 0px',
+          }}
+          mobileStylesText={{ fontSize: 12 }}
         />
-
         {boxHeight === '95%' && (
           <Box>
             <Typography
@@ -144,7 +209,7 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
                     label: 'Contact number',
                     textValue: contactNumber,
                     onChangeAction: handleContactNumberChange,
-                    helperText: 'Type a valid 9-digit number',
+                    helperText: 'Type a valid 10-digit number',
                   })}
                 </Grid>
                 <Grid item xs={12} sm={5.5}>
@@ -155,7 +220,7 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
                     helperText: 'Type your last name',
                   })}
                   {textField({
-                    label: 'Approximate time of arrival (min)',
+                    label: 'Approx. time of arrival (min)',
                     textValue: aproxTime,
                     onChangeAction: handleAproxTimeChange,
                     helperText: 'Type a valid number',
@@ -166,13 +231,44 @@ const ClaimDonationModal = ({ open, onClose, donation, interval }) => {
                 buttonText={'Confirm'}
                 width={'80%'}
                 marginLeft={'10%'}
-                marginTop={'20px'}
+                margin={'20px 0px 20px 0px'}
                 onClick={handleSubmit}
                 backgroundColor={PersianPink}
                 backgroundColorHover={MountbattenPink}
                 disabled={!isFormComplete}
+                mobileStyles={{ height: '30px', margin: '0px 0px 15px 0px' }}
+                mobileStylesText={{ fontSize: 12 }}
               />
             </form>
+          </Box>
+        )}
+        {boxHeight === '70%' && (
+          <Box>
+            <Typography
+              sx={{
+                ...classes.title,
+                textAlign: 'center',
+                color: Wenge,
+                marginTop: '15px',
+                fontSize: '18px',
+                fontWeight: 500,
+                padding: '0px',
+              }}
+            >
+              Transportation is provided by the restaurant
+            </Typography>
+            <MainButton
+              buttonText={'Confirm'}
+              width={'80%'}
+              marginLeft={'10%'}
+              margin={'20px 0px 20px 0px'}
+              onClick={handleSubmit}
+              backgroundColor={PersianPink}
+              backgroundColorHover={MountbattenPink}
+              // disabled={!isFormComplete}
+              mobileStyles={{ height: '30px', margin: '0px 0px 15px 0px' }}
+              mobileStylesText={{ fontSize: 12 }}
+            />
           </Box>
         )}
       </Box>
