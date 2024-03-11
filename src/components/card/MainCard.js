@@ -23,7 +23,7 @@ const MainCard = ({ title, avatar, image, link, page }) => {
         buttonText={page === 'Platform' ? 'Donations' : 'Donate Now'}
         width={'150px'}
         height={'35px'}
-        to={link}
+        onClick={() => window.open(link, '/')}
         backgroundColor={MountbattenPink}
         backgroundColorHover={PersianPink}
         mobileStyles={{ width: '125px', height: '20px' }}
