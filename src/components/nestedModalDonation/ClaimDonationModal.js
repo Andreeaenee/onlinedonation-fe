@@ -164,7 +164,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
           </Grid>
           {/* Right Column */}
           <Grid item xs={12} sm={6}>
-            <Avatar src={Meal} sx={classes.avatar}></Avatar>
+            <Avatar src={donation.imageUrl || Meal} sx={classes.avatar}></Avatar>
           </Grid>
         </Grid>
 

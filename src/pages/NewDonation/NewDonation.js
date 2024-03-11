@@ -21,9 +21,8 @@ import {
 } from '../../constants/colors'
 import { FormField } from '../../utils/FormField'
 import MainButton from '../../components/MainButton'
-import { UploadIcon } from '../../assets/icons'
+import { CancelIcon, UploadIcon } from '../../assets/icons'
 import dayjs from 'dayjs'
-import axiosFetch from '../../api/Axios'
 import { postDonationData } from '../../api/getDonations'
 
 const NewDonation = () => {
@@ -38,8 +37,89 @@ const NewDonation = () => {
   const [to, setTo] = useState(null)
   const [pickupPoint, setPickupPoint] = useState('')
   const [contactNumber, setContactNumber] = useState('')
+  const [image, setImage] = useState(null)
+  const [fileName, setFileName] = useState('')
+  const [errors, setErrors] = useState({
+    title: false,
+    quantity: false,
+    description: false,
+    from: false,
+    to: false,
+    contactNumber: false,
+    image: false,
+    pickupPoint: false,
+  })
 
-  const textField = ({ label, textValue, onChangeAction, helperText }) => {
+  const validateForm = () => {
+    const newErrors = {
+      title: !title || title.length > 100,
+      quantity: !quantity || isNaN(quantity) || quantity < 1 || quantity > 1000,
+      description: !description || description.length > 500,
+      from: !from || !dayjs(from).isValid(),
+      to: !to || !dayjs(to).isValid() || dayjs(to).isBefore(dayjs(from)),
+      contactNumber:
+        !contactNumber || contactNumber.length !== 8 || isNaN(contactNumber),
+      image: !image,
+      pickupPoint: checked ? false : !pickupPoint,
+    }
+
+    setErrors(newErrors)
+    return Object.values(newErrors).every((error) => !error)
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const formData = new FormData()
+
+    if (!validateForm()) {
+      alert('Please fill in all required fields correctly.')
+      return
+    }
+
+    // Append the text fields to formData
+    formData.append('name', title)
+    formData.append('description', description)
+    formData.append('quantity', quantity)
+    formData.append('start_date', dayjs(from).format('YYYY-MM-DD'))
+    formData.append('end_date', dayjs(to).format('YYYY-MM-DD'))
+    formData.append('transport_provided', checked)
+    formData.append('phone', contactNumber)
+    formData.append('pick_up_point', pickupPoint)
+    // Append the file to formData, the 'image' is the key expected by the multer middleware on the backend
+    if (image) {
+      formData.append('image', image, fileName) // Assuming 'image' is the file and 'fileName' is the name of the file
+    }
+    const response = await postDonationData(formData)
+    console.log(response.data)
+
+    setChecked(false)
+    setTitle('')
+    setQuantity('')
+    setDescription('')
+    setFrom(null)
+    setTo(null)
+    setPickupPoint('')
+    setContactNumber('')
+    setImage(null)
+    setFileName('')
+  }
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      setImage(file)
+      setFileName(file.name)
+    }
+  }
+
+  const textField = ({
+    label,
+    textValue,
+    onChangeAction,
+    helperText,
+    error,
+  }) => {
     return (
       <Box
         sx={{
@@ -72,6 +152,8 @@ const NewDonation = () => {
           value={textValue}
           fullWidth
           required
+          error={error}
+          placeholder={label === 'From' || label === 'To' ? 'YYYY-MM-DD' : ''}
           sx={{
             mb: 2,
             marginLeft: '50px',
@@ -82,29 +164,6 @@ const NewDonation = () => {
         />
       </Box>
     )
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    const dataToSend = {
-      name: title,
-      description: description,
-      quantity: parseInt(quantity),
-      start_date: dayjs(from).format('YYYY-MM-DD'),
-      end_date: dayjs(to).format('YYYY-MM-DD'),
-      transport_provided: checked,
-      phone: contactNumber,
-      pick_up_point: pickupPoint,
-    }
-    postDonationData(dataToSend);
-    setChecked(false)
-    setTitle('')
-    setQuantity(null)
-    setDescription('')
-    setFrom(null)
-    setTo(null)
-    setPickupPoint('')
-    setContactNumber('')
   }
 
   return (
@@ -121,6 +180,7 @@ const NewDonation = () => {
                 label: 'Title',
                 textValue: title,
                 onChangeAction: (e) => setTitle(e.target.value),
+                error: errors.title,
               })}
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -128,27 +188,69 @@ const NewDonation = () => {
                 label: 'Quantity/menu',
                 textValue: quantity,
                 onChangeAction: (e) => setQuantity(e.target.value),
+                error: errors.quantity,
               })}
             </Grid>
           </Grid>
-          <MainButton
-            icon={<UploadIcon width={'20px'} height={'20px'} />}
-            buttonText="Upload Image"
-            onClickAction={() => {
-              console.log('Create')
-            }}
-            width={'90%'}
-            height={'50px'}
-            fontSize={20}
-            lineHeight={24}
-            marginLeft={'5%'}
-            marginTop={'20px'}
-            backgroundColor={PersianPink}
-            backgroundColorHover={MountbattenPink}
-            textColor={White100}
-            mobileStyles={{ height: '30px', marginTop: '15px' }}
-            mobileStylesText={{ fontSize: 12 }}
+          <label
+            htmlFor="upload-input"
+            style={{ display: 'inline-block', width: '100%' }}
+          >
+            <div
+              style={{
+                marginTop: '20px',
+                marginLeft: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '88%',
+                height: '100%',
+                backgroundColor: PersianPink,
+                color: White100,
+                borderRadius: '12px',
+                cursor: 'pointer',
+                border: 'none',
+                padding: '12px 14px',
+                gap: '8px',
+              }}
+            >
+              <UploadIcon width={'20px'} height={'20px'} />
+              <span
+                style={{
+                  fontSize: '20px',
+                  lineHeight: '24px',
+                  marginLeft: '10px',
+                }}
+              >
+                Upload Image
+              </span>
+            </div>
+          </label>
+          <input
+            id="upload-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
           />
+          {fileName && (
+            <div
+              style={{ display: 'flex', marginLeft: '50px', marginTop: '20px' }}
+            >
+              <Typography>{fileName}</Typography>
+              <CancelIcon
+                width={'20px'}
+                height={'20px'}
+                cursor={'pointer'}
+                sx={{ marginLeft: '30px' }}
+                onClick={() => {
+                  setFileName('')
+                  setImage(null)
+                }}
+              />
+            </div>
+          )}
+
           <Typography
             sx={{
               ...classes.fieldTypo,
@@ -167,6 +269,7 @@ const NewDonation = () => {
             label={'Menu Name, Ingredients, etc.'}
             onChange={(e) => setDescription(e.target.value)}
             value={description}
+            error={errors.description}
             sx={{
               mb: 2,
               margin: 'auto',
@@ -192,12 +295,14 @@ const NewDonation = () => {
                 label: 'From',
                 textValue: from,
                 onChangeAction: (e) => setFrom(e.target.value),
+                error: errors.from,
               })}
               {isMobile ? (
                 textField({
                   label: 'To',
                   textValue: to,
                   onChangeAction: (e) => setTo(e.target.value),
+                  error: errors.to,
                 })
               ) : (
                 <>
@@ -224,6 +329,7 @@ const NewDonation = () => {
                       label: 'Pickup Point',
                       textValue: pickupPoint,
                       onChangeAction: (e) => setPickupPoint(e.target.value),
+                      error: errors.pickupPoint,
                     })}
                 </>
               )}
@@ -254,6 +360,7 @@ const NewDonation = () => {
                       label: 'Pickup Point',
                       textValue: pickupPoint,
                       onChangeAction: (e) => setPickupPoint(e.target.value),
+                      error: errors.pickupPoint,
                     })}
                 </>
               ) : (
@@ -261,12 +368,14 @@ const NewDonation = () => {
                   label: 'To',
                   textValue: to,
                   onChangeAction: (e) => setTo(e.target.value),
+                  error: errors.to,
                 })
               )}
               {textField({
                 label: 'Contact Number',
                 textValue: contactNumber,
                 onChangeAction: (e) => setContactNumber(e.target.value),
+                error: errors.contactNumber,
               })}
             </Grid>
           </Grid>

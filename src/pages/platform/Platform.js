@@ -12,7 +12,7 @@ import OraluiRobert from '../../assets/photos/sponsors/Logo-oraluirobert.png'
 import ListCards from '../../components/listCards/ListCards'
 import ListDonationCard from '../../components/donationCard/ListDonationCard'
 import { useEffect, useState } from 'react'
-import { fetchDonationsData } from '../../api/getDonations'
+import { fetchDonationById, fetchDonationsData } from '../../api/getDonations'
 
 const restaurants = [
   {

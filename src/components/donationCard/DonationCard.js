@@ -30,7 +30,7 @@ const DonationCard = ({ donation }) => {
           <Box sx={classes.imagesBox}>
             <Avatar src={RestaurantLogo} sx={classes.icon} />
             <Typography sx={classes.name}>Restaurant Name</Typography>
-            <Avatar src={Meal} sx={classes.photo} />
+            <Avatar src={donation.imageUrl} sx={classes.photo} />
           </Box>
           <Typography sx={classes.title}>{donation.name}</Typography>
           <Typography sx={classes.description}>
