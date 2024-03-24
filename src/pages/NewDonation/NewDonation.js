@@ -1,29 +1,28 @@
-import React from 'react'
-import { useState } from 'react'
-import { useTheme } from '@mui/material/styles'
+import React, { useState } from 'react'
 import {
+  useTheme,
+  useMediaQuery,
   Box,
   Typography,
   TextField,
   Grid,
   Switch,
   FormControlLabel,
-  useMediaQuery,
 } from '@mui/material'
+import dayjs from 'dayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
+import { LocalizationProvider, StaticTimePicker } from '@mui/x-date-pickers'
 import NewDonationStyles from './NewDonationStyles'
 import WrapperPage from '../../components/WrapperPage'
-import {
-  Black100,
-  MountbattenPink,
-  PersianPink,
-  Wenge,
-  White100,
-} from '../../constants/colors'
-import { FormField } from '../../utils/FormField'
 import MainButton from '../../components/MainButton'
-import { CancelIcon, UploadIcon } from '../../assets/icons'
-import dayjs from 'dayjs'
+import CustomizedSnackbars from '../../components/SnackBar'
+import TextFieldWithLabel from '../../components/TextFieldWithLabel'
 import { postDonationData } from '../../api/getDonations'
+import { CancelIcon, UploadIcon } from '../../assets/icons'
+import { FormField } from '../../utils/FormField'
+import './styles.css'
+import { White100, PersianPink, MountbattenPink } from '../../constants/colors'
 
 const NewDonation = () => {
   const theme = useTheme()
@@ -33,12 +32,13 @@ const NewDonation = () => {
   const [quantity, setQuantity] = useState(null)
   const [description, setDescription] = useState('')
   const [checked, setChecked] = useState(false)
-  const [from, setFrom] = useState(null)
-  const [to, setTo] = useState(null)
+  const [from, setFrom] = useState(new Date())
+  const [to, setTo] = useState(new Date())
   const [pickupPoint, setPickupPoint] = useState('')
   const [contactNumber, setContactNumber] = useState('')
   const [image, setImage] = useState(null)
   const [fileName, setFileName] = useState('')
+  const [openSnackBar, setOpenSnackBar] = useState(false)
   const [errors, setErrors] = useState({
     title: false,
     quantity: false,
@@ -55,14 +55,13 @@ const NewDonation = () => {
       title: !title || title.length > 100,
       quantity: !quantity || isNaN(quantity) || quantity < 1 || quantity > 1000,
       description: !description || description.length > 500,
-      from: !from || !dayjs(from).isValid(),
-      to: !to || !dayjs(to).isValid() || dayjs(to).isBefore(dayjs(from)),
+      from: !from,
+      to: !to || to < from,
       contactNumber:
         !contactNumber || contactNumber.length !== 8 || isNaN(contactNumber),
       image: !image,
       pickupPoint: checked ? false : !pickupPoint,
     }
-
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => !error)
   }
@@ -77,22 +76,25 @@ const NewDonation = () => {
       return
     }
 
-    // Append the text fields to formData
+    const formattedFromDate = dayjs(from).format('YYYY-MM-DD HH:mm:ss')
+    const formattedToDate = dayjs(to).format('YYYY-MM-DD HH:mm:ss')
+
     formData.append('name', title)
     formData.append('description', description)
     formData.append('quantity', quantity)
-    formData.append('start_date', dayjs(from).format('YYYY-MM-DD'))
-    formData.append('end_date', dayjs(to).format('YYYY-MM-DD'))
+    formData.append('start_date', formattedFromDate)
+    formData.append('end_date', formattedToDate)
     formData.append('transport_provided', checked)
     formData.append('phone', contactNumber)
     formData.append('pick_up_point', pickupPoint)
-    // Append the file to formData, the 'image' is the key expected by the multer middleware on the backend
     if (image) {
-      formData.append('image', image, fileName) // Assuming 'image' is the file and 'fileName' is the name of the file
+      formData.append('image', image, fileName)
     }
     const response = await postDonationData(formData)
-    console.log(response.data)
-
+    console.log('Response:', response)
+    if (response === 201) {
+      handleOpenSnackBar()
+    }
     setChecked(false)
     setTitle('')
     setQuantity('')
@@ -113,59 +115,83 @@ const NewDonation = () => {
     }
   }
 
-  const textField = ({
-    label,
-    textValue,
-    onChangeAction,
-    helperText,
-    error,
-  }) => {
-    return (
-      <Box
-        sx={{
-          marginTop:
-            !isMobile && !checked && label === 'Contact Number'
-              ? '60px'
-              : '0px',
-          transition:
-            !isMobile && !checked && label === 'Contact Number'
-              ? 'marginTop 0.3s ease'
-              : 'none',
-        }}
-      >
-        <Typography
-          sx={{
-            ...classes.fieldTypo,
-            fontSize: label === 'From' || label === 'To' ? '14px' : '20px',
-            color: label === 'From' || label === 'To' ? Black100 : Wenge,
-          }}
-        >
-          {label}:
-        </Typography>
-        <TextField
-          type="text"
-          name={`${label}`}
-          variant="outlined"
-          color="secondary"
-          label={'Type ' + label}
-          onChange={onChangeAction}
-          value={textValue}
-          fullWidth
-          required
-          error={error}
-          placeholder={label === 'From' || label === 'To' ? 'YYYY-MM-DD' : ''}
-          sx={{
-            mb: 2,
-            marginLeft: '50px',
-            ...FormField.field,
-            width: '80%',
-          }}
-          helperText={helperText}
-        />
-      </Box>
-    )
+  const handleOpenSnackBar = () => {
+    setOpenSnackBar(true)
   }
 
+  // const textField = ({
+  //   label,
+  //   textValue,
+  //   onChangeAction,
+  //   helperText,
+  //   error,
+  // }) => {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         marginTop:
+  //           !isMobile && !checked && label === 'Contact Number'
+  //             ? '60px'
+  //             : '0px',
+  //         transition:
+  //           !isMobile && !checked && label === 'Contact Number'
+  //             ? 'marginTop 0.3s ease'
+  //             : 'none',
+  //       }}
+  //     >
+  //       <Typography
+  //         sx={{
+  //           ...classes.fieldTypo,
+  //           fontSize: '20px',
+  //           color: Wenge,
+  //         }}
+  //       >
+  //         {label}:
+  //       </Typography>
+  //       <TextField
+  //         type="text"
+  //         name={`${label}`}
+  //         variant="outlined"
+  //         color="secondary"
+  //         label={'Type ' + label}
+  //         onChange={onChangeAction}
+  //         value={textValue}
+  //         fullWidth
+  //         required
+  //         error={error}
+  //         placeholder={''}
+  //         sx={{
+  //           mb: 2,
+  //           marginLeft: '50px',
+  //           ...FormField.field,
+  //           width: '80%',
+  //         }}
+  //         helperText={helperText}
+  //       />
+  //     </Box>
+  //   )
+  // }
+
+  const hoursPicker = (label, time, setTime) => {
+    return (
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Typography sx={classes.fieldTypo}>{label}:</Typography>
+        <DemoContainer components={['TimePicker']} sx={classes.demoContainer}>
+          <StaticTimePicker
+            components={{
+              ActionBar: () => null,
+            }}
+            label={label}
+            value={time ? dayjs(time) : null}
+            onChange={(newValue) =>
+              setTime(newValue ? newValue.toDate() : null)
+            }
+            sx={classes.timePicker}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+    )
+  }
   return (
     <WrapperPage>
       <Box sx={classes.box}>
@@ -176,54 +202,28 @@ const NewDonation = () => {
           <Typography sx={classes.title}>Create a Donation</Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              {textField({
-                label: 'Title',
-                textValue: title,
-                onChangeAction: (e) => setTitle(e.target.value),
-                error: errors.title,
-              })}
+              <TextFieldWithLabel
+                label="Title"
+                textValue={title}
+                onChangeAction={(e) => setTitle(e.target.value)}
+                error={errors.title}
+                classes={classes}
+              ></TextFieldWithLabel>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {textField({
-                label: 'Quantity/menu',
-                textValue: quantity,
-                onChangeAction: (e) => setQuantity(e.target.value),
-                error: errors.quantity,
-              })}
+              <TextFieldWithLabel
+                label="Quantity/menu"
+                textValue={quantity}
+                onChangeAction={(e) => setQuantity(e.target.value)}
+                error={errors.quantity}
+                classes={classes}
+              ></TextFieldWithLabel>
             </Grid>
           </Grid>
-          <label
-            htmlFor="upload-input"
-            style={{ display: 'inline-block', width: '100%' }}
-          >
-            <div
-              style={{
-                marginTop: '20px',
-                marginLeft: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '88%',
-                height: '100%',
-                backgroundColor: PersianPink,
-                color: White100,
-                borderRadius: '12px',
-                cursor: 'pointer',
-                border: 'none',
-                padding: '12px 14px',
-                gap: '8px',
-              }}
-            >
+          <label htmlFor="upload-input" style={classes.labelPhoto}>
+            <div style={{ ...classes.uploadPhoto, ...classes.divPhoto }}>
               <UploadIcon width={'20px'} height={'20px'} />
-              <span
-                style={{
-                  fontSize: '20px',
-                  lineHeight: '24px',
-                  marginLeft: '10px',
-                }}
-              >
-                Upload Image
-              </span>
+              <span style={classes.spanPhoto}>Upload Image</span>
             </div>
           </label>
           <input
@@ -234,9 +234,7 @@ const NewDonation = () => {
             style={{ display: 'none' }}
           />
           {fileName && (
-            <div
-              style={{ display: 'flex', marginLeft: '50px', marginTop: '20px' }}
-            >
+            <div style={classes.divPhoto}>
               <Typography>{fileName}</Typography>
               <CancelIcon
                 width={'20px'}
@@ -251,16 +249,7 @@ const NewDonation = () => {
             </div>
           )}
 
-          <Typography
-            sx={{
-              ...classes.fieldTypo,
-              marginTop: '20px',
-              color: Wenge,
-              fontSize: '20px',
-            }}
-          >
-            Description:
-          </Typography>
+          <Typography sx={classes.fieldTypo}>Description:</Typography>
           <TextField
             multiline
             rows={4}
@@ -279,41 +268,17 @@ const NewDonation = () => {
               ...FormField.field,
             }}
           />
-          <Typography
-            sx={{
-              ...classes.fieldTypo,
-              marginTop: '20px',
-              color: Wenge,
-              fontSize: '20px',
-            }}
-          >
-            Available time slot:
-          </Typography>
+          <Typography sx={classes.fieldTypo}>Available time slot:</Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              {textField({
-                label: 'From',
-                textValue: from,
-                onChangeAction: (e) => setFrom(e.target.value),
-                error: errors.from,
-              })}
+              <Box>{hoursPicker('From', from, setFrom)}</Box>
+
               {isMobile ? (
-                textField({
-                  label: 'To',
-                  textValue: to,
-                  onChangeAction: (e) => setTo(e.target.value),
-                  error: errors.to,
-                })
+                <Box>{hoursPicker('To', to, setTo)}</Box>
               ) : (
                 <>
                   <FormControlLabel
-                    sx={{
-                      marginLeft: '50px',
-                      marginTop: '10px',
-                      color: Wenge,
-                      fontSize: '14px',
-                      marginBottom: '10px',
-                    }}
+                    sx={classes.switch}
                     control={
                       <Switch
                         checked={checked}
@@ -324,13 +289,15 @@ const NewDonation = () => {
                     }
                     label="Transport Provided?"
                   />
-                  {!checked &&
-                    textField({
-                      label: 'Pickup Point',
-                      textValue: pickupPoint,
-                      onChangeAction: (e) => setPickupPoint(e.target.value),
-                      error: errors.pickupPoint,
-                    })}
+                  {!checked && (
+                    <TextFieldWithLabel
+                      label="Pickup Point"
+                      textValue={pickupPoint}
+                      onChangeAction={(e) => setPickupPoint(e.target.value)}
+                      error={errors.pickupPoint}
+                      classes={classes}
+                    ></TextFieldWithLabel>
+                  )}
                 </>
               )}
             </Grid>
@@ -338,13 +305,7 @@ const NewDonation = () => {
               {isMobile ? (
                 <>
                   <FormControlLabel
-                    sx={{
-                      marginLeft: '50px',
-                      marginTop: '10px',
-                      color: Wenge,
-                      fontSize: '14px',
-                      marginBottom: '10px',
-                    }}
+                    sx={classes.switch}
                     control={
                       <Switch
                         checked={checked}
@@ -355,28 +316,28 @@ const NewDonation = () => {
                     }
                     label="Transport Provided?"
                   />
-                  {!checked &&
-                    textField({
-                      label: 'Pickup Point',
-                      textValue: pickupPoint,
-                      onChangeAction: (e) => setPickupPoint(e.target.value),
-                      error: errors.pickupPoint,
-                    })}
+                  {!checked && (
+                    <TextFieldWithLabel
+                      label="Pickup Point"
+                      textValue={pickupPoint}
+                      onChangeAction={(e) => setPickupPoint(e.target.value)}
+                      error={errors.pickupPoint}
+                      classes={classes}
+                    ></TextFieldWithLabel>
+                  )}
                 </>
               ) : (
-                textField({
-                  label: 'To',
-                  textValue: to,
-                  onChangeAction: (e) => setTo(e.target.value),
-                  error: errors.to,
-                })
+                <Box>{hoursPicker('To', to, setTo)}</Box>
               )}
-              {textField({
-                label: 'Contact Number',
-                textValue: contactNumber,
-                onChangeAction: (e) => setContactNumber(e.target.value),
-                error: errors.contactNumber,
-              })}
+              <TextFieldWithLabel
+                label="Contact Number"
+                textValue={contactNumber}
+                onChangeAction={(e) => setContactNumber(e.target.value)}
+                error={errors.contactNumber}
+                classes={classes}
+                isMobile={isMobile}
+                checked={checked}
+              ></TextFieldWithLabel>
             </Grid>
           </Grid>
           <MainButton
@@ -397,6 +358,12 @@ const NewDonation = () => {
           />
         </form>
       </Box>
+      <CustomizedSnackbars
+        openSnackBar={openSnackBar}
+        setOpenSnackBar={setOpenSnackBar}
+        message="The donation has been successfully posted!"
+        severity="success"
+      ></CustomizedSnackbars>
     </WrapperPage>
   )
 }

@@ -7,8 +7,7 @@ export async function fetchDonationsData() {
       method: 'GET',
       url: 'http://localhost:3000/api/donations',
     })
-    console.log('Response: ', response)
-    return response
+    return response.responseData
   } catch (error) {
     console.log('Error: ', error)
     throw error
@@ -22,7 +21,7 @@ export async function fetchDonationById(donationId) {
       method: 'GET',
       url: `http://localhost:3000/api/donations/${donationId}`,
     })
-    return response
+    return response.responseData
   } catch (error) {
     console.log('Error: ', error.response ? error.response : error.message)
     throw error
@@ -40,7 +39,7 @@ export async function postDonationData(data) {
         'Content-Type': 'multipart/form-data',
       },
     })
-    return response
+    return response.statusCode
   } catch (error) {
     console.log('Error: ', error)
     throw error
@@ -54,6 +53,7 @@ export async function deleteDonationData(donationId) {
       method: 'DELETE',
       url: `http://localhost:3000/api/donations/${donationId}`,
     })
+    return response.statusCode
   } catch (error) {
     console.log('Error: ', error)
     throw error

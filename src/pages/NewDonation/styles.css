@@ -1,0 +1,10 @@
+
+@media (min-width: 1200px) {
+  .css-1i5562v {
+    margin-top: 0;
+    flex-direction: column;
+  }
+}
+.css-mhc70k-MuiGrid-root > .MuiGrid-item {
+  padding-top: 0;
+}
