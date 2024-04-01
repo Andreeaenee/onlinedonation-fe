@@ -91,7 +91,6 @@ const NewDonation = () => {
       formData.append('image', image, fileName)
     }
     const response = await postDonationData(formData)
-    console.log('Response:', response)
     if (response === 201) {
       handleOpenSnackBar()
     }
@@ -118,59 +117,6 @@ const NewDonation = () => {
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
   }
-
-  // const textField = ({
-  //   label,
-  //   textValue,
-  //   onChangeAction,
-  //   helperText,
-  //   error,
-  // }) => {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         marginTop:
-  //           !isMobile && !checked && label === 'Contact Number'
-  //             ? '60px'
-  //             : '0px',
-  //         transition:
-  //           !isMobile && !checked && label === 'Contact Number'
-  //             ? 'marginTop 0.3s ease'
-  //             : 'none',
-  //       }}
-  //     >
-  //       <Typography
-  //         sx={{
-  //           ...classes.fieldTypo,
-  //           fontSize: '20px',
-  //           color: Wenge,
-  //         }}
-  //       >
-  //         {label}:
-  //       </Typography>
-  //       <TextField
-  //         type="text"
-  //         name={`${label}`}
-  //         variant="outlined"
-  //         color="secondary"
-  //         label={'Type ' + label}
-  //         onChange={onChangeAction}
-  //         value={textValue}
-  //         fullWidth
-  //         required
-  //         error={error}
-  //         placeholder={''}
-  //         sx={{
-  //           mb: 2,
-  //           marginLeft: '50px',
-  //           ...FormField.field,
-  //           width: '80%',
-  //         }}
-  //         helperText={helperText}
-  //       />
-  //     </Box>
-  //   )
-  // }
 
   const hoursPicker = (label, time, setTime) => {
     return (

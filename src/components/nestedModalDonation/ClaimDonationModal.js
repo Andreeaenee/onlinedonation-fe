@@ -17,7 +17,10 @@ import { FormField } from '../../utils/FormField'
 import Meal from '../../assets/photos/cardPhoto/meal.png'
 import { format } from 'date-fns'
 import { IntervalIcon, LocationIcon } from '../../assets/icons'
-import { deleteDonationData } from '../../api/getDonations'
+import TransportIsProvidedModal from './TransportIsProvided'
+import { postDonationDriversData } from '../../api/getDonationsDrivers'
+import { updateDonationData } from '../../api/getDonations'
+import CustomizedSnackbars from '../SnackBar'
 
 const ClaimDonationModal = ({ open, onClose, donation }) => {
   const theme = useTheme()
@@ -27,15 +30,17 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [contactNumber, setContactNumber] = useState('')
-  const [aproxTime, setAproxTime] = useState('')
+  const [aproxTime, setAproxTime] = useState(null)
+  const [ong_id, setOngId] = useState(1)
   const [isFormComplete, setIsFormComplete] = useState(false)
+  const [openSnackBar, setOpenSnackBar] = useState(false)
   let isTransportProvided = donation.transport_provided
 
   useEffect(() => {
     setIsFormComplete(
       firstName.length > 0 &&
         lastName.length > 0 &&
-        /^\d{10}$/.test(contactNumber) &&
+        /^\d{9}$/.test(contactNumber) &&
         /^\d*$/.test(aproxTime)
     )
   }, [firstName, lastName, contactNumber, aproxTime])
@@ -43,13 +48,16 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   const handleButtonClick = () => {
     setBoxHeight((prevHeight) => {
       if (prevHeight === '60%') {
-        return isTransportProvided ? '70%' : '95%'
-      } else if (prevHeight === '70%') {
+        return isTransportProvided ? '80%' : '95%'
+      } else if (prevHeight === '80%') {
         return '60%'
       } else {
         return '60%'
       }
     })
+  }
+  const handleOpenSnackBar = () => {
+    setOpenSnackBar(true)
   }
 
   const handleFirstNameChange = (e) => {
@@ -68,15 +76,33 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
     setAproxTime(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    const formData = new FormData()
+
+    formData.append('first_name', firstName)
+    formData.append('last_name', lastName)
+    formData.append('contact_number', contactNumber)
+    formData.append('approx_time', aproxTime)
+
+    const response = await postDonationDriversData(
+      donation.donation_id,
+      formData
+    )
+    const response1 = await updateDonationData(donation.donation_id, {
+      ong_id: ong_id,
+    })
+    // deleteDonationData(donation.donation_id)
+    if (response === 200 && response1 === 200) {
+      handleOpenSnackBar()
+    }
     setAproxTime('')
     setContactNumber('')
     setLastName('')
     setFirstName('')
-    deleteDonationData(donation.donation_id)
-    onClose()
-    window.location.reload()
+    setTimeout(() => {
+      onClose()
+    }, 2000)
   }
 
   const textField = ({ label, textValue, onChangeAction, helperText }) => {
@@ -164,7 +190,10 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
           </Grid>
           {/* Right Column */}
           <Grid item xs={12} sm={6}>
-            <Avatar src={donation.imageUrl || Meal} sx={classes.avatar}></Avatar>
+            <Avatar
+              src={donation.imageUrl || Meal}
+              sx={classes.avatar}
+            ></Avatar>
           </Grid>
         </Grid>
 
@@ -196,7 +225,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
             >
               Provide the details of the person who's gonna pick up the command
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={5.5}>
                   {textField({
@@ -209,7 +238,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                     label: 'Contact number',
                     textValue: contactNumber,
                     onChangeAction: handleContactNumberChange,
-                    helperText: 'Type a valid 10-digit number',
+                    helperText: 'Type a valid 9-digit number',
                   })}
                 </Grid>
                 <Grid item xs={12} sm={5.5}>
@@ -242,35 +271,20 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
             </form>
           </Box>
         )}
-        {boxHeight === '70%' && (
-          <Box>
-            <Typography
-              sx={{
-                ...classes.title,
-                textAlign: 'center',
-                color: Wenge,
-                marginTop: '15px',
-                fontSize: '18px',
-                fontWeight: 500,
-                padding: '0px',
-              }}
-            >
-              Transportation is provided by the restaurant
-            </Typography>
-            <MainButton
-              buttonText={'Confirm'}
-              width={'80%'}
-              marginLeft={'10%'}
-              margin={'20px 0px 20px 0px'}
-              onClick={handleSubmit}
-              backgroundColor={PersianPink}
-              backgroundColorHover={MountbattenPink}
-              // disabled={!isFormComplete}
-              mobileStyles={{ height: '30px', margin: '0px 0px 15px 0px' }}
-              mobileStylesText={{ fontSize: 12 }}
-            />
-          </Box>
+        {boxHeight === '80%' && (
+          <TransportIsProvidedModal
+            donation={donation}
+            theme={theme}
+            onClose={onClose}
+            classes={classes}
+          />
         )}
+        <CustomizedSnackbars
+          openSnackBar={openSnackBar}
+          setOpenSnackBar={setOpenSnackBar}
+          message="The donation has been claimed successfully!"
+          severity="success"
+        ></CustomizedSnackbars>
       </Box>
     </Modal>
   )

@@ -59,3 +59,19 @@ export async function deleteDonationData(donationId) {
     throw error
   }
 }
+
+//Updates the donation data on the server with the address and ong_id
+export async function updateDonationData(donationId, data) {
+  try {
+    const response = await axiosFetch({
+      method: 'PUT',
+      url: `http://localhost:3000/api/donations/${donationId}`,
+      data: data,
+    })
+    return response.statusCode
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
