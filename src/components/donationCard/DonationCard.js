@@ -4,8 +4,7 @@ import DonationCardStyles from './DonationCardStyle'
 import { useState } from 'react'
 import ClaimDonationModal from '../nestedModalDonation/ClaimDonationModal'
 import RestaurantLogo from '../../assets/photos/cardPhoto/restaurantLogo.png'
-import Meal from '../../assets/photos/cardPhoto/meal.png'
-import { fetchDonationsData } from '../../api/getDonations'
+import dayjs from 'dayjs'
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -18,6 +17,7 @@ const DonationCard = ({ donation }) => {
   const theme = useTheme()
   const classes = DonationCardStyles(theme)
   const [openModal, setOpenModal] = useState(false)
+  const date = dayjs(donation.date).format('DD.MM.YYYY')
 
   const handleClick = () => {
     setOpenModal(true)
@@ -37,10 +37,10 @@ const DonationCard = ({ donation }) => {
             {truncateDescription(donation.description, 100)}
           </Typography>
           <Typography sx={classes.date}>
-            Date: <span style={{ fontWeight: 300 }}>{donation.date}</span>
+            Date: <span style={{ fontWeight: 300 }}>{date}</span>
           </Typography>
         </Card>
-      </ButtonBase>
+      </ButtonBase>   
       {openModal && (
         <ClaimDonationModal
           donation={donation}

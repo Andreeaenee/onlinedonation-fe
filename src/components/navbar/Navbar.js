@@ -15,7 +15,7 @@ import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
 import theme from '../../themes/theme'
 import { Menu as MenuIcon } from '@mui/icons-material'
-import NavbBarStyles from './NavBarStyles'
+import NavbBarStyles from './NavbarStyles'
 import { MOBILE_BREAKPOINT } from '../../constants/constants'
 
 const buttons = [
@@ -41,7 +41,7 @@ const buttons = [
   },
 ]
 
-const NavBar = () => {
+const Navbar = () => {
   const [activeButton, setActiveButton] = useState()
   const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
   const [isDrawerOpen, setDrawerOpen] = useState(false)
@@ -93,7 +93,7 @@ const NavBar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-       <Box
+      <Box
         sx={{
           ...NavbBarStyles.navBar,
           ...NavbBarStyles.fixedNavBar,
@@ -137,4 +137,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default Navbar

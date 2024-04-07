@@ -5,7 +5,7 @@ export async function postDonationDriversData(donation_id, data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: `http://localhost:3000/api/donations/${donation_id}/drivers`,
+      url: process.env.REACT_APP_API_PORT + `donations/${donation_id}/drivers`,
       data: data,
     })
 
