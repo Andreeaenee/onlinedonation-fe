@@ -39,6 +39,7 @@ const NewDonation = () => {
   const [image, setImage] = useState(null)
   const [fileName, setFileName] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
+  const [error_complete_fileds, setError_complete_fileds] = useState(false)
   const [errors, setErrors] = useState({
     title: false,
     quantity: false,
@@ -72,7 +73,7 @@ const NewDonation = () => {
     const formData = new FormData()
 
     if (!validateForm()) {
-      alert('Please fill in all required fields correctly.')
+      handleErrorCompleteFields()
       return
     }
 
@@ -93,6 +94,9 @@ const NewDonation = () => {
     const response = await postDonationData(formData)
     if (response === 201) {
       handleOpenSnackBar()
+    }
+    else {
+      console.log('Error posting donation')
     }
     setChecked(false)
     setTitle('')
@@ -116,6 +120,10 @@ const NewDonation = () => {
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
+  }
+
+  const handleErrorCompleteFields = () => {
+    setError_complete_fileds(true)
   }
 
   const hoursPicker = (label, time, setTime) => {
@@ -309,6 +317,12 @@ const NewDonation = () => {
         setOpenSnackBar={setOpenSnackBar}
         message="The donation has been successfully posted!"
         severity="success"
+      ></CustomizedSnackbars>
+      <CustomizedSnackbars
+        openSnackBar={error_complete_fileds}
+        setOpenSnackBar={setError_complete_fileds}
+        message="Please fill in all required fields correctly."
+        severity="error"
       ></CustomizedSnackbars>
     </WrapperPage>
   )
