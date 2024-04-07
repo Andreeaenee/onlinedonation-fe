@@ -5,7 +5,7 @@ export async function fetchDonationsData() {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: 'http://localhost:3000/api/donations',
+      url: process.env.REACT_APP_API_PORT+'donations',
     })
     return response.responseData
   } catch (error) {
@@ -19,7 +19,7 @@ export async function fetchDonationById(donationId) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: `http://localhost:3000/api/donations/${donationId}`,
+      url: process.env.REACT_APP_API_PORT + `donations/${donationId}`,
     })
     return response.responseData
   } catch (error) {
@@ -33,7 +33,7 @@ export async function postDonationData(data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: 'http://localhost:3000/api/donation',
+      url: process.env.REACT_APP_API_PORT + 'donation',
       data: data,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -51,7 +51,7 @@ export async function deleteDonationData(donationId) {
   try {
     const response = await axiosFetch({
       method: 'DELETE',
-      url: `http://localhost:3000/api/donations/${donationId}`,
+      url: process.env.REACT_APP_API_PORT + `donations/${donationId}`,
     })
     return response.statusCode
   } catch (error) {
@@ -65,7 +65,7 @@ export async function updateDonationData(donationId, data) {
   try {
     const response = await axiosFetch({
       method: 'PUT',
-      url: `http://localhost:3000/api/donations/${donationId}`,
+      url: process.env.REACT_APP_API_PORT + `donations/${donationId}`,
       data: data,
     })
     return response.statusCode
@@ -74,4 +74,3 @@ export async function updateDonationData(donationId, data) {
     throw error
   }
 }
-
