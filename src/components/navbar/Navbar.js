@@ -15,7 +15,7 @@ import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
 import theme from '../../themes/theme'
 import { Menu as MenuIcon } from '@mui/icons-material'
-import NavbBarStyles from './NavBarStyles'
+import NavbBarStyles from './NavbarStyles'
 import { MOBILE_BREAKPOINT } from '../../constants/constants'
 
 const buttons = [
@@ -31,8 +31,8 @@ const buttons = [
   },
   {
     id: 3,
-    label: 'Campaigns',
-    path: '/campaigns',
+    label: 'Dashboard',
+    path: '/dashboard',
   },
   {
     id: 4,
@@ -51,7 +51,9 @@ const NavBar = () => {
     const matchingButton =
       location.pathname === '/'
         ? buttons.findIndex((button) => button.label === 'About Us') + 1
-        : buttons.findIndex((button) => button.path === location.pathname) + 1
+        : buttons.findIndex((button) =>
+            location.pathname.includes(button.path)
+          ) + 1
     setActiveButton(matchingButton)
   }, [location])
 
@@ -93,7 +95,7 @@ const NavBar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-       <Box
+      <Box
         sx={{
           ...NavbBarStyles.navBar,
           ...NavbBarStyles.fixedNavBar,
@@ -102,7 +104,12 @@ const NavBar = () => {
         {isMobile ? (
           <>
             <Box sx={NavbBarStyles.logoBox}>
-              <Logo width={'75px'} height={'75px'} />
+              <Link
+                to="/about-us"
+                style={{ textDecoration: 'none', cursor: 'pointer' }}
+              >
+                <Logo width={'75px'} height={'75px'} />
+              </Link>
             </Box>
             <Box sx={NavbBarStyles.buttonsBox}>
               <IconButton
@@ -127,7 +134,12 @@ const NavBar = () => {
         ) : (
           <>
             <Box sx={NavbBarStyles.logoBox}>
-              <Logo width={'100px'} height={'100px'} />
+              <Link
+                to="/about-us"
+                style={{ textDecoration: 'none', cursor: 'pointer' }}
+              >
+                <Logo width={'100px'} height={'100px'} />
+              </Link>
             </Box>
             <Box sx={NavbBarStyles.buttonsBox}>{renderButtons(false)}</Box>
           </>

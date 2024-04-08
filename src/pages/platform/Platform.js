@@ -134,6 +134,11 @@ const Platform = () => {
       </Typography>
       <ListCards cards={restaurants} page={'Platform'} />
       <Typography sx={classes.mainText}>Donations</Typography>
+      {data.length === 0 && (
+        <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
+          There are no donations yet
+        </Typography>
+      )}
       <ListDonationCard donations={data} />
     </WrapperPage>
   )

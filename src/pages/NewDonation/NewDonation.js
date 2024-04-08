@@ -58,7 +58,7 @@ const NewDonation = () => {
       from: !from,
       to: !to || to < from,
       contactNumber:
-        !contactNumber || contactNumber.length !== 8 || isNaN(contactNumber),
+        !contactNumber || contactNumber.length !== 10,
       image: !image,
       pickupPoint: checked ? false : !pickupPoint,
     }

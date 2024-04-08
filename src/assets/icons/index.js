@@ -16,6 +16,9 @@ import { ReactComponent as UploadIcon } from './upload.svg'
 import { ReactComponent as IntervalIcon } from './interval-icon.svg'
 import { ReactComponent as LocationIcon } from './location-icon.svg'
 import { ReactComponent as CancelIcon } from './cancel.svg'
+import {ReactComponent as DashboardIcon} from './dashboard-icon.svg'
+import {ReactComponent as DonationPostIcon} from './donation-post-icon.svg'
+import {ReactComponent as ProfileIcon} from './profile-icon.svg'
 
 export { Logo }
 export { Restaurants }
@@ -35,3 +38,6 @@ export { UploadIcon }
 export { IntervalIcon }
 export { LocationIcon }
 export { CancelIcon }
+export { DashboardIcon }
+export { DonationPostIcon }
+export { ProfileIcon }
