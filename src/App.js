@@ -20,7 +20,7 @@ function App() {
         <Route
           element={
             <div>
-              <NavBar />
+              <Navbar />
               <Outlet />
               <Footer />
             </div>

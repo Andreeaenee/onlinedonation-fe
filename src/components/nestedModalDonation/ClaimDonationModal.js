@@ -15,12 +15,12 @@ import NestedModalStyles from './NestedModalStyles'
 import { MountbattenPink, PersianPink, Wenge } from '../../constants/colors'
 import { FormField } from '../../utils/FormField'
 import Meal from '../../assets/photos/cardPhoto/meal.png'
-import { format } from 'date-fns'
 import { IntervalIcon, LocationIcon } from '../../assets/icons'
 import TransportIsProvidedModal from './TransportIsProvided'
 import { postDonationDriversData } from '../../api/getDonationsDrivers'
 import { updateDonationData } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
+import dayjs from 'dayjs'
 
 const ClaimDonationModal = ({ open, onClose, donation }) => {
   const theme = useTheme()
@@ -160,21 +160,18 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
               <Typography sx={classes.interval}>
                 Interval:{' '}
                 <span style={{ fontWeight: 300, fontSize: '16px' }}>
-                  {format(new Date(donation.start_date), 'dd/MM/yyyy')} -{' '}
-                  {format(new Date(donation.end_date), 'dd/MM/yyyy')}
+                {dayjs(donation.start_date).format('HH:mm')} -{' '}
+                {dayjs(donation.end_date).format('HH:mm')}
                 </span>
               </Typography>
             </Box>
 
-            {/* <Typography sx={classes.date}>
-              Date: <span style={{ fontWeight: 300 }}>{donation.date}</span>
-            </Typography> */}
             <Box
-              sx={{ display: 'flex', marginLeft: '15px', alignItems: 'center' }}
+              sx={{ display: 'flex', marginLeft: '10px', alignItems: 'center' }}
             >
               <LocationIcon
-                width={isMobile ? '30px' : '35px'}
-                height={isMobile ? '30px' : '35px'}
+                width={isMobile ? '30px' : '30px'}
+                height={isMobile ? '30px' : '30px'}
               />
               <Typography sx={classes.date}>
                 Pickup Point:{' '}

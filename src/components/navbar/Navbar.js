@@ -41,7 +41,7 @@ const buttons = [
   },
 ]
 
-const NavBar = () => {
+const Navbar = () => {
   const [activeButton, setActiveButton] = useState()
   const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
   const [isDrawerOpen, setDrawerOpen] = useState(false)
@@ -149,4 +149,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default Navbar
