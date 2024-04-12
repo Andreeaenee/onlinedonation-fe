@@ -1,9 +1,10 @@
 import React from 'react'
 import MainLayout from '../MainLayout'
+import Header from '../Header'
 const DashboardRestaurants = () => {
   return (
     <MainLayout>
-      <h1>DashboardRestaurants</h1>
+      <Header title={'Dashboard'} />
       {/* Add other content here */}
     </MainLayout>
   )

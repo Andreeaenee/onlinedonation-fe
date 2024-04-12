@@ -10,6 +10,15 @@ const SidebarStyles = (theme) => ({
     alignItems: 'center',
     paddingTop: 5,
   },
+  mobileSidebar: {
+    backgroundColor: MountbattenPink,
+    width: '50px',
+    height: '831px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 5,
+  },
   button: {
     marginBottom: 2,
     width: '80%',
@@ -18,6 +27,11 @@ const SidebarStyles = (theme) => ({
     '&:hover': {
       backgroundColor: White400,
       color: MountbattenPink,
+    },
+    //for mobile view
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '5px',
+      minWidth: '0px',
     },
   },
   buttonName: {

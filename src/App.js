@@ -12,6 +12,8 @@ import NavBar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
 import NewDonation from './pages/NewDonation/NewDonation'
 import Dashboard from './pages/dashboard/Dashboard'
+import DonationsRestPage from './pages/dashboard/dashboard-restaurants/donation_restaurants/DonationsRestPage'
+import UserSettingsRestPage from './pages/dashboard/dashboard-restaurants/user-settings/UserSettingsRestPage'
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
         <Route
           element={
             <div>
-              <Navbar />
+              <NavBar />
               <Outlet />
               <Footer />
             </div>
@@ -47,10 +49,10 @@ function App() {
           }
         >
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/dashboard/donations" element={<Dashboard />}></Route>
+          <Route path="/dashboard/donations" element={<DonationsRestPage />}></Route>
           <Route
             path="/dashboard/user-settings"
-            element={<Dashboard />}
+            element={<UserSettingsRestPage />}
           ></Route>
         </Route>
       </Routes>

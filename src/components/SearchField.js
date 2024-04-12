@@ -4,27 +4,32 @@ import { MountbattenPink } from '../constants/colors'
 import { SearchIcon } from '../assets/icons'
 import { useTheme } from '@mui/material/styles'
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: MountbattenPink,
-      borderRadius: '10px',
-      width: '300px',
-      height: '52px',
-      [theme.breakpoints.down('sm')]: {
-        width: '100%', // Adjust width for mobile
+const StyledTextField = styled(TextField)(
+  ({ theme, isDonationsDashboard }) => ({
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: MountbattenPink,
+        borderRadius: '10px',
+        width: '300px',
+        height: isDonationsDashboard ? '42px' : '52px',
+        [theme.breakpoints.down('sm')]: {
+          width: '100%',
+        },
+      },
+      '&:hover fieldset': {
+        borderColor: MountbattenPink,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: MountbattenPink,
+      },
+      '& input': {
+        padding:  isDonationsDashboard ? '6px 0 0px' : '15px 0 0px',
       },
     },
-    '&:hover fieldset': {
-      borderColor: MountbattenPink,
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: MountbattenPink,
-    },
-  },
-}))
+  })
+)
 
-const SearchField = () => {
+const SearchField = ({ isDonationsDashboard }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -33,18 +38,26 @@ const SearchField = () => {
       variant="outlined"
       placeholder="Search..."
       sx={{
-        marginTop: isMobile ? '20px' : '50px', // Adjust marginTop for mobile
+        marginTop: isMobile || isDonationsDashboard ? '30px' : '50px',
       }}
       InputProps={{
         startAdornment: (
           <InputAdornment
             position="start"
-            sx={{ marginBottom: isMobile ? '2px' : '5px', padding: '8px' }}
+            sx={{
+              marginBottom: isMobile
+                ? '2px'
+                : isDonationsDashboard
+                ? '-5px'
+                : '-15px',
+              padding: '8px',
+            }}
           >
             <SearchIcon />
           </InputAdornment>
         ),
       }}
+      isDonationsDashboard={isDonationsDashboard} // Pass the prop to styled component
     />
   )
 }
