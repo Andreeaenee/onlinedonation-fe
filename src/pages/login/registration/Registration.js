@@ -1,41 +1,58 @@
 import React from 'react'
 import { useState } from 'react'
-import WrapperPage from '../../components/WrapperPage'
+import WrapperPage from '../../../components/WrapperPage'
 import {
   Typography,
   Grid,
   Box,
-  Link,
-  Button,
-  Divider,
   TextField,
   useMediaQuery,
+  Select,
+  MenuItem,
 } from '@mui/material'
-import { LoginPoster } from '../../assets/photos'
-import { White400, Black100, PersianPink } from '../../constants/colors'
-import { GoogleIcon } from '../../assets/icons'
-import LoginStyles from './LoginStyles'
+import { LoginPoster } from '../../../assets/photos'
+import { White400, PersianPink } from '../../../constants/colors'
+import LoginStyles from '../LoginStyles'
 import { useTheme } from '@mui/material/styles'
-import MainButton from '../../components/MainButton'
-import { loginUser } from '../../api/getUsers'
-import CustomizedSnackbars from '../../components/SnackBar'
-import { useNavigate } from 'react-router-dom'
-import { setItem } from '../../utils/LocalStorageUtils'
+import MainButton from '../../../components/MainButton'
+import { organisationList } from '../utils'
+import CustomizedSnackbars from '../../../components/SnackBar'
+import { postUserCredentials } from '../../../api/getUsers'
 
-const Login = () => {
+const Registration = () => {
   const theme = useTheme()
   const classes = LoginStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [organisation, setOrganisation] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorSnackbar, setErrorSnackbar] = useState('')
+  const [successSnackbar, setSuccessSnackbar] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
-  const nav = useNavigate()
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
   }
 
+  const handleOrganisationChange = (event) => {
+    setOrganisation(event.target.value)
+  }
+
+  const handleOrganisationId = (organisation) => {
+    let organisationId
+    switch (organisation) {
+      case 'Ong':
+        organisationId = 1
+        break
+      case 'Restaurant':
+        organisationId = 2
+        break
+      default:
+        organisationId = 0
+        break
+    }
+    return organisationId
+  }
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
@@ -45,9 +62,9 @@ const Login = () => {
     return password.length >= 8
   }
 
-  const handleLogInSubmit = async () => {
+  const handleUserCredentialsSubmit = async () => {
     try {
-      if (!email || !password) {
+      if (!organisation || !email || !password) {
         throw new Error('Please fill in all fields.')
       }
       if (!validateEmail(email)) {
@@ -56,38 +73,28 @@ const Login = () => {
       if (!validatePassword(password)) {
         throw new Error('Password must be at least 8 characters long.')
       }
-      const response = await loginUser(email, password)
 
-      if (response.statusCode === 200) {
-        console.log('User created successfully. Please verify your email.')
-        setItem('loggedIn', true)
-        nav('/about-us')
+      const formData = new FormData()
+      formData.append('user_type_id', handleOrganisationId(organisation)) // 1 for Ong, 2 for Restaurant
+      formData.append('email', email)
+      formData.append('password', password)
+
+      const response = await postUserCredentials(formData)
+
+      if (response === 201) {
+        setSuccessSnackbar(
+          'User created successfully. Please verify your email.'
+        )
+        handleOpenSnackBar()
+      } else {
+        throw new Error('Unexpected response from server.')
       }
     } catch (error) {
       let errorMessage
-      switch (error.response?.statusCode) {
-        case 400:
-          switch (error.response.data) {
-            case 'Email not verified':
-              errorMessage =
-                'Email not verified. Please verify your email before logging in.'
-              break
-            case `The registration process isn't complete yet`:
-              errorMessage = `The registration process isn't complete yet. Please complete the registration process before logging in.`
-              break
-            case 'Invalid credentials':
-              errorMessage =
-                'Invalid credentials. Please check your email and password and try again.'
-              break
-            default:
-              errorMessage =
-                error.response.data || 'Error posting user credentials.'
-              break
-          }
-          break
-        default:
-          errorMessage = error.message || 'Error posting user credentials.'
-          break
+      if (error.response && error.response.status === 400) {
+        errorMessage = 'Email already exists. Please try another email.'
+      } else {
+        errorMessage = error.message || 'Error posting user credentials.'
       }
       setErrorSnackbar(errorMessage)
       handleOpenSnackBar()
@@ -102,31 +109,32 @@ const Login = () => {
             {!isMobile && <LoginPoster width={'400px'} height={'550px'} />}
           </Grid>
           <Grid item xs={6}>
-            <Box sx={classes.signupBox}>
-              <Typography sx={classes.notAMember}>Not a member? </Typography>
-              <Link href="/login/register" sx={classes.signupButton}>
-                Sign up now
-              </Link>
-            </Box>
             <Box sx={classes.signinContainer}>
-              <Typography sx={classes.header}>Sign in to HopeShare</Typography>
-              <Button sx={classes.button}>
-                <Box sx={classes.buttonComponents}>
-                  <GoogleIcon width={'14px'} height={'14px'} />
-                  <Typography sx={classes.whiteTypo}>
-                    Sign in with Google
-                  </Typography>
-                </Box>
-              </Button>
-              <Box sx={classes.dividerBox}>
-                <Divider sx={{ flexGrow: 1 }} />
-                <Typography sx={{ margin: '0 10px', color: Black100 }}>
-                  Or
-                </Typography>
-                <Divider sx={{ flexGrow: 1 }} />
-              </Box>
+              <Typography sx={{ ...classes.header, marginBottom: '25px' }}>
+                Sign up to HopeShare
+              </Typography>
               <form>
                 <Box sx={classes.form}>
+                  <Typography sx={classes.label}>
+                    Choose Organisation:
+                  </Typography>
+                  <Select
+                    value={organisation}
+                    onChange={handleOrganisationChange}
+                    displayEmpty
+                    variant="outlined"
+                    fullWidth
+                    sx={{ ...classes.field, marginBottom: '10px' }}
+                  >
+                    <MenuItem value="" disabled>
+                      Select an organisation
+                    </MenuItem>
+                    {organisationList.map((organisation, index) => (
+                      <MenuItem value={organisation} key={index}>
+                        {organisation}
+                      </MenuItem>
+                    ))}
+                  </Select>
                   <Typography sx={classes.label}>Email Address:</Typography>
                   <TextField
                     type="text"
@@ -142,17 +150,7 @@ const Login = () => {
                   />
                 </Box>
                 <Box sx={classes.passwordBox}>
-                  <Box
-                    sx={{ display: 'flex', justifyContent: 'space-between' }}
-                  >
-                    <Typography sx={classes.label}>Password:</Typography>
-                    <Link
-                      href="/login/reset-password"
-                      sx={classes.forgotPassword}
-                    >
-                      Forgot password?
-                    </Link>
-                  </Box>
+                  <Typography sx={classes.label}>Password:</Typography>
 
                   <TextField
                     type="password"
@@ -168,8 +166,8 @@ const Login = () => {
                   />
                 </Box>
                 <MainButton
-                  buttonText="Sign in"
-                  onClick={handleLogInSubmit}
+                  buttonText="Sign up"
+                  onClick={handleUserCredentialsSubmit}
                   width={'45%'}
                   height={'35px'}
                   fontSize={14}
@@ -195,8 +193,16 @@ const Login = () => {
           severity="error"
         />
       )}
+      {successSnackbar && (
+        <CustomizedSnackbars
+          openSnackBar={openSnackBar}
+          setOpenSnackBar={handleOpenSnackBar}
+          message={successSnackbar}
+          severity="success"
+        />
+      )}
     </WrapperPage>
   )
 }
 
-export default Login
+export default Registration

@@ -62,6 +62,7 @@ const Platform = () => {
       })
   }, [])
 
+
   return (
     <WrapperPage>
       <Box

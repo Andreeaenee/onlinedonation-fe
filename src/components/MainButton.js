@@ -20,6 +20,7 @@ const MainButton = ({
   backgroundColorHover,
   borderColor,
   textColor,
+  borderRadius,
   mobileStyles,
   mobileStylesText,
 }) => {
@@ -43,7 +44,7 @@ const MainButton = ({
       sx={{
         backgroundColor: backgroundColor,
         padding: '12px 24px',
-        borderRadius: '12px',
+        borderRadius: borderRadius? borderRadius : '12px',
         gap: '8px',
         '&:hover': {
           backgroundColor: backgroundColorHover,

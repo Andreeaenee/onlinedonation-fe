@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -7,44 +8,29 @@ import {
   useMediaQuery,
   List,
   ListItem,
+  Menu,
+  MenuItem,
 } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import { Logo } from '../../assets/icons/index'
-import { Link, useLocation } from 'react-router-dom'
+import { Logo, LogoutIcon } from '../../assets/icons/index'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
 import theme from '../../themes/theme'
 import { Menu as MenuIcon } from '@mui/icons-material'
 import NavbBarStyles from './NavbarStyles'
 import { MOBILE_BREAKPOINT } from '../../constants/constants'
-
-const buttons = [
-  {
-    id: 1,
-    label: 'Platform',
-    path: '/platform',
-  },
-  {
-    id: 2,
-    label: 'About Us',
-    path: '/about-us',
-  },
-  {
-    id: 3,
-    label: 'Dashboard',
-    path: '/dashboard',
-  },
-  {
-    id: 4,
-    label: 'Login',
-    path: '/login',
-  },
-]
+import { getItem, setItem } from '../../utils/LocalStorageUtils'
+import { buttons } from './utils'
 
 const Navbar = () => {
   const [activeButton, setActiveButton] = useState()
   const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
   const [isDrawerOpen, setDrawerOpen] = useState(false)
+  const loggedIn = getItem('loggedIn')
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+  const nav = useNavigate()
+
   const location = useLocation()
 
   useEffect(() => {
@@ -66,31 +52,47 @@ const Navbar = () => {
     setDrawerOpen(!isDrawerOpen)
   }
 
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
   const renderButtons = (isMobile) => {
-    return buttons.map(({ path, id, label }) => (
-      <ListItem key={id} sx={NavbBarStyles.buttonHover}>
-        <Link to={path}>
-          <Button
-            disableRipple
-            onClick={() => handleButtonClick(id)}
-            sx={{
-              ...NavbBarStyles.button,
-              ...NavbBarStyles.buttonHover,
-              color: activeButton === id ? Black800 : Black400,
-              ...(!isMobile && {
-                fontWeight: activeButton === id ? 'bold' : 'normal',
-                marginTop: activeButton === id ? '10px' : '0px',
-              }),
-            }}
-          >
-            <div style={{ display: 'inline-block' }}>
-              <ListItemText>{label}</ListItemText>
-              {activeButton === id && <hr style={{ ...NavbBarStyles.hr }}></hr>}
-            </div>
-          </Button>
-        </Link>
-      </ListItem>
-    ))
+    return buttons.map(({ path, id, label }) => {
+      if (!loggedIn && id === 3) {
+        return null
+      }
+
+      return (
+        <ListItem key={id} sx={NavbBarStyles.buttonHover}>
+          <Link to={path}>
+            <Button
+              disableRipple
+              onClick={() => handleButtonClick(id)}
+              onMouseEnter={loggedIn && id === 4 ? handleMenuOpen : undefined}
+              sx={{
+                ...NavbBarStyles.button,
+                ...NavbBarStyles.buttonHover,
+                color: activeButton === id ? Black800 : Black400,
+                ...(!isMobile && {
+                  fontWeight: activeButton === id ? 'bold' : 'normal',
+                  marginTop: activeButton === id ? '10px' : '0px',
+                }),
+              }}
+            >
+              <div style={{ display: 'inline-block' }}>
+                <ListItemText>{label}</ListItemText>
+                {activeButton === id && (
+                  <hr style={{ ...NavbBarStyles.hr }}></hr>
+                )}
+              </div>
+            </Button>
+          </Link>
+        </ListItem>
+      )
+    })
   }
 
   return (
@@ -145,6 +147,27 @@ const Navbar = () => {
           </>
         )}
       </Box>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            setItem('loggedIn', false)
+            nav('/about-us')
+          }}
+        >
+          Logout
+          <Box sx={{ marginLeft: '5px', display: 'flex' }}>
+            <LogoutIcon width={'16px'} height={'16px'} />
+          </Box>
+        </MenuItem>
+      </Menu>
     </ThemeProvider>
   )
 }

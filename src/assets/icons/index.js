@@ -19,6 +19,10 @@ import { ReactComponent as CancelIcon } from './cancel.svg'
 import {ReactComponent as DashboardIcon} from './dashboard-icon.svg'
 import {ReactComponent as DonationPostIcon} from './donation-post-icon.svg'
 import {ReactComponent as ProfileIcon} from './profile-icon.svg'
+import { ReactComponent as GoogleIcon } from './google-icon.svg'
+import { ReactComponent as OpenMailIcon } from './mail-open.svg'
+import { ReactComponent as CheckCircleIcon } from './check-circle.svg'
+import { ReactComponent as LogoutIcon } from './logout-icon.svg'
 
 export { Logo }
 export { Restaurants }
@@ -41,3 +45,7 @@ export { CancelIcon }
 export { DashboardIcon }
 export { DonationPostIcon }
 export { ProfileIcon }
+export { GoogleIcon }
+export { OpenMailIcon }
+export { CheckCircleIcon }
+export { LogoutIcon }
