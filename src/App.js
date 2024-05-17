@@ -1,4 +1,5 @@
 import './App.css'
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -17,8 +18,16 @@ import UserSettingsRestPage from './pages/dashboard/dashboard-restaurants/user-s
 import Registration from './pages/login/registration/Registration'
 import VerifyEmailPage from './pages/login/registration/EmailVerification'
 import ForgetPassword from './pages/login/ForgetPassword'
+import { exchangeCodeForToken } from './api/login/callback'
 
 function App() {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      exchangeCodeForToken(code);
+    }
+  }, []);
   return (
     <Router>
       <Routes>

@@ -21,6 +21,7 @@ import NavbBarStyles from './NavbarStyles'
 import { MOBILE_BREAKPOINT } from '../../constants/constants'
 import { getItem, setItem } from '../../utils/LocalStorageUtils'
 import { buttons } from './utils'
+import { deleteCookie } from '../../utils/CookieManager'
 
 const Navbar = () => {
   const [activeButton, setActiveButton] = useState()
@@ -159,7 +160,9 @@ const Navbar = () => {
         <MenuItem
           onClick={() => {
             setItem('loggedIn', false)
-            nav('/about-us')
+            deleteCookie('jwt')
+            nav('/')
+            window.location.reload()
           }}
         >
           Logout

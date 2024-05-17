@@ -1,4 +1,5 @@
 import axiosFetch from './Axios'
+import { decodeToken } from './login/callback'
 
 // Posts the user credentials to the server
 export async function postUserCredentials(data) {
@@ -28,8 +29,10 @@ export async function loginUser(email, password) {
         '&password=' +
         password,
     })
-    console.log('Response', response)
-    return response
+    console.log('Response Login:', response)
+    if (response.statusCode === 200) {
+      decodeToken(response.responseData.token)
+    }
   } catch (error) {
     console.log('Error: ', error)
     throw error

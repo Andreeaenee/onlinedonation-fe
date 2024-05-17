@@ -21,6 +21,7 @@ import { loginUser } from '../../api/getUsers'
 import CustomizedSnackbars from '../../components/SnackBar'
 import { useNavigate } from 'react-router-dom'
 import { setItem } from '../../utils/LocalStorageUtils'
+import { loginWithGoogle } from '../../api/login/login'
 
 const Login = () => {
   const theme = useTheme()
@@ -56,13 +57,7 @@ const Login = () => {
       if (!validatePassword(password)) {
         throw new Error('Password must be at least 8 characters long.')
       }
-      const response = await loginUser(email, password)
-
-      if (response.statusCode === 200) {
-        console.log('User created successfully. Please verify your email.')
-        setItem('loggedIn', true)
-        nav('/about-us')
-      }
+       await loginUser(email, password)
     } catch (error) {
       let errorMessage
       switch (error.response?.statusCode) {
@@ -110,7 +105,7 @@ const Login = () => {
             </Box>
             <Box sx={classes.signinContainer}>
               <Typography sx={classes.header}>Sign in to HopeShare</Typography>
-              <Button sx={classes.button}>
+              <Button sx={classes.button} onClick={loginWithGoogle}>
                 <Box sx={classes.buttonComponents}>
                   <GoogleIcon width={'14px'} height={'14px'} />
                   <Typography sx={classes.whiteTypo}>
