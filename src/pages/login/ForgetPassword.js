@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Typography, Box, Button, TextField } from '@mui/material'
+import { Typography, Box, TextField } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import LoginStyles from './LoginStyles'
 import MainButton from '../../components/MainButton'
@@ -8,7 +8,6 @@ import { White400, PersianPink } from '../../constants/colors'
 import CustomizedSnackbars from '../../components/SnackBar'
 import { forgetPassword, resetPassword } from '../../api/getUsers'
 import { setItem, getItem } from '../../utils/LocalStorageUtils'
-import { set } from 'date-fns'
 
 const ForgetPassword = () => {
   const theme = useTheme()
@@ -25,6 +24,9 @@ const ForgetPassword = () => {
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
+    setTimeout(() => {
+      setOpenSnackBar(false)
+    }, 3000)
   }
 
   const validatePassword = (password) => {

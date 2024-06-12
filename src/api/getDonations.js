@@ -7,6 +7,7 @@ export async function fetchDonationsData() {
       method: 'GET',
       url: process.env.REACT_APP_API_PORT+'donations',
     })
+    console.log('Response: ', response) 
     return response.responseData
   } catch (error) {
     console.log('Error: ', error)

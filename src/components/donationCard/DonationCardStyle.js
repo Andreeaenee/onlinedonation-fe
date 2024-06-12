@@ -3,9 +3,9 @@ import { Peach, Black400, Black100 } from '../../constants/colors'
 const DonationCardStyles = (theme) => ({
   // list
   cardList: {
-    marginLeft: '100px',
-    marginRight: '100px',
-    padding: '10px',
+    marginLeft: '50px',
+    marginRight: '50px',
+    padding: '0px',
     display: 'flex',
     flexWrap: 'wrap',
     gap: '20px',

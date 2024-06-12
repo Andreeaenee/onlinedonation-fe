@@ -1,23 +1,27 @@
 import axios from 'axios'
-import { getItem } from '../utils/LocalStorageUtils'
+import { useNavigation } from 'react-router-dom'
 
 export default function axiosFetch(options) {
   // get jwt from cookie
-  const loggedIn = getItem('loggedIn')
+  let cookie = document.cookie
   let jwt = ''
-  if (loggedIn) {
-    jwt = document.cookie
+  if (cookie) {
+    jwt = cookie
       .split('; ')
       .find((row) => row.startsWith('jwt='))
       .split('=')[1]
-    console.log('JWT:', jwt)
   }
-
 
   if (!options.headers) {
     options.headers = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
+      Authorization: 'Bearer ' + jwt,
+    }
+  }
+  else {
+    options.headers = {
+      ...options.headers,
       Authorization: 'Bearer ' + jwt,
     }
   }
@@ -28,11 +32,13 @@ export default function axiosFetch(options) {
 
   return axios(options)
     .then((response) => {
+      if (response.status === 401) {
+        window.location.href = '/login'
+      }
       return { statusCode: response.status, responseData: response.data }
     })
     .catch((error) => {
       console.error('Error:', error)
-
       throw error
     })
 }

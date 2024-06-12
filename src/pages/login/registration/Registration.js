@@ -32,6 +32,9 @@ const Registration = () => {
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
+    setTimeout(() => {
+      setOpenSnackBar(false)
+    }, 3000)
   }
 
   const handleOrganisationChange = (event) => {

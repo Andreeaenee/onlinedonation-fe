@@ -4,8 +4,8 @@ const ListCardStyles = (theme) => ({
   cardsBox: {
     backgroundColor: White100,
     borderRadius: '10px',
-    marginLeft: '285px',
-    marginRight: '320px',
+    marginLeft: '100px',
+    marginRight: '100px',
     padding: '20px',
     display: 'flex',
     flexWrap: 'wrap',
@@ -18,8 +18,8 @@ const ListCardStyles = (theme) => ({
   },
   cardsBoxPlatform: {
     backgroundColor: '#ffffff',
-    marginLeft: '150px',
-    marginRight: '150px',
+    marginLeft: '50px',
+    marginRight: '50px',
     padding: '10px',
     display: 'flex',
     flexWrap: 'wrap',

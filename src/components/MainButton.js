@@ -44,10 +44,11 @@ const MainButton = ({
       sx={{
         backgroundColor: backgroundColor,
         padding: '12px 24px',
-        borderRadius: borderRadius? borderRadius : '12px',
+        borderRadius: borderRadius ? borderRadius : '12px',
         gap: '8px',
         '&:hover': {
           backgroundColor: backgroundColorHover,
+          cursor: 'pointer',
         },
         width,
         height,
@@ -58,6 +59,7 @@ const MainButton = ({
         ...(isMobile && mobileStyles),
       }}
       disabled={disabled}
+      cursor={disabled ? 'not-allowed' : 'pointer'}
     >
       <Typography
         style={{

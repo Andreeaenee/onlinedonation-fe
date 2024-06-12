@@ -9,34 +9,15 @@ import { useTheme } from '@mui/material/styles'
 import LoginStyles from '../LoginStyles'
 
 const VerifyEmailPage = () => {
-  const { token } = useParams()
+  const { userId } = useParams()
   const theme = useTheme()
   const classes = LoginStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [verificationStatus, setVerificationStatus] = useState('pending')
 
   useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        const response = await axios.get(`/verify-email/${token}`)
-        console.log(response.data) // Log success message or handle as needed
-        setVerificationStatus('verified')
-      } catch (error) {
-        console.error(error) // Handle error
-        if (
-          error.response &&
-          error.response.status === 400 &&
-          error.response.data === 'Token has expired'
-        ) {
-          setVerificationStatus('expired')
-        } else {
-          setVerificationStatus('error')
-        }
-      }
-    }
-
-    verifyEmail()
-  }, [token])
+    setVerificationStatus('verified')
+  }, [userId])
 
   return (
     <Box sx={classes.boxCenterPage}>
@@ -53,7 +34,7 @@ const VerifyEmailPage = () => {
             height={'40px'}
             fontSize={18}
             margin={'50px'}
-            to={'/login'}
+            to={'/login/register/complete-registration/' + userId}
           />
         </Box>
       )}
@@ -68,7 +49,7 @@ const VerifyEmailPage = () => {
           {!isMobile && (
             <Box sx={{ alignSelf: 'flex-end' }}>
               <MainButton
-                buttonText={'Got to registration'}
+                buttonText={'Go to registration'}
                 width={'200px'}
                 height={'40px'}
                 fontSize={18}
@@ -81,6 +62,6 @@ const VerifyEmailPage = () => {
       )}
     </Box>
   )
-}
+} 
 
 export default VerifyEmailPage

@@ -1,0 +1,24 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8a2be2;stop-opacity:1" /> <!-- BlueViolet -->
+      <stop offset="50%" style="stop-color:#c71585;stop-opacity:1" /> <!-- MediumVioletRed -->
+      <stop offset="100%" style="stop-color:#ff1493;stop-opacity:1" /> <!-- DeepPink -->
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" /> <!-- HotPink -->
+      <stop offset="50%" style="stop-color:#ba55d3;stop-opacity:1" /> <!-- MediumOrchid -->
+      <stop offset="100%" style="stop-color:#9400d3;stop-opacity:1" /> <!-- DarkViolet -->
+    </linearGradient>
+  </defs>
+  <path d="M 0 300 C 100 250 100 100 300 0" stroke="url(#grad1)" stroke-width="2" fill="none" />
+  <path d="M 10 290 C 60 240 120 160 290 10" stroke="url(#grad2)" stroke-width="3.5" fill="none" />
+  <path d="M 20 280 C 0 200 180 170 280 20" stroke="url(#grad1)" stroke-width="1" fill="none" />
+  <path d="M 50 290 C 160 220 80 130 290 50" stroke="url(#grad2)" stroke-width="2.5" fill="none" />
+  <path d="M 40 300 C 220 210 150 80 260 10" stroke="url(#grad1)" stroke-width="4" fill="none" />
+  <path d="M 10 250 C 100 200 200 100 250 0" stroke="url(#grad2)" stroke-width="1.5" fill="none" />
+  <path d="M 30 295 C 110 190 220 110 280 100" stroke="url(#grad1)" stroke-width="3" fill="none" />
+  <path d="M -10 310 C 120 180 240 120 260 -200" stroke="url(#grad2)" stroke-width="2" fill="none" />
+  <path d="M 50 250 C 130 170 260 130 250 50" stroke="url(#grad1)" stroke-width="1.5" fill="none" />
+  <path d="M 0 300 C 100 250 100 140 300 0" stroke="url(#grad2)" stroke-width="2.5" fill="none" />
+</svg>

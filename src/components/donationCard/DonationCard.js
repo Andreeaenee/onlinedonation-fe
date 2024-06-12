@@ -40,7 +40,7 @@ const DonationCard = ({ donation }) => {
             Date: <span style={{ fontWeight: 300 }}>{date}</span>
           </Typography>
         </Card>
-      </ButtonBase>   
+      </ButtonBase>
       {openModal && (
         <ClaimDonationModal
           donation={donation}

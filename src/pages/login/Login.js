@@ -35,6 +35,9 @@ const Login = () => {
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
+    setTimeout(() => {
+      setOpenSnackBar(false)
+    }, 3000)
   }
 
   const validateEmail = (email) => {
