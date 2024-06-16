@@ -23,7 +23,8 @@ const Sidebar = () => {
   }, [location])
 
   return (
-    isMobile ? (
+    <Box sx={{ display: 'flex', height: '100vh' }}>
+      {isMobile ? (
       <Box sx={classes.mobileSidebar}>
         {SidebarButtons.map((button, index) => (
           <Button
@@ -32,14 +33,14 @@ const Sidebar = () => {
             sx={{
               ...classes.button,
               color: activeButton === index ? MountbattenPink : White100,
-              backgroundColor: activeButton === index ? White400 : 'transparent',
+              backgroundColor:
+                activeButton === index ? White400 : 'transparent',
             }}
             href={button.path}
-          >
-          </Button>
+          ></Button>
         ))}
       </Box>
-    ) : (
+      ) : (
       <Box sx={classes.sidebar}>
         {SidebarButtons.map((button, index) => (
           <Button
@@ -48,7 +49,8 @@ const Sidebar = () => {
             sx={{
               ...classes.button,
               color: activeButton === index ? MountbattenPink : White100,
-              backgroundColor: activeButton === index ? White400 : 'transparent',
+              backgroundColor:
+                activeButton === index ? White400 : 'transparent',
             }}
             href={button.path}
           >
@@ -56,7 +58,8 @@ const Sidebar = () => {
           </Button>
         ))}
       </Box>
-    )
+      )}
+    </Box>
   )
 }
 

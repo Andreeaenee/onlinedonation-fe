@@ -7,6 +7,5 @@ export function loginWithGoogle() {
   )}&redirect_uri=${encodeURIComponent(
     process.env.REACT_APP_REDIRECT_URI
   )}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`
-  console.log('URL:', authUrl)
   window.location.href = authUrl
 }

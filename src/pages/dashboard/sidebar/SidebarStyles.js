@@ -1,10 +1,10 @@
-import { MountbattenPink, White400 } from '../../../constants/colors'
+import { MountbattenPink, White400 } from '../../../constants/colors';
 
 const SidebarStyles = (theme) => ({
   sidebar: {
     backgroundColor: MountbattenPink,
     width: '200px',
-    height: '831px',
+    height: '100vh',  // Set to 100vh to take full viewport height
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -13,7 +13,7 @@ const SidebarStyles = (theme) => ({
   mobileSidebar: {
     backgroundColor: MountbattenPink,
     width: '50px',
-    height: '831px',
+    height: '100vh',  // Set to 100vh to take full viewport height
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -28,7 +28,7 @@ const SidebarStyles = (theme) => ({
       backgroundColor: White400,
       color: MountbattenPink,
     },
-    //for mobile view
+    // for mobile view
     [theme.breakpoints.down('md')]: {
       marginLeft: '5px',
       minWidth: '0px',
@@ -39,6 +39,6 @@ const SidebarStyles = (theme) => ({
     fontWeight: 'medium',
     fontSize: '16px',
   },
-})
+});
 
-export default SidebarStyles
+export default SidebarStyles;

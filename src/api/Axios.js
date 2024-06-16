@@ -1,15 +1,12 @@
 import axios from 'axios'
-import { useNavigation } from 'react-router-dom'
+import { getCookie } from '../utils/CookieManager'
 
 export default function axiosFetch(options) {
   // get jwt from cookie
   let cookie = document.cookie
   let jwt = ''
   if (cookie) {
-    jwt = cookie
-      .split('; ')
-      .find((row) => row.startsWith('jwt='))
-      .split('=')[1]
+    jwt = getCookie('jwt');
   }
 
   if (!options.headers) {

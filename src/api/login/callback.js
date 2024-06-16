@@ -1,6 +1,7 @@
 import axiosFetch from '../Axios'
 import { jwtDecode } from 'jwt-decode'
 import { setItem } from '../../utils/LocalStorageUtils'
+import { getCookie, setCookie } from '../../utils/CookieManager'
 
 export async function exchangeCodeForToken(code) {
   try {
@@ -11,7 +12,6 @@ export async function exchangeCodeForToken(code) {
     })
     if (response.statusCode === 200) {
       const data = response.responseData
-      console.log('Data:', data)
       decodeToken(data.token)
     } else {
       console.error('Error during login:', await response.text())
@@ -25,7 +25,8 @@ export async function decodeToken(token) {
   const decodedToken = verifyToken(token)
   console.log('Decoded token:', decodedToken)
   if (decodedToken) {
-    document.cookie = `jwt=${token}; path=/; max-age=3600; Secure`
+    setCookie('jwt', token, 3600)
+    setCookie('profile', decodedToken, 3600)
     setItem('loggedIn', true)
     window.location.href = '/'
   } else {
@@ -42,3 +43,10 @@ export function verifyToken(token) {
     return null
   }
 }
+
+export const getUserRole = () => {
+  const token = getCookie('jwt');
+  if (!token) return 0;
+  const decodedToken = jwtDecode(token);
+  return decodedToken?.user_type_id;
+};

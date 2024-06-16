@@ -20,24 +20,28 @@ import SponsorLogo from './SponsorLogo'
 
 const cards = [
   {
+    id: 1,
     title: 'Ora lui Robert',
     image: OraLuiRobertJPG,
     avatar: OraluiRobert,
     link: 'https://oraluirobert.com/',
   },
   {
+    id: 2,
     title: 'UVT',
     image: UvtJpg,
     avatar: UvtLogo,
     link: 'https://www.uvt.ro/',
   },
   {
+    id: 3,
     title: 'Ora lui Robert',
     image: OraLuiRobertJPG,
     avatar: OraluiRobert,
     link: 'https://oraluirobert.com/',
   },
   {
+    id: 4,
     title: 'UVT',
     image: UvtJpg,
     avatar: UvtLogo,
@@ -49,7 +53,6 @@ const reviews = [
   {
     review:
       'Review lorem ipusm knrcrkc firnvernv ejrnvrjevb rvrj fjrebf rfbjr frjeg grg jer gvgje vew vjr vrjvvrv hur vv hf fh ur fruehfue f hu fe4hfUHFRFHY UR DH',
-
     name: 'Jane Doe',
     avatar: UvtLogo,
     date: '12.12.2021',
@@ -57,7 +60,6 @@ const reviews = [
   {
     review:
       'Review lorem ipusm knrcrkc firnvernv ejrnvrjevb rvrj fjrebf rfbjr frjeg grg jer gvgje vew vjr vrjvvrv hur vv hf fh ur fruehfue f hu fe4hfUHFRFHY UR DH',
-
     name: 'Oralui Robert',
     avatar: OraluiRobert,
     date: '12.12.2021',
@@ -97,7 +99,7 @@ const AboutUs = () => {
             mobileStylesText={{ fontSize: 12 }}
           />
         </Box>
-        <MainSaladPhoto height={'95%'}></MainSaladPhoto>
+        <MainSaladPhoto height={'95%'} />
       </Box>
       <Typography sx={classes.mainText}>Sponsors</Typography>
       <Grid container spacing={5} justifyContent="center" marginBottom={'30px'}>
@@ -148,7 +150,14 @@ const AboutUs = () => {
         </Tabs>
       </Box>
       {activeTab === 1 && (
-        <ListCards cards={cards} page={'About Us'} type={'MainCard'} />
+        <ListCards
+          cards={cards.map((card, index) => ({
+            ...card,
+            key: card.id || index,
+          }))}
+          page={'About Us'}
+          type={'MainCard'}
+        />
       )}
       <Box
         sx={{

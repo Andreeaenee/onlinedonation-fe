@@ -22,15 +22,4 @@ export const removeItem = (key) => {
   return localStorage.removeItem(key)
 }
 
-export const getUserRole = () => {
-  const user = getItem('profile')
-  return user ? user.user_role : null
-}
 
-export const setUserRole = (role) => {
-  const user = getItem('profile')
-  if (user) {
-    user.user_role = role
-    setItem('profile', user)
-  }
-}
