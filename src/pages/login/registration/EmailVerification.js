@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { Typography, Box, useMediaQuery } from '@mui/material'
-import { Black800, Black400 } from '../../../constants/colors'
 import { CheckCircleIcon } from '../../../assets/icons'
 import MainButton from '../../../components/MainButton'
 import { useTheme } from '@mui/material/styles'

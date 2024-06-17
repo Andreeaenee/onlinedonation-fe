@@ -3,9 +3,9 @@ import { Wenge, PersianPink } from '../../constants/colors'
 const styles = (theme) => ({
   title: {
     margin: '200px 200px 0 50px',
-    fontSize: '40px',
+    fontSize: '36px',
     fontWeight: 600,
-    lineHeight: '55px',
+    lineHeight: '50px',
     color: Wenge,
     [theme.breakpoints.down('md')]: {
       fontSize: '16px',

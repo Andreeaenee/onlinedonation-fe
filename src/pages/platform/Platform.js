@@ -65,12 +65,6 @@ const Platform = () => {
 
   return (
     <WrapperPage>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: isMobile ? 'null' : 'space-between',
-        }}
-      >
         <Box sx={{ display: 'flex' }}>
           <Grid container spacing={5} sx={classes.filterGrid}>
             <Grid
@@ -108,28 +102,6 @@ const Platform = () => {
           </Grid>
           <SearchField />
         </Box>
-        {!isMobile && (
-          <MainButton
-            buttonText={'Post a Donation'}
-            width={'250px'}
-            height={'50px'}
-            fontSize={18}
-            margin={'50px'}
-            to={'/new-donation'}
-          />
-        )}
-      </Box>
-      {isMobile && (
-        <MainButton
-          buttonText={'Post a Donation'}
-          width={'94%'}
-          height={'40px'}
-          fontSize={14}
-          margin={'20px'}
-          borderRadius={'10px'}
-          to={'/new-donation'}
-        />
-      )}
       <Typography sx={classes.mainText}>
         Restaurants that are donating today
       </Typography>

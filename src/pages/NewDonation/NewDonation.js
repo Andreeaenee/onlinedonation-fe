@@ -23,8 +23,10 @@ import { CancelIcon, UploadIcon } from '../../assets/icons'
 import { FormField } from '../../utils/FormField'
 import './styles.css'
 import { White100, PersianPink, MountbattenPink } from '../../constants/colors'
+import { getUserId } from '../../api/login/callback'
 
 const NewDonation = () => {
+  const userId = getUserId();
   const theme = useTheme()
   const classes = NewDonationStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -88,6 +90,7 @@ const NewDonation = () => {
     formData.append('transport_provided', checked)
     formData.append('phone', contactNumber)
     formData.append('pick_up_point', pickupPoint)
+    formData.append('restaurant_id', userId)
     if (image) {
       formData.append('image', image, fileName)
     }

@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const role = getUserRole();
-    console.log('Fetched user role:', role);
     setUserRole(role || 0);
   }, [])
 

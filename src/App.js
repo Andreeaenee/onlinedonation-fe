@@ -14,14 +14,13 @@ import Footer from './components/footer/Footer';
 import NewDonation from './pages/NewDonation/NewDonation';
 import Dashboard from './pages/dashboard/Dashboard';
 import DonationsRestPage from './pages/dashboard/dashboard-restaurants/donation_restaurants/DonationsRestPage';
-import UserSettingsRestPage from './pages/dashboard/dashboard-restaurants/user-settings/UserSettingsRestPage';
+import UserProfilePage from './pages/dashboard/user-profile/UserProfile';
 import Registration from './pages/login/registration/Registration';
 import VerifyEmailPage from './pages/login/registration/EmailVerification';
 import ForgetPassword from './pages/login/ForgetPassword';
 import Unauthorized from './components/Unauthorized';
 import { exchangeCodeForToken } from './api/login/callback';
 import RegistrationInfo from './pages/login/registration/RegistrationInfo';
-import Test from './pages/test';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './components/AuthContext';
 import { USER_ROLES } from './constants/constants';
@@ -103,10 +102,10 @@ function App() {
               }
             />
             <Route
-              path="/dashboard/user-settings"
+              path="/dashboard/user-profile"
               element={
                 <ProtectedRoute
-                  element={UserSettingsRestPage}
+                  element={UserProfilePage}
                   requiredRoles={[
                     USER_ROLES.ADMIN,
                     USER_ROLES.ONG,
@@ -116,7 +115,6 @@ function App() {
               }
             />
           </Route>
-          <Route path="/test" element={<Test />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </Router>

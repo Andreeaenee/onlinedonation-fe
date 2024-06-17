@@ -1,13 +1,13 @@
 import React from 'react'
 import MainLayout from '../MainLayout'
 
-const DashboardOng = () => {
+const DashboardAdmin = () => {
   return (
     <MainLayout>
-      <h1>DashboardOng</h1>
+      <h1>Dashboard Admin</h1>
       {/* Add other content here */}
     </MainLayout>
   )
 }
 
-export default DashboardOng
+export default DashboardAdmin

@@ -19,8 +19,6 @@ import { useTheme } from '@mui/material/styles'
 import MainButton from '../../components/MainButton'
 import { loginUser } from '../../api/getUsers'
 import CustomizedSnackbars from '../../components/SnackBar'
-import { useNavigate } from 'react-router-dom'
-import { setItem } from '../../utils/LocalStorageUtils'
 import { loginWithGoogle } from '../../api/login/login'
 
 const Login = () => {
@@ -31,7 +29,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [errorSnackbar, setErrorSnackbar] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
-  const nav = useNavigate()
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)

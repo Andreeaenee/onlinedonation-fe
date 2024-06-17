@@ -263,7 +263,7 @@ const LoginStyles = (theme) => ({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: PersianPink,
+    backgroundColor: '#D83F6D',
     color: White100,
     borderRadius: '12px',
     cursor: 'pointer',

@@ -29,13 +29,13 @@ export default function axiosFetch(options) {
 
   return axios(options)
     .then((response) => {
-      if (response.status === 401) {
-        window.location.href = '/login'
-      }
-      return { statusCode: response.status, responseData: response.data }
+      return { statusCode: response.status, responseData: response.data };
     })
     .catch((error) => {
-      console.error('Error:', error)
-      throw error
-    })
+      console.error('Error:', error);
+      if (error.response && error.response.status === 401) {
+        window.location.href = '/login';
+      }
+      throw error; 
+    });
 }

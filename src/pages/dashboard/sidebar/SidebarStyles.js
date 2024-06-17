@@ -3,21 +3,22 @@ import { MountbattenPink, White400 } from '../../../constants/colors';
 const SidebarStyles = (theme) => ({
   sidebar: {
     backgroundColor: MountbattenPink,
+    height: '100%',
     width: '200px',
-    height: '100vh',  // Set to 100vh to take full viewport height
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     paddingTop: 5,
+    overflowY: 'auto',  // Ensure vertical scrollbar appears when content exceeds height
   },
   mobileSidebar: {
     backgroundColor: MountbattenPink,
     width: '50px',
-    height: '100vh',  // Set to 100vh to take full viewport height
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     paddingTop: 5,
+    overflowY: 'auto',  // Ensure vertical scrollbar appears when content exceeds height
   },
   button: {
     marginBottom: 2,

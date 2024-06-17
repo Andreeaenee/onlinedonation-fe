@@ -16,8 +16,8 @@ export const SidebarButtons = [
     path: '/dashboard/donations',
   },
   {
-    name: 'User Settings',
+    name: 'User Profile',
     icon: <ProfileIcon width={'25px'} height={'25px'} />,
-    path: '/dashboard/user-settings',
+    path: '/dashboard/user-profile',
   },
 ]

@@ -15,6 +15,7 @@ import MainButton from '../../../components/MainButton'
 import CustomizedSnackbars from '../../../components/SnackBar'
 import { registerUser } from '../../../api/getUsers'
 import { useNavigate, useParams } from 'react-router-dom'
+import ContractModal from './ContractModal'
 
 const RegistrationInfo = () => {
   const { userId } = useParams()
@@ -48,6 +49,11 @@ const RegistrationInfo = () => {
     cif: false,
     contract: false,
   })
+
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpenModal = () => setOpenModal(true)
+  const handleCloseModal = () => setOpenModal(false)
 
   const handleOpenSnackBar = () => {
     setOpenSnackBar(true)
@@ -118,13 +124,12 @@ const RegistrationInfo = () => {
     form.append('user_id', userId)
 
     try {
-      const response = await registerUser(form);
+      const response = await registerUser(form)
       if (response === 200) {
         setErrorSnackbar('Registration successful.')
         handleOpenSnackBar()
-        nav('/login');
+        nav('/login')
       }
-
     } catch (error) {
       setErrorSnackbar(
         'An error occurred during registration. Please try again.'
@@ -308,11 +313,22 @@ const RegistrationInfo = () => {
                   formData.documentSRL
                 )}
                 {textFieldInputs('CIF:', 'cif', errors.cif)}
-                {renderDocumentUpload(
-                  'Contract',
-                  'contract',
-                  formData.contract
-                )}
+                <Typography sx={classes.labelR}>Contract</Typography>
+                <MainButton
+                  buttonText="Sign Contract"
+                  onClick={handleOpenModal}
+                  width={'55%'}
+                  height={'36px'}
+                  fontSize={18}
+                  lineHeight={24}
+                  margin={'20px 20px 10px 20px'}
+                  borderRadius={'13px'}
+                  backgroundColor={PersianPink}
+                  backgroundColorHover={PersianPink}
+                  textColor={White400}
+                  mobileStyles={{ height: '20px', marginTop: '15px' }}
+                  mobileStylesText={{ fontSize: 12 }}
+                />
               </Box>
               <Box sx={{ marginTop: '20px' }}>
                 <CurbeIcon />
@@ -330,7 +346,7 @@ const RegistrationInfo = () => {
             lineHeight={24}
             margin={'20px 70px 0px 0px'}
             borderRadius={'7px'}
-            backgroundColor={'#D83F6D'}
+            backgroundColor={PersianPink}
             backgroundColorHover={PersianPink}
             textColor={White400}
             mobileStyles={{ height: '20px', marginTop: '15px' }}
@@ -338,6 +354,9 @@ const RegistrationInfo = () => {
           />
         </Box>
       </form>
+
+      <ContractModal open={openModal} handleClose={handleCloseModal} />
+
       {errorSnackbar && (
         <CustomizedSnackbars
           openSnackBar={openSnackBar}

@@ -91,7 +91,7 @@ const AboutUs = () => {
             buttonText={'Join Us'}
             width={'325px'}
             height={'45px'}
-            marginTop={'150px'}
+            marginTop={'50px'}
             marginLeft={'50px'}
             to={'/login'}
             fontSize={20}

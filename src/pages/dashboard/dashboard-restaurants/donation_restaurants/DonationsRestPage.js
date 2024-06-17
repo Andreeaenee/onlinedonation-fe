@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Grid, Button, Typography } from '@mui/material'
 import MainLayout from '../../MainLayout'
 import Header from '../../Header'
@@ -8,17 +8,31 @@ import SearchField from '../../../../components/SearchField'
 import { useMediaQuery } from '@mui/material'
 import DonationsRestPageStyles from './DonationsRestPageStyles'
 import MainButton from '../../../../components/MainButton'
+import { fetchDonationsData } from '../../../../api/getDonations'
+import ListDonationCard from '../../../../components/donationCard/ListDonationCard'
 
 const DonationsRestPage = () => {
   const theme = useTheme()
   const classes = DonationsRestPageStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetchDonationsData()
+      .then((response) => {
+        setData(response)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+  }, [])
+
   return (
     <MainLayout>
       <Header title="Donations management" />
       <Box
         sx={{
-          display:  isMobile ? 'null' : 'flex',
+          display: isMobile ? 'null' : 'flex',
           justifyContent: isMobile ? 'null' : 'space-between',
         }}
       >
@@ -81,6 +95,12 @@ const DonationsRestPage = () => {
           />
         )}
       </Box>
+      {data.length === 0 && (
+        <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
+          There are no donations yet
+        </Typography>
+      )}
+      <ListDonationCard donations={data} />
     </MainLayout>
   )
 }
