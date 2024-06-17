@@ -22,4 +22,12 @@ export const removeItem = (key) => {
   return localStorage.removeItem(key)
 }
 
+export const initLocalStorage = () => {
+  if (!getItem('sidebar-expanded')) {
+    setItem('sidebar-expanded', true)
+  }
+  if (!getItem('loggedIn')) {
+    setItem('loggedIn', false)
+  }
+}
 

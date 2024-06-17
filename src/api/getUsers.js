@@ -6,7 +6,7 @@ export async function postUserCredentials(data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: process.env.REACT_APP_API_PORT + 'user/credentials',
+      url: process.env.REACT_APP_API_PORT + 'users/credentials',
       data: data,
     })
     return response.statusCode
@@ -21,7 +21,7 @@ export async function registerUser(data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: process.env.REACT_APP_API_PORT + 'user/register',
+      url: process.env.REACT_APP_API_PORT + 'users/register',
       data: data,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -42,7 +42,7 @@ export async function loginUser(email, password) {
       method: 'GET',
       url:
         process.env.REACT_APP_API_PORT +
-        'user/login?email=' +
+        'users/login?email=' +
         email +
         '&password=' +
         password,
@@ -61,7 +61,7 @@ export async function forgetPassword(data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: process.env.REACT_APP_API_PORT + 'user/forgot-password',
+      url: process.env.REACT_APP_API_PORT + 'users/forgot-password',
       data: data,
     })
     return response.statusCode
@@ -76,7 +76,7 @@ export async function resetPassword(data) {
   try {
     const response = await axiosFetch({
       method: 'POST',
-      url: process.env.REACT_APP_API_PORT + 'user/reset-password',
+      url: process.env.REACT_APP_API_PORT + 'users/reset-password',
       data: data,
     })
     return response
@@ -91,9 +91,23 @@ export async function getUserEmail(id) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: process.env.REACT_APP_API_PORT + 'user/email/' + id,
+      url: process.env.REACT_APP_API_PORT + 'users/email/' + id,
     })
     return response
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+//get all users
+export async function getUsers() {
+  try {
+    const response = await axiosFetch({
+      method: 'GET',
+      url: process.env.REACT_APP_API_PORT + 'users',
+    })
+    return response.responseData
   } catch (error) {
     console.log('Error: ', error)
     throw error

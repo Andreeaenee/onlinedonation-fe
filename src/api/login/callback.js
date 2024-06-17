@@ -1,6 +1,6 @@
 import axiosFetch from '../Axios'
 import { jwtDecode } from 'jwt-decode'
-import { setItem } from '../../utils/LocalStorageUtils'
+import { initLocalStorage, setItem } from '../../utils/LocalStorageUtils'
 import { setCookie } from '../../utils/CookieManager'
 
 export async function exchangeCodeForToken(code) {
@@ -27,7 +27,7 @@ export async function decodeToken(token) {
   if (decodedToken) {
     setCookie('jwt', token, 3600)
     setCookie('profile', decodedToken, 3600)
-    setItem('loggedIn', true)
+    initLocalStorage()
     window.location.href = '/'
   } else {
     console.error('Invalid token signature')
@@ -43,4 +43,3 @@ export function verifyToken(token) {
     return null
   }
 }
-

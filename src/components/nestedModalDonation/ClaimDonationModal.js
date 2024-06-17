@@ -37,6 +37,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   let isTransportProvided = donation.transport_provided
 
   useEffect(() => {
+    console.log('Donation:', donation)
     setIsFormComplete(
       firstName.length > 0 &&
         lastName.length > 0 &&
@@ -160,26 +161,32 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
               <Typography sx={classes.interval}>
                 Interval:{' '}
                 <span style={{ fontWeight: 300, fontSize: '16px' }}>
-                {dayjs(donation.start_date).format('HH:mm')} -{' '}
-                {dayjs(donation.end_date).format('HH:mm')}
+                  {dayjs(donation.start_date).format('HH:mm')} -{' '}
+                  {dayjs(donation.end_date).format('HH:mm')}
                 </span>
               </Typography>
             </Box>
+            {donation.transport_provided ? null : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  marginLeft: '10px',
+                  alignItems: 'center',
+                }}
+              >
+                <LocationIcon
+                  width={isMobile ? '30px' : '30px'}
+                  height={isMobile ? '30px' : '30px'}
+                />
 
-            <Box
-              sx={{ display: 'flex', marginLeft: '10px', alignItems: 'center' }}
-            >
-              <LocationIcon
-                width={isMobile ? '30px' : '30px'}
-                height={isMobile ? '30px' : '30px'}
-              />
-              <Typography sx={classes.date}>
-                Pickup Point:{' '}
-                <span style={{ fontWeight: 300 }}>
-                  {donation.pick_up_point}
-                </span>
-              </Typography>
-            </Box>
+                <Typography sx={classes.date}>
+                  Pickup Point:{' '}
+                  <span style={{ fontWeight: 300 }}>
+                    {donation.pick_up_point}
+                  </span>
+                </Typography>
+              </Box>
+            )}
 
             <Typography sx={classes.description}>
               {donation.description}

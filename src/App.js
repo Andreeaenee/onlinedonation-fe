@@ -24,6 +24,7 @@ import RegistrationInfo from './pages/login/registration/RegistrationInfo'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
 import { USER_ROLES } from './constants/constants'
+import Users from './pages/dashboard/dashboard-admin/Users'
 
 function App() {
   useEffect(() => {
@@ -102,6 +103,17 @@ function App() {
               }
             />
             <Route
+              path="/dashboard/users"
+              element={
+                <ProtectedRoute
+                  element={Users}
+                  requiredRoles={[
+                    USER_ROLES.ADMIN
+                  ]}
+                />
+              }
+            />
+            <Route
               path="/dashboard/user-profile"
               element={
                 <ProtectedRoute
@@ -114,6 +126,7 @@ function App() {
                 />
               }
             />
+
           </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>

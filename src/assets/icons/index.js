@@ -24,6 +24,7 @@ import { ReactComponent as OpenMailIcon } from './mail-open.svg'
 import { ReactComponent as CheckCircleIcon } from './check-circle.svg'
 import { ReactComponent as LogoutIcon } from './logout-icon.svg'
 import { ReactComponent as CurbeIcon } from './curbe.svg'
+import {ReactComponent as UsersIcon} from './users-icon.svg'
 
 export { Logo }
 export { Restaurants }
@@ -51,3 +52,4 @@ export { OpenMailIcon }
 export { CheckCircleIcon }
 export { LogoutIcon }
 export { CurbeIcon }
+export { UsersIcon }
