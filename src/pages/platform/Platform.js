@@ -6,7 +6,6 @@ import { useTheme } from '@mui/material/styles'
 import '../../styles.css'
 import PlatformStyles from './PlatformStyles'
 import SearchField from '../../components/SearchField'
-import MainButton from '../../components/MainButton'
 import OraLuiRobertJPG from '../../assets/photos/cardPhoto/OraLuiRobert.jpg'
 import OraluiRobert from '../../assets/photos/sponsors/Logo-oraluirobert.png'
 import ListCards from '../../components/listCards/ListCards'
@@ -51,68 +50,76 @@ const Platform = () => {
   const classes = PlatformStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
     fetchDonationsData()
       .then((response) => {
         setData(response)
+        setFilteredData(response)
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
       })
   }, [])
-
-
+  const handleSearch = (input) => {
+    if (input.length >= 3) {
+      const filtered = data.filter((donation) =>
+        donation.name.toLowerCase().startsWith(input.toLowerCase())
+      )
+      setFilteredData(filtered)
+    } else {
+      setFilteredData(data)
+    }
+  }
   return (
     <WrapperPage>
-        <Box sx={{ display: 'flex' }}>
-          <Grid container spacing={5} sx={classes.filterGrid}>
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              sx={{
-                paddingLeft: '0px !important',
-                paddingTop: '0px !important',
-              }}
-            >
-              <Button sx={classes.gridButton}>
-                <FilterIcon />{' '}
-                {!isMobile && (
-                  <Typography sx={classes.gridTypo}>Filter</Typography>
-                )}
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              sx={{
-                paddingLeft: '0px !important',
-                paddingTop: '0px !important',
-              }}
-            >
-              <Button sx={{ ...classes.gridButton }}>
-                <SortIcon />
-                {!isMobile && (
-                  <Typography sx={classes.gridTypo}>Sort</Typography>
-                )}
-              </Button>
-            </Grid>
+      <Box sx={{ display: 'flex' }}>
+        <Grid container spacing={5} sx={classes.filterGrid}>
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            sx={{
+              paddingLeft: '0px !important',
+              paddingTop: '0px !important',
+            }}
+          >
+            <Button sx={classes.gridButton}>
+              <FilterIcon />{' '}
+              {!isMobile && (
+                <Typography sx={classes.gridTypo}>Filter</Typography>
+              )}
+            </Button>
           </Grid>
-          <SearchField />
-        </Box>
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            sx={{
+              paddingLeft: '0px !important',
+              paddingTop: '0px !important',
+            }}
+          >
+            <Button sx={{ ...classes.gridButton }}>
+              <SortIcon />
+              {!isMobile && <Typography sx={classes.gridTypo}>Sort</Typography>}
+            </Button>
+          </Grid>
+        </Grid>
+        <SearchField handleSearch={handleSearch} />
+      </Box>
       <Typography sx={classes.mainText}>
         Restaurants that are donating today
       </Typography>
       <ListCards cards={restaurants} page={'Platform'} />
       <Typography sx={classes.mainText}>Donations</Typography>
-      {data.length === 0 && (
+      {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
           There are no donations yet
         </Typography>
       )}
-      <ListDonationCard donations={data} />
+      <ListDonationCard donations={filteredData} />
     </WrapperPage>
   )
 }

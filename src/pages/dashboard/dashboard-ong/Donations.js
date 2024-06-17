@@ -1,35 +1,48 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Grid, Button, Typography } from '@mui/material'
-import MainLayout from '../../MainLayout'
-import Header from '../../Header'
-import { FilterIcon, SortIcon } from '../../../../assets/icons'
+import MainLayout from '../MainLayout'
+import Header from '../Header'
+import { FilterIcon, SortIcon } from '../../../assets/icons'
 import { useTheme } from '@mui/material/styles'
-import SearchField from '../../../../components/SearchField'
+import SearchField from '../../../components/SearchField'
 import { useMediaQuery } from '@mui/material'
-import DonationsRestPageStyles from './DonationsRestPageStyles'
-import MainButton from '../../../../components/MainButton'
-import { fetchDonationsData } from '../../../../api/getDonations'
-import ListDonationCard from '../../../../components/donationCard/ListDonationCard'
+import DonationsRestPageStyles from '../donations/DonationsStyles'
+import MainButton from '../../../components/MainButton'
+import { fetchDonationsData } from '../../../api/getDonations'
+import ListDonationCard from '../../../components/donationCard/ListDonationCard'
 
-const DonationsRestPage = () => {
+const DonationsOng = () => {
   const theme = useTheme()
   const classes = DonationsRestPageStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
     fetchDonationsData()
       .then((response) => {
         setData(response)
+        setFilteredData(response)
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
       })
   }, [])
 
+  const handleSearch = (input) => {
+    if (input.length >= 3) {
+      const filtered = data.filter((donation) =>
+        donation.name.toLowerCase().startsWith(input.toLowerCase())
+      )
+      setFilteredData(filtered)
+    } else {
+      setFilteredData(data)
+    }
+  }
+
   return (
     <MainLayout>
-      <Header title="Donations management" />
+      <Header title="Donations management Ong" />
       <Box
         sx={{
           display: isMobile ? 'null' : 'flex',
@@ -71,7 +84,10 @@ const DonationsRestPage = () => {
               </Button>
             </Grid>
           </Grid>
-          <SearchField isDonationsDashboard={true} />
+          <SearchField
+            isDonationsDashboard={true}
+            handleSearch={handleSearch}
+          />
         </Box>
         {!isMobile && (
           <MainButton
@@ -95,14 +111,14 @@ const DonationsRestPage = () => {
           />
         )}
       </Box>
-      {data.length === 0 && (
+      {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
           There are no donations yet
         </Typography>
       )}
-      <ListDonationCard donations={data} />
+      <ListDonationCard donations={filteredData} />
     </MainLayout>
   )
 }
 
-export default DonationsRestPage
+export default DonationsOng

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { getUserRole } from '../api/login/callback'
+import { getUserRole } from '../api/login/utils'
 
 const AuthContext = createContext()
 

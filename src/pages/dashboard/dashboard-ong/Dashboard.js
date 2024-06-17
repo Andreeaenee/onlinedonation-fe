@@ -1,10 +1,11 @@
 import React from 'react'
 import MainLayout from '../MainLayout'
+import Header from '../Header'
 
 const DashboardOng = () => {
   return (
     <MainLayout>
-      <h1>Dashboard Admin</h1>
+      <Header title={'Dashboard Admin'} />
       {/* Add other content here */}
     </MainLayout>
   )

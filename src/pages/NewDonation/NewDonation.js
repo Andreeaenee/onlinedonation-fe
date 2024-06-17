@@ -23,7 +23,7 @@ import { CancelIcon, UploadIcon } from '../../assets/icons'
 import { FormField } from '../../utils/FormField'
 import './styles.css'
 import { White100, PersianPink, MountbattenPink } from '../../constants/colors'
-import { getUserId } from '../../api/login/callback'
+import { getUserId } from '../../api/login/utils'
 
 const NewDonation = () => {
   const userId = getUserId();

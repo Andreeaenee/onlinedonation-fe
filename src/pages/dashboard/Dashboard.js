@@ -1,34 +1,36 @@
-import React, { Suspense, lazy } from 'react';
-import DashboardRestaurants from './dashboard-restaurants/Dashboard'
-import WrapperPage from '../../components/WrapperPage'
+import React, { Suspense, lazy } from 'react'
 import { useAuth } from '../../components/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
-const AdminDashboard = lazy(() => import('./dashboard-admin/Dashboard'));
-const OngDashboard = lazy(() => import('./dashboard-ong/Dashboard'));
-const RestaurantDashboard = lazy(() => import('./dashboard-restaurants/Dashboard'));
+const AdminDashboard = lazy(() => import('./dashboard-admin/Dashboard'))
+const OngDashboard = lazy(() => import('./dashboard-ong/Dashboard'))
+const RestaurantDashboard = lazy(() =>
+  import('./dashboard-restaurants/Dashboard')
+)
 
 const Dashboard = () => {
-  const { userRole } = useAuth();
-  let Component;
-  switch(userRole) {
+  const { userRole } = useAuth()
+  const nav = useNavigate()
+  let Component
+  switch (userRole) {
     case 3:
-      Component = AdminDashboard;
-      break;
+      Component = AdminDashboard
+      break
     case 1:
-      Component = OngDashboard;
-      break;
+      Component = OngDashboard
+      break
     case 2:
-      Component = RestaurantDashboard;
-      break;
+      Component = RestaurantDashboard
+      break
     default:
-      return <div>Invalid role</div>;
+      nav('/unauthorized')
   }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Component />
     </Suspense>
-  );
+  )
 }
 
 export default Dashboard

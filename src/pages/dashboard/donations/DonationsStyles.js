@@ -1,4 +1,4 @@
-import { MountbattenPink, Black400 } from '../../../../constants/colors'
+import { MountbattenPink, Black400 } from '../../../constants/colors'
 
 const DonationsRestPageStyles = (theme) => ({
   filterGrid: {

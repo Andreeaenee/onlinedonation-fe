@@ -29,7 +29,7 @@ const StyledTextField = styled(TextField)(
   })
 )
 
-const SearchField = ({ isDonationsDashboard }) => {
+const SearchField = ({ isDonationsDashboard, handleSearch }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -57,6 +57,7 @@ const SearchField = ({ isDonationsDashboard }) => {
           </InputAdornment>
         ),
       }}
+      onChange={(e) => handleSearch(e.target.value)} // Call handleSearch on input change
       isDonationsDashboard={isDonationsDashboard} // Pass the prop to styled component
     />
   )

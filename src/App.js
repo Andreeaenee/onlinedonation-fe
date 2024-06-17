@@ -1,38 +1,38 @@
-import './App.css';
-import { useEffect } from 'react';
+import './App.css'
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Outlet,
-} from 'react-router-dom';
-import AboutUs from './pages/aboutUs/AboutUs';
-import Platform from './pages/platform/Platform';
-import Login from './pages/login/Login';
-import NavBar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
-import NewDonation from './pages/NewDonation/NewDonation';
-import Dashboard from './pages/dashboard/Dashboard';
-import DonationsRestPage from './pages/dashboard/dashboard-restaurants/donation_restaurants/DonationsRestPage';
-import UserProfilePage from './pages/dashboard/user-profile/UserProfile';
-import Registration from './pages/login/registration/Registration';
-import VerifyEmailPage from './pages/login/registration/EmailVerification';
-import ForgetPassword from './pages/login/ForgetPassword';
-import Unauthorized from './components/Unauthorized';
-import { exchangeCodeForToken } from './api/login/callback';
-import RegistrationInfo from './pages/login/registration/RegistrationInfo';
-import ProtectedRoute from './components/ProtectedRoute';
-import { AuthProvider } from './components/AuthContext';
-import { USER_ROLES } from './constants/constants';
+} from 'react-router-dom'
+import AboutUs from './pages/aboutUs/AboutUs'
+import Platform from './pages/platform/Platform'
+import Login from './pages/login/Login'
+import NavBar from './components/navbar/Navbar'
+import Footer from './components/footer/Footer'
+import NewDonation from './pages/NewDonation/NewDonation'
+import Dashboard from './pages/dashboard/Dashboard'
+import Donations from './pages/dashboard/donations/Donations'
+import UserProfilePage from './pages/dashboard/user-profile/UserProfile'
+import Registration from './pages/login/registration/Registration'
+import VerifyEmailPage from './pages/login/registration/EmailVerification'
+import ForgetPassword from './pages/login/ForgetPassword'
+import Unauthorized from './components/Unauthorized'
+import { exchangeCodeForToken } from './api/login/callback'
+import RegistrationInfo from './pages/login/registration/RegistrationInfo'
+import ProtectedRoute from './components/ProtectedRoute'
+import { AuthProvider } from './components/AuthContext'
+import { USER_ROLES } from './constants/constants'
 
 function App() {
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    const urlParams = new URLSearchParams(window.location.search)
+    const code = urlParams.get('code')
     if (code) {
-      exchangeCodeForToken(code);
+      exchangeCodeForToken(code)
     }
-  }, []);
+  }, [])
 
   return (
     <AuthProvider>
@@ -92,7 +92,7 @@ function App() {
               path="/dashboard/donations"
               element={
                 <ProtectedRoute
-                  element={DonationsRestPage}
+                  element={Donations}
                   requiredRoles={[
                     USER_ROLES.ADMIN,
                     USER_ROLES.ONG,
@@ -119,7 +119,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
-  );
+  )
 }
 
-export default App;
+export default App

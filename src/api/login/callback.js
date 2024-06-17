@@ -1,7 +1,7 @@
 import axiosFetch from '../Axios'
 import { jwtDecode } from 'jwt-decode'
 import { setItem } from '../../utils/LocalStorageUtils'
-import { getCookie, setCookie } from '../../utils/CookieManager'
+import { setCookie } from '../../utils/CookieManager'
 
 export async function exchangeCodeForToken(code) {
   try {
@@ -44,16 +44,3 @@ export function verifyToken(token) {
   }
 }
 
-export const getUserRole = () => {
-  const token = getCookie('jwt');
-  if (!token) return 0;
-  const decodedToken = jwtDecode(token);
-  return decodedToken?.user_type_id;
-};
-
-export const getUserId = () => {
-  const token = getCookie('jwt');
-  if (!token) return 0;
-  const decodedToken = jwtDecode(token);
-  return decodedToken?.user_id;
-}

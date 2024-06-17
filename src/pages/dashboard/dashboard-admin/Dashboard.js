@@ -1,12 +1,13 @@
 import React from 'react'
 import MainLayout from '../MainLayout'
+import Header from '../Header'
 
 const DashboardAdmin = () => {
   return (
     <MainLayout>
-      <h1>Dashboard Admin</h1>
-      {/* Add other content here */}
-    </MainLayout>
+    <Header title={'Dashboard'} />
+    {/* Add other content here */}
+  </MainLayout>
   )
 }
 
