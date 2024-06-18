@@ -21,8 +21,10 @@ import { postDonationDriversData } from '../../api/getDonationsDrivers'
 import { updateDonationData } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
 import dayjs from 'dayjs'
+import { getUserId } from '../../api/login/utils'
 
 const ClaimDonationModal = ({ open, onClose, donation }) => {
+  const userId = getUserId()
   const theme = useTheme()
   const classes = NestedModalStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -31,13 +33,11 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   const [lastName, setLastName] = useState('')
   const [contactNumber, setContactNumber] = useState('')
   const [aproxTime, setAproxTime] = useState(null)
-  const [ong_id, setOngId] = useState(1)
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [openSnackBar, setOpenSnackBar] = useState(false)
   let isTransportProvided = donation.transport_provided
 
   useEffect(() => {
-    console.log('Donation:', donation)
     setIsFormComplete(
       firstName.length > 0 &&
         lastName.length > 0 &&
@@ -91,7 +91,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
       formData
     )
     const response1 = await updateDonationData(donation.donation_id, {
-      ong_id: ong_id,
+      ong_id: userId,
     })
     // deleteDonationData(donation.donation_id)
     if (response === 200 && response1 === 200) {

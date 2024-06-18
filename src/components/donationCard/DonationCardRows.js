@@ -3,7 +3,6 @@ import { Box, Typography, IconButton, Grid, ButtonBase } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import dayjs from 'dayjs';
 import ClaimDonationModal from '../nestedModalDonation/ClaimDonationModal';
-import { truncateString } from '../../utils/StringUtils';
 
 const DonationCardRow = ({ donation }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -11,11 +10,13 @@ const DonationCardRow = ({ donation }) => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Pending':
+      case 'unclaimed':
         return 'orange';
-      case 'Completed':
+      case 'claimed':
+        return 'blue';
+      case 'finsihsed':
         return 'green';
-      case 'Failed':
+      case 'canceled':
         return 'red';
       default:
         return 'gray';
@@ -74,13 +75,13 @@ const DonationCardRow = ({ donation }) => {
                   justifyContent: 'center',
                   padding: '4px 8px',
                   borderRadius: '4px',
-                  backgroundColor: getStatusColor(donation.donation_id),
+                  backgroundColor: getStatusColor(donation.status_name),
                   color: 'white',
                   fontWeight: 'bold',
                 }}
               >
                 <Typography variant="body2" sx={{ color: 'white' }}>
-                  {donation.donation_id}
+                  {donation.status_name}
                 </Typography>
               </Box>
             </Grid>

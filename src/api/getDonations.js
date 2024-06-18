@@ -1,11 +1,11 @@
 import axiosFetch from './Axios'
 
 // Fetches the donations data from the server
-export async function fetchDonationsData() {
+export async function fetchDonationsData(filter, filterId) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: process.env.REACT_APP_API_PORT+'donations',
+      url: process.env.REACT_APP_API_PORT+`donations?filter=${filter}&filterId=${filterId}`,
     })
     return response.responseData
   } catch (error) {

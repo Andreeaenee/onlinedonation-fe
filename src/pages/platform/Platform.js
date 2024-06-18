@@ -72,6 +72,8 @@ const Platform = () => {
       setFilteredData(data)
     }
   }
+
+  console.log('Donations Platform:', data)
   return (
     <WrapperPage>
       <Box sx={{ display: 'flex' }}>

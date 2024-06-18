@@ -5,7 +5,6 @@ import {
   MountbattenPink,
   White100,
   White400,
-  Grey400,
 } from '../../../constants/colors'
 import { useLocation } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
@@ -30,7 +29,6 @@ const Sidebar = () => {
       (button) => location.pathname === button.path
     )
     setActiveButton(matchingButton)
-    console.log("User role: ", userRole)
   }, [location])
 
   const handleToggleSidebar = () => {
@@ -41,6 +39,8 @@ const Sidebar = () => {
   const filteredButtons = SidebarButtons.filter((button) =>
     button.role.includes(userRole)
   );
+
+  console.log('filteredButtons', filteredButtons);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
@@ -68,7 +68,7 @@ const Sidebar = () => {
             width: isExpanded ? '200px' : '50px',
           }}
         >
-          {SidebarButtons.map((button, index) => (
+          {filteredButtons.map((button, index) => (
             <Button
               key={index}
               startIcon={button.icon}

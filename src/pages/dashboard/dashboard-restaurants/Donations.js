@@ -10,8 +10,10 @@ import DonationsRestPageStyles from '../donations/DonationsStyles'
 import MainButton from '../../../components/MainButton'
 import { fetchDonationsData } from '../../../api/getDonations'
 import ListDonationCard from '../../../components/donationCard/ListDonationCard'
+import { getUserId } from '../../../api/login/utils'
 
 const DonationsRestaurant = () => {
+  const userId = getUserId()
   const theme = useTheme()
   const classes = DonationsRestPageStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -19,7 +21,7 @@ const DonationsRestaurant = () => {
   const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
-    fetchDonationsData()
+    fetchDonationsData('restaurant', userId)
       .then((response) => {
         setData(response)
         setFilteredData(response)
@@ -27,7 +29,7 @@ const DonationsRestaurant = () => {
       .catch((error) => {
         console.error('Error fetching data:', error)
       })
-  }, [])
+  }, [userId])
 
   const handleSearch = (input) => {
     if (input.length >= 3) {
@@ -115,7 +117,7 @@ const DonationsRestaurant = () => {
           There are no donations yet
         </Typography>
       )}
-      <ListDonationCard donations={filteredData} />
+      <ListDonationCard donations={filteredData} page={'donations-admin'}/>
     </MainLayout>
   )
 }

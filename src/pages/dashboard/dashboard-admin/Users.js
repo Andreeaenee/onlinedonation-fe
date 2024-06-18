@@ -7,7 +7,6 @@ import { getUsers } from '../../../api/getUsers'
 import CustomTable from '../../../components/table/CustomTable'
 import { UsersHeaders } from '../utils'
 import SearchField from '../../../components/SearchField'
-import MainButton from '../../../components/MainButton'
 import {FilterIcon, SortIcon} from '../../../assets/icons'
 import DonationsRestPageStyles from '../donations/DonationsStyles'
 
@@ -38,7 +37,6 @@ const Users = () => {
       .catch((error) => {
         console.error('Error fetching data:', error)
       })
-    console.log('Users:', data)
   }, [])
 
   const getUserType = (type_id) => {
@@ -139,27 +137,6 @@ const Users = () => {
             handleSearch={handleSearch}
           />
         </Box>
-        {!isMobile && (
-          <MainButton
-            buttonText={'Post a Donation'}
-            width={'225px'}
-            height={'45px'}
-            fontSize={18}
-            margin={'25px'}
-            to={'/new-donation'}
-          />
-        )}
-        {isMobile && (
-          <MainButton
-            buttonText={'Post a Donation'}
-            width={'94%'}
-            height={'40px'}
-            fontSize={14}
-            margin={'20px'}
-            borderRadius={'10px'}
-            to={'/new-donation'}
-          />
-        )}
       </Box>
 
       {/* Tabs component for navigation */}

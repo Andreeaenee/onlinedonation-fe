@@ -5,7 +5,7 @@ import Header from '../Header'
 const DashboardOng = () => {
   return (
     <MainLayout>
-      <Header title={'Dashboard Admin'} />
+      <Header title={'Dashboard Ong'} />
       {/* Add other content here */}
     </MainLayout>
   )
