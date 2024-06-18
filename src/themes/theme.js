@@ -9,6 +9,9 @@ const theme = createTheme({
     secondary: {
       main: PersianPink,
     },
+    thirdRed: {
+      main: '#e50000',
+    },
   },
   typography: {
     fontFamily: 'Montserrat, sans-serif',

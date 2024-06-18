@@ -29,7 +29,6 @@ const DonationsAdmin = () => {
       })
   }, [])
 
-  // Handler to filter donations based on the search input
   const handleSearch = (input) => {
     if (input.length >= 3) {
       const filtered = data.filter((donation) =>
@@ -117,7 +116,7 @@ const DonationsAdmin = () => {
           There are no donations yet
         </Typography>
       )}
-      <ListDonationCard donations={filteredData} />
+      <ListDonationCard donations={filteredData} page={'donations-admin'}/>
     </MainLayout>
   )
 }

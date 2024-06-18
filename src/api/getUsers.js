@@ -101,11 +101,11 @@ export async function getUserEmail(id) {
 }
 
 //get all users
-export async function getUsers() {
+export async function getUsers(filter, filterId) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: process.env.REACT_APP_API_PORT + 'users',
+      url: process.env.REACT_APP_API_PORT + 'users?filter=' + filter + '&filterId=' + filterId,
     })
     return response.responseData
   } catch (error) {

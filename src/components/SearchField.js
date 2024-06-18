@@ -53,12 +53,12 @@ const SearchField = ({ isDonationsDashboard, handleSearch }) => {
               padding: '8px',
             }}
           >
-            <SearchIcon />
+            <SearchIcon style={{ marginTop: '20%'}}/>
           </InputAdornment>
         ),
       }}
-      onChange={(e) => handleSearch(e.target.value)} // Call handleSearch on input change
-      isDonationsDashboard={isDonationsDashboard} // Pass the prop to styled component
+      onChange={(e) => handleSearch(e.target.value)} 
+      isDonationsDashboard={isDonationsDashboard}
     />
   )
 }

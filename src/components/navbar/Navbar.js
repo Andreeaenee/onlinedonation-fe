@@ -61,6 +61,7 @@ const Navbar = () => {
     setAnchorEl(null)
   }
   const renderButtons = (isMobile) => {
+    console.log('loggedIn', loggedIn)
     return buttons.map(({ path, id, label }) => {
       if (!loggedIn && id === 3) {
         return null

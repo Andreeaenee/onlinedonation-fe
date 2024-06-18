@@ -5,13 +5,9 @@ import { useState } from 'react'
 import ClaimDonationModal from '../nestedModalDonation/ClaimDonationModal'
 import RestaurantLogo from '../../assets/photos/cardPhoto/restaurantLogo.png'
 import dayjs from 'dayjs'
+import { truncateString } from '../../utils/StringUtils'
 
-const truncateDescription = (description, maxLength) => {
-  if (description.length > maxLength) {
-    return `${description.substring(0, maxLength)}...`
-  }
-  return description
-}
+
 
 const DonationCard = ({ donation }) => {
   const theme = useTheme()
@@ -34,7 +30,7 @@ const DonationCard = ({ donation }) => {
           </Box>
           <Typography sx={classes.title}>{donation.name}</Typography>
           <Typography sx={classes.description}>
-            {truncateDescription(donation.description, 100)}
+            {truncateString(donation.description, 100)}
           </Typography>
           <Typography sx={classes.date}>
             Date: <span style={{ fontWeight: 300 }}>{date}</span>

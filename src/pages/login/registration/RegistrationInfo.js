@@ -91,7 +91,7 @@ const RegistrationInfo = () => {
       coverPhoto: !formData.coverPhoto,
       documentSRL: !formData.documentSRL,
       cif: !formData.cif,
-      contract: !formData.contract,
+      contract: !formData.documentSRL, // contract is the same as documentSRL for now
     }
     setErrors(newErrors)
 
@@ -120,7 +120,7 @@ const RegistrationInfo = () => {
     form.append('coverPhoto', formData.coverPhoto)
     form.append('document', formData.documentSRL)
     form.append('cif', formData.cif)
-    form.append('contract', formData.contract)
+    form.append('contract', formData.documentSRL) // contract is the same as documentSRL for now
     form.append('user_id', userId)
 
     try {

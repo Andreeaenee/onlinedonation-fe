@@ -42,6 +42,7 @@ const DonationCardStyles = (theme) => ({
   },
   imagesBox: {
     display: 'flex',
+    alignItems: 'center',
   },
   icon: {
     width: '50px',
@@ -51,43 +52,105 @@ const DonationCardStyles = (theme) => ({
       height: '60px',
     },
   },
+  nameBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: theme.spacing(2),
+    flexGrow: 1,
+  },
   name: {
     fontWeight: 500,
     fontSize: '17px',
     textAlign: 'left',
   },
   photo: {
-    width: '125px',
-    height: '75px',
-    borderRadius: '10px',
-    marginLeft: 'auto',
-    [theme.breakpoints.down('md')]: {
-      width: '150px',
-      height: '100px',
-      alignItems: 'right',
-    },
+    width: '80px',
+    height: '80px',
+    borderRadius: '12px',
+    marginLeft: theme.spacing(2),
   },
   title: {
-    fontWeight: 500,
+    fontWeight: 600,
     color: Black400,
     fontSize: '18px',
     textAlign: 'left',
-    marginLeft: '10px',
   },
   description: {
-    fontWeight: 300,
+    fontWeight: 400,
     color: Black100,
     fontSize: '14px',
     textAlign: 'left',
-    marginLeft: '10px',
   },
   date: {
     fontWeight: 500,
     color: Black400,
     fontSize: '16px',
-    marginTop: 'auto',
     textAlign: 'left',
-    marginLeft: '10px',
+  },
+  // row card
+  rowCard: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: '12px',
+    marginBottom: theme.spacing(2),
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    backgroundColor: 'white',
+    width: '100%',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    '&:hover': {
+      transform: 'scale(1.02)',
+      boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+    },
+  },
+  imagesBox: {
+    display: 'flex',
+    alignItems: 'center',
+    flexShrink: 0,
+  },
+  icon: {
+    width: 60,
+    height: 60,
+    borderRadius: '8px',
+  },
+  photo: {
+    width: 80,
+    height: 80,
+    borderRadius: '12px',
+    marginLeft: theme.spacing(2),
+  },
+  contentBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    marginLeft: theme.spacing(2),
+    textAlign: 'left',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 500,
+    color: theme.palette.text.primary,
+    textAlign: 'left',
+    marginRight: theme.spacing(2),
+  },
+  description: {
+    fontSize: 16,
+    color: theme.palette.text.secondary,
+    textAlign: 'left',
+    marginRight: theme.spacing(2),
+    flex: 1, // Allow description to take up remaining space
+  },
+  date: {
+    fontSize: 14,
+    color: theme.palette.text.secondary,
+    textAlign: 'left',
+    whiteSpace: 'nowrap', // Prevent date from wrapping
+  },
+  name: {
+    fontWeight: 'bold',
+    marginLeft: theme.spacing(2),
   },
 })
 

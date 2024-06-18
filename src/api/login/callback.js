@@ -27,6 +27,7 @@ export async function decodeToken(token) {
   if (decodedToken) {
     setCookie('jwt', token, 3600)
     setCookie('profile', decodedToken, 3600)
+    setItem('loggedIn', true)
     initLocalStorage()
     window.location.href = '/'
   } else {
