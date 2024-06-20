@@ -14,3 +14,10 @@ export const getUserRole = () => {
     const decodedToken = jwtDecode(token);
     return decodedToken?.user_id;
   }
+
+  export const getUserStatus = () => {
+    const token = getCookie('jwt');
+    if (!token) return 0;
+    const decodedToken = jwtDecode(token);
+    return decodedToken?.status_id;
+  }

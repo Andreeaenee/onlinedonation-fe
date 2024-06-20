@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import MainLayout from '../MainLayout'
 import Header from '../Header'
-import { Box, Tab, Tabs, Typography, useMediaQuery, Badge, Grid, Button } from '@mui/material'
+import {
+  Box,
+  Tab,
+  Tabs,
+  Typography,
+  useMediaQuery,
+  Badge,
+  Grid,
+  Button,
+} from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { getUsers } from '../../../api/getUsers'
 import CustomTable from '../../../components/table/CustomTable'
 import { UsersHeaders } from '../utils'
 import SearchField from '../../../components/SearchField'
-import {FilterIcon, SortIcon} from '../../../assets/icons'
+import { FilterIcon, SortIcon } from '../../../assets/icons'
 import DonationsRestPageStyles from '../donations/DonationsStyles'
 
 const Users = () => {
@@ -32,7 +41,11 @@ const Users = () => {
       })
     getUsers('status_id', 3)
       .then((response) => {
-        setUserRequests(response)
+        if (response === 'Users requests not found') {
+          setUserRequests([])
+        } else {
+          setUserRequests(response)
+        }
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
@@ -52,18 +65,20 @@ const Users = () => {
     }
   }
 
-  const data = userData.map((user) => {
+  const data = filteredData.map((user) => {
     return {
       id: userCount++,
       name: user.name,
       email: user.email,
       phone: user.phone,
       type: getUserType(user.user_type_id),
+      user_id: user.user_id,
     }
   })
 
-  const dataRequests = userRequests.map((user) => {
+  const dataRequests = userRequests?.map((user) => {
     return {
+      user_id: user.user_id,
       id: requestCount++,
       name: user.name,
       email: user.email,
@@ -74,12 +89,14 @@ const Users = () => {
 
   const handleSearch = (input) => {
     if (input.length >= 3) {
-      const filtered = data.filter((user) =>
-        user.name?.toLowerCase().startsWith(input.toLowerCase()) || user.email?.toLowerCase().startsWith(input.toLowerCase())
+      const filtered = userData.filter(
+        (user) =>
+          user.name?.toLowerCase().startsWith(input.toLowerCase()) ||
+          user.email?.toLowerCase().startsWith(input.toLowerCase())
       )
       setFilteredData(filtered)
     } else {
-      setFilteredData(data)
+      setFilteredData(userData)
     }
   }
 
@@ -168,7 +185,7 @@ const Users = () => {
       <Box className={classes.tabContent}>
         {activeTab === 0 && (
           <Box sx={{ marginTop: '20px' }}>
-            <CustomTable data={filteredData} headers={UsersHeaders} />
+            <CustomTable data={data} headers={UsersHeaders} />
           </Box>
         )}
         {activeTab === 1 &&

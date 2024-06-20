@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import WrapperPage from '../../../components/WrapperPage'
 import { Box, Divider, Typography, TextField } from '@mui/material'
 import {
@@ -16,12 +16,14 @@ import CustomizedSnackbars from '../../../components/SnackBar'
 import { registerUser } from '../../../api/getUsers'
 import { useNavigate, useParams } from 'react-router-dom'
 import ContractModal from './ContractModal'
+import { getUserById } from '../../../api/getUsers'
 
 const RegistrationInfo = () => {
   const { userId } = useParams()
   const nav = useNavigate()
   const theme = useTheme()
   const classes = LoginStyles(theme)
+  const [email, setEmail] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
   const [errorSnackbar, setErrorSnackbar] = useState('')
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ const RegistrationInfo = () => {
     coverPhoto: null,
     documentSRL: null,
     cif: '',
-    contract: null,
+    contract: '',
   })
 
   const [errors, setErrors] = useState({
@@ -51,6 +53,16 @@ const RegistrationInfo = () => {
   })
 
   const [openModal, setOpenModal] = useState(false)
+
+  useEffect(() => {
+    getUserById(userId)
+      .then((response) => {
+        setEmail(response.email)
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error)
+      })
+  }, [userId])
 
   const handleOpenModal = () => setOpenModal(true)
   const handleCloseModal = () => setOpenModal(false)
@@ -91,7 +103,7 @@ const RegistrationInfo = () => {
       coverPhoto: !formData.coverPhoto,
       documentSRL: !formData.documentSRL,
       cif: !formData.cif,
-      contract: !formData.documentSRL, // contract is the same as documentSRL for now
+      contract: !formData.contract,
     }
     setErrors(newErrors)
 
@@ -120,9 +132,8 @@ const RegistrationInfo = () => {
     form.append('coverPhoto', formData.coverPhoto)
     form.append('document', formData.documentSRL)
     form.append('cif', formData.cif)
-    form.append('contract', formData.documentSRL) // contract is the same as documentSRL for now
+    form.append('contract', formData.contract)
     form.append('user_id', userId)
-
     try {
       const response = await registerUser(form)
       if (response === 200) {
@@ -355,7 +366,7 @@ const RegistrationInfo = () => {
         </Box>
       </form>
 
-      <ContractModal open={openModal} handleClose={handleCloseModal} />
+      <ContractModal open={openModal} handleClose={handleCloseModal} onComplete={(data) => setFormData({ ...formData, contract: data.download_url })} email={email}/>
 
       {errorSnackbar && (
         <CustomizedSnackbars

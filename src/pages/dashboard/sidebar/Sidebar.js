@@ -40,8 +40,6 @@ const Sidebar = () => {
     button.role.includes(userRole)
   );
 
-  console.log('filteredButtons', filteredButtons);
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
       {isMobile ? (

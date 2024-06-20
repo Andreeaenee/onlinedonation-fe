@@ -57,28 +57,12 @@ const Login = () => {
       if (!validatePassword(password)) {
         throw new Error('Password must be at least 8 characters long.')
       }
-       await loginUser(email, password)
+      await loginUser(email, password)
     } catch (error) {
       let errorMessage
-      switch (error.response?.statusCode) {
+      switch (error.response?.status) {
         case 400:
-          switch (error.response.data) {
-            case 'Email not verified':
-              errorMessage =
-                'Email not verified. Please verify your email before logging in.'
-              break
-            case `The registration process isn't complete yet`:
-              errorMessage = `The registration process isn't complete yet. Please complete the registration process before logging in.`
-              break
-            case 'Invalid credentials':
-              errorMessage =
-                'Invalid credentials. Please check your email and password and try again.'
-              break
-            default:
-              errorMessage =
-                error.response.data || 'Error posting user credentials.'
-              break
-          }
+          errorMessage = handleBadRequest(error.response.data)
           break
         default:
           errorMessage = error.message || 'Error posting user credentials.'
@@ -86,6 +70,27 @@ const Login = () => {
       }
       setErrorSnackbar(errorMessage)
       handleOpenSnackBar()
+    }
+  }
+
+  const handleBadRequest = (data) => {
+    switch (data) {
+      case 'Email not verified':
+        return 'Email not verified. Please verify your email before logging in.'
+      case `The registration process isn't complete yet`:
+        return `The registration process isn't complete yet. Please complete the registration process before logging in.`
+      case 'Invalid credentials':
+        return 'Invalid credentials. Please check your email and password and try again.'
+      case `The registration process isn't complete yet. Wait for the admin approval`:
+        return `The registration process isn't complete yet. Wait for the admin approval.`
+      default:
+        return  'Error posting user credentials.'
+    }
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleLogInSubmit()
     }
   }
 
@@ -120,7 +125,7 @@ const Login = () => {
                 </Typography>
                 <Divider sx={{ flexGrow: 1 }} />
               </Box>
-              <form>
+              <form onKeyPress={handleKeyPress}>
                 <Box sx={classes.form}>
                   <Typography sx={classes.label}>Email Address:</Typography>
                   <TextField

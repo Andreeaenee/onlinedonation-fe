@@ -105,7 +105,41 @@ export async function getUsers(filter, filterId) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: process.env.REACT_APP_API_PORT + 'users?filter=' + filter + '&filterId=' + filterId,
+      url:
+        process.env.REACT_APP_API_PORT +
+        'users?filter=' +
+        filter +
+        '&filterId=' +
+        filterId,
+    })
+    return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+//get user by id
+export async function getUserById(id) {
+  try {
+    const response = await axiosFetch({
+      method: 'GET',
+      url: process.env.REACT_APP_API_PORT + 'users/' + id,
+    })
+    return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+//update user
+export async function updateUser(data) {
+  try {
+    const response = await axiosFetch({
+      method: 'PUT',
+      url: process.env.REACT_APP_API_PORT + 'users/status',
+      data: data,
     })
     return response.responseData
   } catch (error) {

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Box, Modal, Button } from '@mui/material'
-import { DocusealForm } from '@docuseal/react'
+import React from 'react';
+import { Box, Modal, Button } from '@mui/material';
+import { DocusealForm } from '@docuseal/react';
 
-const ContractModal = ({ open, handleClose }) => {
+const ContractModal = ({ open, handleClose, onComplete, email }) => {
   return (
     <Modal
       open={open}
@@ -27,10 +27,14 @@ const ContractModal = ({ open, handleClose }) => {
         }}
       >
         <DocusealForm
-          src="http://85.120.206.58/d/TYL5z11XAnqk6o"
-          email="andreaaene.12@gmail.com"
+          src="http://85.120.206.58/d/tLzheb3mxuvfMk"
+          email={email}
           logo="http://localhost:3001/logo.png"
-          onComplete={(data) => console.log(data)}
+          onComplete={(data) => {
+            onComplete(data);
+            handleClose();
+          }}
+          allowToResubmit="false"
         />
         <Box mt={2} display="flex" justifyContent="flex-end">
           <Button onClick={handleClose} color="primary">
@@ -39,7 +43,7 @@ const ContractModal = ({ open, handleClose }) => {
         </Box>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ContractModal
+export default ContractModal;

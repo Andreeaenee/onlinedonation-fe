@@ -36,6 +36,6 @@ export default function axiosFetch(options) {
       if (error.response && error.response.status === 401) {
         window.location.href = '/login';
       }
-      throw error; 
+      throw error; // Re-throw the error to propagate it further
     });
 }

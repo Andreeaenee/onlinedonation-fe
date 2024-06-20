@@ -126,6 +126,17 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/dashboard/users/user-profile/:userId"
+              element={
+                <ProtectedRoute
+                  element={UserProfilePage}
+                  requiredRoles={[
+                    USER_ROLES.ADMIN,
+                  ]}
+                />
+              }
+            />
 
           </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />

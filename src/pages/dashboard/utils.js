@@ -32,4 +32,4 @@ export const SidebarButtons = [
   },
 ]
 
-export const UsersHeaders = ['ID', 'Name', 'Email', 'Phone', 'Type']
+export const UsersHeaders = ['Id', 'Name', 'Email', 'Phone', 'Type']

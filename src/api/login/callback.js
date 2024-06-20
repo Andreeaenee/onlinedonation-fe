@@ -17,13 +17,14 @@ export async function exchangeCodeForToken(code) {
       console.error('Error during login:', await response.text())
     }
   } catch (error) {
+    window.location.href = `/login`
     console.error('Error during login:', error)
   }
 }
 
 export async function decodeToken(token) {
   const decodedToken = verifyToken(token)
-  console.log('Decoded token:', decodedToken)
+  setItem('payload', decodedToken)
   if (decodedToken) {
     setCookie('jwt', token, 3600)
     setCookie('profile', decodedToken, 3600)
