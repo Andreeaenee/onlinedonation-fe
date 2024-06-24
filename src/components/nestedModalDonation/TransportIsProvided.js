@@ -6,9 +6,10 @@ import MainButton from '../MainButton'
 import { FormField } from '../../utils/FormField'
 import { updateDonationDataClaim } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
+import { getUserId } from '../../api/login/utils'
 
 const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
-  const [ong_id, setOngId] = useState(1)
+  const ong_id = getUserId()
   const [address, setAddress] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
 
@@ -25,13 +26,13 @@ const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
       donation.donation_id,
       formData
     )
-    console.log(response)
     if (response === 200) {
       handleOpenSnackBar()
     }
     setTimeout(() => {
       onClose()
-    }, 2000)
+      window.location.reload()
+    }, 1000)
   }
 
   const textField = ({ label, textValue, onChangeAction, helperText }) => {

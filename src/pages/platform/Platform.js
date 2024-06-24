@@ -53,7 +53,7 @@ const Platform = () => {
   const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
-    fetchDonationsData()
+    fetchDonationsData('status', 2)
       .then((response) => {
         setData(response)
         setFilteredData(response)

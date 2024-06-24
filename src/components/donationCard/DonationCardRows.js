@@ -36,7 +36,7 @@ const DonationCardRow = ({ donation }) => {
         return 'orange'
       case 'claimed':
         return 'blue'
-      case 'finsihsed':
+      case 'finished':
         return 'green'
       case 'canceled':
         return 'red'

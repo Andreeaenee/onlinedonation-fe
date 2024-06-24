@@ -1,4 +1,4 @@
-import { Peach, Black400, Black100 } from '../../constants/colors'
+import { Peach, Black400, Black100 } from '../../constants/colors';
 
 const DonationCardStyles = (theme) => ({
   // list
@@ -43,6 +43,7 @@ const DonationCardStyles = (theme) => ({
   imagesBox: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   icon: {
     width: '50px',
@@ -62,6 +63,11 @@ const DonationCardStyles = (theme) => ({
     fontWeight: 500,
     fontSize: '17px',
     textAlign: 'left',
+  },
+  photoContainer: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
   photo: {
     width: '80px',
@@ -150,6 +156,6 @@ const DonationCardStyles = (theme) => ({
     fontWeight: 'bold',
     marginLeft: theme.spacing(2),
   },
-})
+});
 
-export default DonationCardStyles
+export default DonationCardStyles;

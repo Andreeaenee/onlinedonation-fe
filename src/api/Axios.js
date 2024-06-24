@@ -6,7 +6,7 @@ export default function axiosFetch(options) {
   let cookie = document.cookie
   let jwt = ''
   if (cookie) {
-    jwt = getCookie('jwt');
+    jwt = getCookie('jwt')
   }
 
   if (!options.headers) {
@@ -15,8 +15,7 @@ export default function axiosFetch(options) {
       'X-Requested-With': 'XMLHttpRequest',
       Authorization: 'Bearer ' + jwt,
     }
-  }
-  else {
+  } else {
     options.headers = {
       ...options.headers,
       Authorization: 'Bearer ' + jwt,
@@ -26,16 +25,15 @@ export default function axiosFetch(options) {
   if (!options.method) {
     options.method = 'get'
   }
-
   return axios(options)
     .then((response) => {
-      return { statusCode: response.status, responseData: response.data };
+      return { statusCode: response.status, responseData: response.data }
     })
     .catch((error) => {
-      console.error('Error:', error);
+      console.error('Error:', error)
       if (error.response && error.response.status === 401) {
-        window.location.href = '/login';
+        window.location.href = '/login'
       }
-      throw error; // Re-throw the error to propagate it further
-    });
+      throw error // Re-throw the error to propagate it further
+    })
 }

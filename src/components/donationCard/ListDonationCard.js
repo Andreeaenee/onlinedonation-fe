@@ -18,17 +18,17 @@ const ListDonationCard = ({ donations, page }) => {
 
   return page === 'donations-admin' ? (
     <Box sx={{ ...classes.cardList, gap: '0px' }}>
-      {donations.map((donation) => (
+      {donations.slice().reverse().map((donation) => (
         <DonationCardRow donation={donation} />
       ))}
     </Box>
   ) : (
     <Box sx={classes.cardList}>
-      {donations.map((donation) => (
+      {donations.slice().reverse().map((donation) => (
         <DonationCard donation={donation} />
       ))}
     </Box>
-  )
+  );
 }
 
 export default ListDonationCard

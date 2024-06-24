@@ -95,3 +95,30 @@ export async function updateDonationData(donationId, data, isImageFileFormat) {
     throw error
   }
 }
+
+export async function updateDonationStatus(donationId, status) {
+  try {
+    const response = await axiosFetch({
+      method: 'PUT',
+      url: process.env.REACT_APP_API_PORT + `donations/status/${donationId}`,
+      data: status,
+    })
+    return response.statusCode
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+export async function fetchDonationStatus() {
+  try {
+    const response = await axiosFetch({
+      method: 'GET',
+      url: process.env.REACT_APP_API_PORT + 'donations/status',
+    })
+    return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
