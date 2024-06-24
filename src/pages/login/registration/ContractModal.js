@@ -34,7 +34,7 @@ const ContractModal = ({ open, handleClose, onComplete, email }) => {
             onComplete(data);
             handleClose();
           }}
-          allowToResubmit="false"
+          allowToResubmit="true"
         />
         <Box mt={2} display="flex" justifyContent="flex-end">
           <Button onClick={handleClose} color="primary">

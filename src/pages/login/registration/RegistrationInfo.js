@@ -95,7 +95,6 @@ const RegistrationInfo = () => {
   const handleLogInSubmit = async () => {
     let newErrors = {
       name: !formData.name,
-      description: !formData.description,
       address: !formData.address,
       phone: !formData.phone,
       link: !formData.link,
@@ -266,6 +265,7 @@ const RegistrationInfo = () => {
               <TextField
                 multiline
                 rows={4}
+                required="false"
                 variant="outlined"
                 color="secondary"
                 onChange={handleChange('description')}

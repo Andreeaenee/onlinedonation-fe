@@ -25,6 +25,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
 import { USER_ROLES } from './constants/constants'
 import Users from './pages/dashboard/dashboard-admin/Users'
+import UserProfileEditMode from './pages/dashboard/user-profile/EditUserProfile'
+import EditDonation from './pages/NewDonation/EditDonation'
 
 function App() {
   useEffect(() => {
@@ -54,6 +56,24 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/login/register" element={<Registration />} />
             <Route path="/new-donation" element={<NewDonation />} />
+            <Route
+              path="/new-donation"
+              element={
+                <ProtectedRoute
+                  element={NewDonation}
+                  requiredRoles={[USER_ROLES.ADMIN, USER_ROLES.RESTAURANT]}
+                />
+              }
+            />
+            <Route
+              path="/edit-donation/:id"
+              element={
+                <ProtectedRoute
+                  element={EditDonation}
+                  requiredRoles={[USER_ROLES.ADMIN, USER_ROLES.RESTAURANT]}
+                />
+              }
+            />
             <Route
               path="/login/register/email-verified/:userId"
               element={<VerifyEmailPage />}
@@ -107,9 +127,7 @@ function App() {
               element={
                 <ProtectedRoute
                   element={Users}
-                  requiredRoles={[
-                    USER_ROLES.ADMIN
-                  ]}
+                  requiredRoles={[USER_ROLES.ADMIN]}
                 />
               }
             />
@@ -127,17 +145,27 @@ function App() {
               }
             />
             <Route
-              path="/dashboard/users/user-profile/:userId"
+              path="/dashboard/user-profile/edit-profile/:userId"
               element={
                 <ProtectedRoute
-                  element={UserProfilePage}
+                  element={UserProfileEditMode}
                   requiredRoles={[
                     USER_ROLES.ADMIN,
+                    USER_ROLES.ONG,
+                    USER_ROLES.RESTAURANT,
                   ]}
                 />
               }
             />
-
+            <Route
+              path="/dashboard/users/user-profile/:userId"
+              element={
+                <ProtectedRoute
+                  element={UserProfilePage}
+                  requiredRoles={[USER_ROLES.ADMIN]}
+                />
+              }
+            />
           </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>

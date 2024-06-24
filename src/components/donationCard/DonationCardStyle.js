@@ -91,17 +91,15 @@ const DonationCardStyles = (theme) => ({
   rowCard: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(2),
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: '12px',
-    marginBottom: theme.spacing(2),
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    backgroundColor: 'white',
+    padding: '16px 24px',
+    borderBottom: '1px solid #e0e0e0',
     width: '100%',
-    transition: 'transform 0.3s, box-shadow 0.3s',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    borderRadius: '12px',
+    marginBottom: '16px',
     '&:hover': {
-      transform: 'scale(1.02)',
-      boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
     },
   },
   imagesBox: {
@@ -140,13 +138,13 @@ const DonationCardStyles = (theme) => ({
     color: theme.palette.text.secondary,
     textAlign: 'left',
     marginRight: theme.spacing(2),
-    flex: 1, // Allow description to take up remaining space
+    flex: 1,
   },
   date: {
     fontSize: 14,
     color: theme.palette.text.secondary,
     textAlign: 'left',
-    whiteSpace: 'nowrap', // Prevent date from wrapping
+    whiteSpace: 'nowrap',
   },
   name: {
     fontWeight: 'bold',

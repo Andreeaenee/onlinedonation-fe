@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import DonationCardStyles from './DonationCardStyle'
 import DonationCard from './DonationCardSquare'
@@ -9,22 +9,25 @@ const ListDonationCard = ({ donations, page }) => {
   const theme = useTheme()
   const classes = DonationCardStyles(theme)
   if (!donations || !Array.isArray(donations)) {
-    return <p>No donations available</p>
-  }
-  return (
-    page === 'donations-admin' ? (
-      <Box sx={{...classes.cardList, gap: '0px'}}>
-        {donations.map((donation) => (
-          <DonationCardRow donation={donation} />
-        ))}
-      </Box>
-    ) : (
-      <Box sx={classes.cardList}>
-        {donations.map((donation) => (
-          <DonationCard donation={donation} />
-        ))}
+    return (
+      <Box sx={{ marginTop: '20px', marginLeft: '10px' }}>
+        <Typography variant="h6">No donations found</Typography>
       </Box>
     )
+  }
+
+  return page === 'donations-admin' ? (
+    <Box sx={{ ...classes.cardList, gap: '0px' }}>
+      {donations.map((donation) => (
+        <DonationCardRow donation={donation} />
+      ))}
+    </Box>
+  ) : (
+    <Box sx={classes.cardList}>
+      {donations.map((donation) => (
+        <DonationCard donation={donation} />
+      ))}
+    </Box>
   )
 }
 

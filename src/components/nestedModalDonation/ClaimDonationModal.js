@@ -18,7 +18,7 @@ import Meal from '../../assets/photos/cardPhoto/meal.png'
 import { IntervalIcon, LocationIcon } from '../../assets/icons'
 import TransportIsProvidedModal from './TransportIsProvided'
 import { postDonationDriversData } from '../../api/getDonationsDrivers'
-import { updateDonationData } from '../../api/getDonations'
+import { updateDonationDataClaim } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
 import dayjs from 'dayjs'
 import { getUserId } from '../../api/login/utils'
@@ -90,7 +90,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
       donation.donation_id,
       formData
     )
-    const response1 = await updateDonationData(donation.donation_id, {
+    const response1 = await updateDonationDataClaim(donation.donation_id, {
       ong_id: userId,
     })
     // deleteDonationData(donation.donation_id)

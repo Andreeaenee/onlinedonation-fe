@@ -4,7 +4,7 @@ import { Box, Typography, TextField } from '@mui/material'
 import { Wenge, PersianPink, MountbattenPink } from '../../constants/colors'
 import MainButton from '../MainButton'
 import { FormField } from '../../utils/FormField'
-import { updateDonationData } from '../../api/getDonations'
+import { updateDonationDataClaim } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
 
 const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
@@ -21,7 +21,10 @@ const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
     const formData = new FormData()
     formData.append('ong_id', ong_id)
     formData.append('delivery_address', address)
-    const response = await updateDonationData(donation.donation_id, formData)
+    const response = await updateDonationDataClaim(
+      donation.donation_id,
+      formData
+    )
     console.log(response)
     if (response === 200) {
       handleOpenSnackBar()

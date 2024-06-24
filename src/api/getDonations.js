@@ -5,7 +5,9 @@ export async function fetchDonationsData(filter, filterId) {
   try {
     const response = await axiosFetch({
       method: 'GET',
-      url: process.env.REACT_APP_API_PORT+`donations?filter=${filter}&filterId=${filterId}`,
+      url:
+        process.env.REACT_APP_API_PORT +
+        `donations?filter=${filter}&filterId=${filterId}`,
     })
     return response.responseData
   } catch (error) {
@@ -61,12 +63,31 @@ export async function deleteDonationData(donationId) {
 }
 
 //Updates the donation data on the server with the address and ong_id
-export async function updateDonationData(donationId, data) {
+export async function updateDonationDataClaim(donationId, data) {
+  try {
+    const response = await axiosFetch({
+      method: 'PUT',
+      url: process.env.REACT_APP_API_PORT + `donations/claim/${donationId}`,
+      data: data,
+    })
+    return response.statusCode
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+export async function updateDonationData(donationId, data, isImageFileFormat) {
   try {
     const response = await axiosFetch({
       method: 'PUT',
       url: process.env.REACT_APP_API_PORT + `donations/${donationId}`,
       data: data,
+      headers: {
+        'Content-Type': isImageFileFormat
+          ? 'multipart/form-data'
+          : 'application/json',
+      },
     })
     return response.statusCode
   } catch (error) {

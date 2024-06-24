@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import MainLayout from '../MainLayout'
 import Header from '../Header'
 import { getUserId, getUserRole } from '../../../api/login/utils'
@@ -18,11 +18,13 @@ import {
   Divider,
   Grid,
   Button,
+  Modal,
 } from '@mui/material'
 import { White800 } from '../../../constants/colors'
 import { getItem } from '../../../utils/LocalStorageUtils'
 import MainButton from '../../../components/MainButton'
 import EditIcon from '@mui/icons-material/Edit'
+import PDFViewer from '../../../components/PDFViewer'
 
 const UserProfilePage = () => {
   const params = useParams()
@@ -30,6 +32,9 @@ const UserProfilePage = () => {
   const userRole = getUserRole()
   const [user, setUser] = useState(null)
   const userPicture = getItem('payload').picture
+  const navigate = useNavigate()
+  const [showPdfViewer, setShowPdfViewer] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState('')
 
   useEffect(() => {
     fetchUser(userId)
@@ -53,16 +58,19 @@ const UserProfilePage = () => {
       </MainLayout>
     )
   }
+
   const handleContractClick = () => {
-    console.log('Contract ID clicked')
+    setPdfUrl(user.contract)
+    setShowPdfViewer(true)
   }
 
   const handleDocumentClick = () => {
-    console.log('Document ID clicked')
+    setPdfUrl(user.documentUrl)
+    setShowPdfViewer(true)
   }
 
   const handleEditClick = () => {
-    console.log('Edit clicked')
+    navigate(`/dashboard/user-profile/edit-profile/${userId}`)
   }
 
   const acceptUser = async () => {
@@ -81,6 +89,27 @@ const UserProfilePage = () => {
     } catch (error) {
       console.error('Error accepting user:', error)
     }
+  }
+  console.log(user)
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Pending Registration':
+        return 'blue'
+      case 'Email Confirmed':
+        return 'violet'
+      case 'In Progress':
+        return 'orange'
+      case 'Complete':
+        return 'green'
+      case 'Rejected':
+        return 'red'
+      default:
+        return 'gray'
+    }
+  }
+
+  const handleClose = () => {
+    setShowPdfViewer(false)
   }
 
   return (
@@ -134,9 +163,27 @@ const UserProfilePage = () => {
               </Box>
             }
             title={
-              <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                {user.name}
-              </Typography>
+              <Box sx={{ display: 'flex', gap: '15px' }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                  {user.name}
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2px 4px',
+                    borderRadius: '4px',
+                    backgroundColor: getStatusColor(user.status_name),
+                    color: 'white',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  <Typography variant="body2" sx={{ color: 'white' }}>
+                    {user.status_name}
+                  </Typography>
+                </Box>
+              </Box>
             }
             subheader={
               <Typography
@@ -251,6 +298,27 @@ const UserProfilePage = () => {
           </CardContent>
         </Card>
       </Box>
+      <Modal
+        open={showPdfViewer}
+        onClose={handleClose}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            width: '35%',
+            height: '80%',
+            bgcolor: 'background.paper',
+            p: 4,
+            overflow: 'auto',
+          }}
+        >
+          <PDFViewer pdfUrl={pdfUrl} />
+        </Box>
+      </Modal>
     </MainLayout>
   )
 }

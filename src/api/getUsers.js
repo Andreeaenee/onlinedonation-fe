@@ -133,7 +133,7 @@ export async function getUserById(id) {
   }
 }
 
-//update user
+//update user's status
 export async function updateUser(data) {
   try {
     const response = await axiosFetch({
@@ -142,6 +142,25 @@ export async function updateUser(data) {
       data: data,
     })
     return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}
+
+export async function updateUserProfile(id, data, isLogoFileFormat) {
+  try {
+    const response = await axiosFetch({
+      method: 'PUT',
+      url: process.env.REACT_APP_API_PORT + `users/${id}`,
+      data: data,
+      headers: {
+        'Content-Type': isLogoFileFormat
+          ? 'multipart/form-data'
+          : 'application/json',
+      },
+    })
+    return response.statusCode
   } catch (error) {
     console.log('Error: ', error)
     throw error
