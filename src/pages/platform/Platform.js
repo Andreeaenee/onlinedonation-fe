@@ -12,38 +12,8 @@ import ListCards from '../../components/listCards/ListCards'
 import ListDonationCard from '../../components/donationCard/ListDonationCard'
 import { useEffect, useState } from 'react'
 import { fetchDonationsData } from '../../api/getDonations'
-const restaurants = [
-  {
-    title: 'Ora lui Robert',
-    image: OraLuiRobertJPG,
-    avatar: OraluiRobert,
-    link: 'https://oraluirobert.com/',
-  },
-  {
-    title: 'Ora lui Robert',
-    image: OraLuiRobertJPG,
-    avatar: OraluiRobert,
-    link: 'https://oraluirobert.com/',
-  },
-  {
-    title: 'Ora lui Robert',
-    image: OraLuiRobertJPG,
-    avatar: OraluiRobert,
-    link: 'https://oraluirobert.com/',
-  },
-  {
-    title: 'Ora lui Robert',
-    image: OraLuiRobertJPG,
-    avatar: OraluiRobert,
-    link: 'https://oraluirobert.com/',
-  },
-  {
-    title: 'Ora lui Robert',
-    image: OraLuiRobertJPG,
-    avatar: OraluiRobert,
-    link: 'https://oraluirobert.com/',
-  },
-]
+import { getUsersToday } from '../../api/getUsers'
+
 
 const Platform = () => {
   const theme = useTheme()
@@ -51,12 +21,20 @@ const Platform = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
+  const [restaurants, setRestaurants] = useState([])
 
   useEffect(() => {
     fetchDonationsData('status', 2)
       .then((response) => {
         setData(response)
         setFilteredData(response)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+    getUsersToday()
+      .then((response) => {
+        setRestaurants(response)
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
@@ -111,10 +89,18 @@ const Platform = () => {
         </Grid>
         <SearchField handleSearch={handleSearch} />
       </Box>
-      <Typography sx={classes.mainText}>
-        Restaurants that are donating today
-      </Typography>
-      <ListCards cards={restaurants} page={'Platform'} />
+      {restaurants.length === 0 ? (
+        <Typography sx={classes.mainText}>
+          There are no restaurants donating today
+        </Typography>
+      ) : (
+        <>
+          <Typography sx={classes.mainText}>
+            Restaurants that are donating today
+          </Typography>
+          <ListCards cards={restaurants} page={'Platform'} />
+        </>
+      )}
       <Typography sx={classes.mainText}>Donations</Typography>
       {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>

@@ -166,3 +166,16 @@ export async function updateUserProfile(id, data, isLogoFileFormat) {
     throw error
   }
 }
+
+export async function getUsersToday() {
+  try {
+    const response = await axiosFetch({
+      method: 'GET',
+      url: process.env.REACT_APP_API_PORT + 'users/today',
+    })
+    return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}

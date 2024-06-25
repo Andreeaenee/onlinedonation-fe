@@ -14,9 +14,9 @@ const ListCards = ({ cards, page }) => {
         <Box sx={page === 'Platform' ? classes.cardPlatform : classes.card}>
           <MainCard
             page={page}
-            title={card.title}
-            avatar={card.avatar}
-            image={card.image}
+            title={card.name}
+            avatar={card.logoUrl}
+            image={card.coverPhotoUrl}
             link={card.link}
           />
         </Box>
