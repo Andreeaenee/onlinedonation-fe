@@ -10,17 +10,21 @@ const ListCards = ({ cards, page }) => {
 
   return (
     <Box sx={page === 'Platform' ? classes.cardsBoxPlatform : classes.cardsBox}>
-      {cards.map((card) => (
-        <Box sx={page === 'Platform' ? classes.cardPlatform : classes.card}>
-          <MainCard
-            page={page}
-            title={card.name}
-            avatar={card.logoUrl}
-            image={card.coverPhotoUrl}
-            link={card.link}
-          />
-        </Box>
-      ))}
+      {cards.length !== 0 &&
+        cards.map((card) => (
+          <Box
+            key={card.id}
+            sx={page === 'Platform' ? classes.cardPlatform : classes.card}
+          >
+            <MainCard
+              page={page}
+              title={card.name}
+              avatar={card.logoUrl}
+              image={card.coverPhotoUrl}
+              link={card.link}
+            />
+          </Box>
+        ))}
     </Box>
   )
 }

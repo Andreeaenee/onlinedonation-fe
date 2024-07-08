@@ -90,7 +90,6 @@ const UserProfilePage = () => {
       console.error('Error accepting user:', error)
     }
   }
-  console.log(user)
   const getStatusColor = (status) => {
     switch (status) {
       case 'Pending Registration':
@@ -309,7 +308,7 @@ const UserProfilePage = () => {
       >
         <Box
           sx={{
-            width: '35%',
+            width: '45%',
             height: '80%',
             bgcolor: 'background.paper',
             p: 4,

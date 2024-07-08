@@ -42,15 +42,15 @@ const DonationsAdmin = () => {
 
   return (
     <MainLayout>
-      <Header title="Donations management Admin" />
+      <Header title="Donations management" />
       <Box
         sx={{
           display: isMobile ? 'null' : 'flex',
           justifyContent: isMobile ? 'null' : 'space-between',
         }}
       >
-        <Box sx={{ display: 'flex' }}>
-          <Grid container spacing={5} sx={classes.filterGrid}>
+      <Box sx={{ display: 'flex', margin: '20px', marginLeft: '5px' }}>
+      {/* <Grid container spacing={5} sx={classes.filterGrid}>
             <Grid
               item
               xs={6}
@@ -83,7 +83,7 @@ const DonationsAdmin = () => {
                 )}
               </Button>
             </Grid>
-          </Grid>
+          </Grid> */}
           <SearchField
             isDonationsDashboard={true}
             handleSearch={handleSearch}

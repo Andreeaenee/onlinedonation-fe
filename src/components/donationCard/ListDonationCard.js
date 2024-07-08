@@ -10,25 +10,31 @@ const ListDonationCard = ({ donations, page }) => {
   const classes = DonationCardStyles(theme)
   if (!donations || !Array.isArray(donations)) {
     return (
-      <Box sx={{ marginTop: '20px', marginLeft: '10px' }}>
-        <Typography variant="h6">No donations found</Typography>
-      </Box>
+      <Typography sx={classes.mainText}>
+        No donations posted yet. Be the first to donate!
+      </Typography>
     )
   }
 
   return page === 'donations-admin' ? (
     <Box sx={{ ...classes.cardList, gap: '0px' }}>
-      {donations.slice().reverse().map((donation) => (
-        <DonationCardRow donation={donation} />
-      ))}
+      {donations
+        .slice()
+        .reverse()
+        .map((donation) => (
+          <DonationCardRow donation={donation} />
+        ))}
     </Box>
   ) : (
     <Box sx={classes.cardList}>
-      {donations.slice().reverse().map((donation) => (
-        <DonationCard donation={donation} />
-      ))}
+      {donations
+        .slice()
+        .reverse()
+        .map((donation) => (
+          <DonationCard donation={donation} />
+        ))}
     </Box>
-  );
+  )
 }
 
 export default ListDonationCard

@@ -120,6 +120,7 @@ const DonationCardRow = ({ donation }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  width: '100%',
                   padding: '4px 8px',
                   borderRadius: '4px',
                   backgroundColor: getStatusColor(donation.status_name),

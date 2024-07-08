@@ -295,7 +295,7 @@ const RegistrationInfo = () => {
               sx={{
                 position: 'absolute',
                 left: '36%',
-                top: '60%',
+                top: '50%',
                 width: '63%',
                 borderColor: Black100,
                 [theme.breakpoints.down('md')]: {

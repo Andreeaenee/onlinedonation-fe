@@ -60,10 +60,45 @@ const Navbar = () => {
   const handleMenuClose = () => {
     setAnchorEl(null)
   }
+
+  const handleLogout = () => {
+    setItem('loggedIn', false)
+    deleteCookie('jwt')
+    nav('/')
+    window.location.reload()
+  }
+
   const renderButtons = (isMobile) => {
     return buttons.map(({ path, id, label }) => {
-      if (!loggedIn && id === 3) {
+      if ((!loggedIn && (id === 3 || id === 5)) || (loggedIn && id === 4)) {
         return null
+      }
+
+      if (id === 5) {
+        return (
+          <ListItem key={id} sx={NavbBarStyles.buttonHover}>
+            <Button
+              disableRipple
+              onClick={handleLogout}
+              sx={{
+                ...NavbBarStyles.button,
+                ...NavbBarStyles.buttonHover,
+                color: activeButton === id ? Black800 : Black400,
+                ...(!isMobile && {
+                  fontWeight: activeButton === id ? 'bold' : 'normal',
+                  marginTop: activeButton === id ? '10px' : '0px',
+                }),
+              }}
+            >
+              <div style={{ display: 'inline-block' }}>
+                <ListItemText>{label}</ListItemText>
+                {activeButton === id && (
+                  <hr style={{ ...NavbBarStyles.hr }}></hr>
+                )}
+              </div>
+            </Button>
+          </ListItem>
+        )
       }
 
       return (
@@ -95,7 +130,6 @@ const Navbar = () => {
       )
     })
   }
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -148,29 +182,6 @@ const Navbar = () => {
           </>
         )}
       </Box>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleMenuClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            setItem('loggedIn', false)
-            deleteCookie('jwt')
-            nav('/')
-            window.location.reload()
-          }}
-        >
-          Logout
-          <Box sx={{ marginLeft: '5px', display: 'flex' }}>
-            <LogoutIcon width={'16px'} height={'16px'} />
-          </Box>
-        </MenuItem>
-      </Menu>
     </ThemeProvider>
   )
 }

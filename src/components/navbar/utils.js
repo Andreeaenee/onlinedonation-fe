@@ -19,4 +19,8 @@ export const buttons = [
       label: 'Login',
       path: '/login',
     },
+    {
+      id: 5,
+      label: 'Logout',
+    }
   ]

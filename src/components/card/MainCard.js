@@ -20,7 +20,7 @@ const MainCard = ({ title, avatar, image, link, page }) => {
       ></Box>
       <Typography sx={classes.title}>{title}</Typography>
       <MainButton
-        buttonText={page === 'Platform' ? 'Donations' : 'Donate Now'}
+        buttonText={page === 'Platform' ? 'Details' : 'Donate Now'}
         width={'150px'}
         height={'35px'}
         onClick={() => window.open(link, '/')}

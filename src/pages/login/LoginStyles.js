@@ -244,7 +244,7 @@ const LoginStyles = (theme) => ({
   regBox5: {
     position: 'absolute',
     left: '36%',
-    top: '62%',
+    top: '55%',
     width: '60%',
     height: '30%',
     padding: '10px',

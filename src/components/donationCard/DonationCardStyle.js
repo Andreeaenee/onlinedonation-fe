@@ -1,4 +1,4 @@
-import { Peach, Black400, Black100 } from '../../constants/colors';
+import { Peach, Black400, Black100, Wenge } from '../../constants/colors'
 
 const DonationCardStyles = (theme) => ({
   // list
@@ -156,6 +156,20 @@ const DonationCardStyles = (theme) => ({
     fontWeight: 'bold',
     marginLeft: theme.spacing(2),
   },
-});
+  mainText: {
+    textAlign: 'left',
+    fontSize: '20px',
+    fontWeight: 350,
+    lineHeight: '55px',
+    color: Wenge,
+    marginTop: '0px',
+    marginBottom: '20px',
+    marginLeft: '100px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '14px',
+      marginLeft: '50px',
+    },
+  },
+})
 
-export default DonationCardStyles;
+export default DonationCardStyles

@@ -114,8 +114,8 @@ const Users = () => {
           justifyContent: isMobile ? 'null' : 'space-between',
         }}
       >
-        <Box sx={{ display: 'flex' }}>
-          <Grid container spacing={5} sx={classes.filterGrid}>
+      <Box sx={{ display: 'flex', margin: '30px'}}>
+      {/* <Grid container spacing={5} sx={classes.filterGrid}>
             <Grid
               item
               xs={6}
@@ -148,7 +148,7 @@ const Users = () => {
                 )}
               </Button>
             </Grid>
-          </Grid>
+          </Grid> */}
           <SearchField
             isDonationsDashboard={true}
             handleSearch={handleSearch}

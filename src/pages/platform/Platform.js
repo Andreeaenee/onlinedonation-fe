@@ -6,14 +6,11 @@ import { useTheme } from '@mui/material/styles'
 import '../../styles.css'
 import PlatformStyles from './PlatformStyles'
 import SearchField from '../../components/SearchField'
-import OraLuiRobertJPG from '../../assets/photos/cardPhoto/OraLuiRobert.jpg'
-import OraluiRobert from '../../assets/photos/sponsors/Logo-oraluirobert.png'
 import ListCards from '../../components/listCards/ListCards'
 import ListDonationCard from '../../components/donationCard/ListDonationCard'
 import { useEffect, useState } from 'react'
 import { fetchDonationsData } from '../../api/getDonations'
 import { getUsersToday } from '../../api/getUsers'
-
 
 const Platform = () => {
   const theme = useTheme()
@@ -34,6 +31,10 @@ const Platform = () => {
       })
     getUsersToday()
       .then((response) => {
+        if (response === 'Users not found') {
+          setRestaurants([])
+          return
+        }
         setRestaurants(response)
       })
       .catch((error) => {
@@ -54,8 +55,8 @@ const Platform = () => {
   console.log('Donations Platform:', data)
   return (
     <WrapperPage>
-      <Box sx={{ display: 'flex' }}>
-        <Grid container spacing={5} sx={classes.filterGrid}>
+      <Box sx={{ display: 'flex', margin: '20px', marginLeft: '75px' }}>
+        {/* <Grid container spacing={5} sx={classes.filterGrid}>
           <Grid
             item
             xs={6}
@@ -86,7 +87,7 @@ const Platform = () => {
               {!isMobile && <Typography sx={classes.gridTypo}>Sort</Typography>}
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
         <SearchField handleSearch={handleSearch} />
       </Box>
       {restaurants.length === 0 ? (

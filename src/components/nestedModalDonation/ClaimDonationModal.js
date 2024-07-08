@@ -53,13 +53,15 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   const [status, setStatus] = useState(donation.status_name)
   const [statusId, setStatusId] = useState(null)
   const isTransportProvided = donation.transport_provided
+  const hasAccessToEditStatus = (userRole !== USER_ROLES.GUEST) && (userRole !== USER_ROLES.ONG || status !== 'unclaimed');
+
 
   useEffect(() => {
     const { firstName, lastName, contactNumber, aproxTime } = formState
     setIsFormComplete(
       firstName.length > 0 &&
         lastName.length > 0 &&
-        /^\d{9}$/.test(contactNumber) &&
+        /^\d{10}$/.test(contactNumber) &&
         /^\d*$/.test(aproxTime)
     )
   }, [formState])
@@ -140,7 +142,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
       }
     }
   }
-
+  console.log(status)
   const textField = ({ label, name, value, onChange, helperText }) => (
     <>
       <Typography sx={classes.fieldTypo}>{label}:</Typography>
@@ -264,9 +266,15 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                       Status: {status}
                     </Typography>
                   </Box>
-                  <ButtonBase onClick={() => setIsEditingStatus(true)}>
-                    <EditIcon fontSize="medium" sx={{ ml: 1, color: Wenge }} />
-                  </ButtonBase>
+                  {hasAccessToEditStatus &&
+                   (
+                        <ButtonBase onClick={() => setIsEditingStatus(true)}>
+                          <EditIcon
+                            fontSize="medium"
+                            sx={{ ml: 1, color: Wenge }}
+                          />
+                        </ButtonBase>
+                      )}
                 </>
               )}
             </Box>

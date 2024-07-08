@@ -52,15 +52,15 @@ const cards = [
 const reviews = [
   {
     review:
-      'Review lorem ipusm knrcrkc firnvernv ejrnvrjevb rvrj fjrebf rfbjr frjeg grg jer gvgje vew vjr vrjvvrv hur vv hf fh ur fruehfue f hu fe4hfUHFRFHY UR DH',
-    name: 'Jane Doe',
+      'Recomand cu căldură această aplicație tuturor restaurantelor și organizațiilor non-guvernamentale care doresc să facă o diferență în comunitatea lor și să contribuie la un viitor mai sustenabil. Este o soluție simplă, eficientă și extrem de necesară.',
+    name: 'Sebastian-Aurelian Ștefănigă',
     avatar: UvtLogo,
     date: '12.12.2021',
   },
   {
     review:
-      'Review lorem ipusm knrcrkc firnvernv ejrnvrjevb rvrj fjrebf rfbjr frjeg grg jer gvgje vew vjr vrjvvrv hur vv hf fh ur fruehfue f hu fe4hfUHFRFHY UR DH',
-    name: 'Oralui Robert',
+      'Utilizăm această aplicație de câteva luni și suntem extrem de mulțumiți de rezultatele obținute. Ne-a permis să accesăm rapid și eficient donațiile de mâncare de la restaurantele locale, pe care le-am distribuit persoanelor aflate în nevoie.',
+    name: 'Ora lui Robert',
     avatar: OraluiRobert,
     date: '12.12.2021',
   },
@@ -151,7 +151,7 @@ const AboutUs = () => {
       </Box>
       {activeTab === 1 && (
         <ListCards
-          cards={cards.map((card, index) => ({
+          cards={cards?.map((card, index) => ({
             ...card,
             key: card.id || index,
           }))}
