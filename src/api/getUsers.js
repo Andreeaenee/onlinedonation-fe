@@ -179,3 +179,16 @@ export async function getUsersToday() {
     throw error
   }
 }
+
+export async function deleteUser(id) {
+  try {
+    const response = await axiosFetch({
+      method: 'DELETE',
+      url: process.env.REACT_APP_API_PORT + 'users/' + id,
+    })
+    return response.statusCode
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}

@@ -52,7 +52,6 @@ const Platform = () => {
     }
   }
 
-  console.log('Donations Platform:', data)
   return (
     <WrapperPage>
       <Box sx={{ display: 'flex', margin: '20px', marginLeft: '75px' }}>

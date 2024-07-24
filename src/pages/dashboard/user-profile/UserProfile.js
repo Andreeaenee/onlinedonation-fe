@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import MainLayout from '../MainLayout'
 import Header from '../Header'
 import { getUserId, getUserRole } from '../../../api/login/utils'
-import { getUserById, updateUser } from '../../../api/getUsers'
+import { getUserById, updateUser, deleteUser } from '../../../api/getUsers'
 import {
   Box,
   Typography,
@@ -25,6 +25,7 @@ import { getItem } from '../../../utils/LocalStorageUtils'
 import MainButton from '../../../components/MainButton'
 import EditIcon from '@mui/icons-material/Edit'
 import PDFViewer from '../../../components/PDFViewer'
+import { Delete } from '@mui/icons-material'
 
 const UserProfilePage = () => {
   const params = useParams()
@@ -71,6 +72,16 @@ const UserProfilePage = () => {
 
   const handleEditClick = () => {
     navigate(`/dashboard/user-profile/edit-profile/${userId}`)
+  }
+
+  const handleDeleteClick = () => {
+    deleteUser(userId)
+      .then(() => {
+        navigate('/dashboard/users')
+      })
+      .catch((error) => {
+        console.error('Error deleting user:', error)
+      })
   }
 
   const acceptUser = async () => {
@@ -158,6 +169,11 @@ const UserProfilePage = () => {
                   <Button onClick={handleEditClick}>
                     <EditIcon />
                   </Button>
+                  {userRole === 3 && user.user_type_id !== 3 && (
+                    <Button onClick={handleDeleteClick}>
+                      <Delete sx={{ padding: '0px' }} />
+                    </Button>
+                  )}
                 </Box>
               </Box>
             }
