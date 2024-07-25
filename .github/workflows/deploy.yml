@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t andreeaene/hopeshare-frontend:${{ github.sha }} ./frontend
+          docker build -t andreeaene/hopeshare-frontend:${{ github.sha }} .
           docker tag andreeaene/hopeshare-frontend:${{ github.sha }} andreeaene/hopeshare-frontend:latest
           docker push andreeaene/hopeshare-frontend:${{ github.sha }}
           docker push andreeaene/hopeshare-frontend:latest
