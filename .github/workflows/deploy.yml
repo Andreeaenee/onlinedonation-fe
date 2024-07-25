@@ -38,11 +38,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/hopeshar
-            echo "REACT_APP_API_PORT=\"${{ secrets.REACT_APP_API_PORT }}\"" > .env
-            echo "REACT_APP_GOOGLE_CLIENT_ID=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\"" >> .env
-            echo "REACT_APP_GOOGLE_CLIENT_SECRET=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}\"" >> .env
-            echo "REACT_APP_REDIRECT_URI=\"${{ secrets.REACT_APP_REDIRECT_URI }}\"" >> .env
-            echo "REACT_APP_API_PORT_FE=\"${{ secrets.REACT_APP_API_PORT_FE }}\"" > .env
-            echo "PORT=\"${{ secrets.PORT }}\"" > .env
+            rm -f .env.frontend
+            echo "REACT_APP_API_PORT=\"${{ secrets.REACT_APP_API_PORT }}\"" > .env.frontend
+            echo "REACT_APP_GOOGLE_CLIENT_ID=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\"" >> .env.frontend
+            echo "REACT_APP_GOOGLE_CLIENT_SECRET=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}\"" >> .env.frontend
+            echo "REACT_APP_REDIRECT_URI=\"${{ secrets.REACT_APP_REDIRECT_URI }}\"" >> .env.frontend
+            echo "REACT_APP_API_PORT_FE=\"${{ secrets.REACT_APP_API_PORT_FE }}\"" >> .env.frontend
+            echo "PORT=\"${{ secrets.PORT }}\"" >> .env.frontend
             docker-compose pull
             docker-compose up -d
