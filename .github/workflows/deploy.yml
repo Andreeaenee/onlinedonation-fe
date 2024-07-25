@@ -46,5 +46,6 @@ jobs:
             echo "REACT_APP_REDIRECT_URI=\"${{ secrets.REACT_APP_REDIRECT_URI }}\"" >> .env.frontend
             echo "REACT_APP_API_PORT_FE=\"${{ secrets.REACT_APP_API_PORT_FE }}\"" >> .env.frontend
             echo "PORT=\"${{ secrets.PORT }}\"" >> .env.frontend
+            cat .env.frontend
             docker-compose pull
             docker-compose up -d
