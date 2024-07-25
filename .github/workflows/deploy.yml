@@ -39,6 +39,7 @@ jobs:
           script: |
             cd /home/hopeshar
             rm -f .env.frontend
+            touch .env.frontend
             echo "REACT_APP_API_PORT=\"${{ secrets.REACT_APP_API_PORT }}\"" > .env.frontend
             echo "REACT_APP_GOOGLE_CLIENT_ID=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\"" >> .env.frontend
             echo "REACT_APP_GOOGLE_CLIENT_SECRET=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}\"" >> .env.frontend
