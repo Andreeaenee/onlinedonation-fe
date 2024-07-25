@@ -8,27 +8,20 @@ on:
 
 jobs:
   build_and_deploy:
-    name: Docker Build and Deploy Frontend
+    name: Build and Deploy Frontend on Self-Hosted Server
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: Transfer Files to Self-Hosted Server
+        uses: appleboy/scp-action@v0.1.3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t andreeaene/hopeshare-frontend:${{ github.sha }} .
-          docker tag andreeaene/hopeshare-frontend:${{ github.sha }} andreeaene/hopeshare-frontend:latest
-          docker push andreeaene/hopeshare-frontend:${{ github.sha }}
-          docker push andreeaene/hopeshare-frontend:latest
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: '.'
+          target: '/home/hopeshar/frontend'
 
       - name: Deploy to Self-Hosted Server
         uses: appleboy/ssh-action@v0.1.9
@@ -37,14 +30,14 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/hopeshar
-            rm -f .env.frontend
-            touch .env.frontend
-            echo "REACT_APP_API_PORT=\"${{ secrets.REACT_APP_API_PORT }}\"" > .env.frontend
-            echo "REACT_APP_GOOGLE_CLIENT_ID=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\"" >> .env.frontend
-            echo "REACT_APP_GOOGLE_CLIENT_SECRET=\"${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}\"" >> .env.frontend
-            echo "REACT_APP_REDIRECT_URI=\"${{ secrets.REACT_APP_REDIRECT_URI }}\"" >> .env.frontend
-            echo "REACT_APP_API_PORT_FE=\"${{ secrets.REACT_APP_API_PORT_FE }}\"" >> .env.frontend
-            echo "PORT=\"${{ secrets.PORT }}\"" >> .env.frontend
-            docker-compose pull
-            docker-compose up -d
+            cd /home/hopeshar/frontend
+            rm -f .env
+            touch .env
+            echo "REACT_APP_API_PORT=${{ secrets.REACT_APP_API_PORT }}" > .env
+            echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
+            echo "REACT_APP_GOOGLE_CLIENT_SECRET=${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}" >> .env
+            echo "REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }}" >> .env
+            echo "REACT_APP_API_PORT_FE=${{ secrets.REACT_APP_API_PORT_FE }}" >> .env
+            echo "PORT=${{ secrets.PORT }}" >> .env
+            cd ..
+            docker-compose up -d --build

@@ -1,7 +1,6 @@
-# Stage 1: Build the react app
+# Stage 1: Build
 FROM node:22.1.0 as build
 
-# Set working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json
@@ -10,23 +9,23 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy all files
+# Copy the rest of the application code, including .env
 COPY . .
 
-# Build the react app
+# Build the application
 RUN npm run build
 
-# Stage 2: Serve the react app using `serve`
+# Stage 2: Serve
 FROM node:22.1.0-alpine
 
-# Install `serve` to serve the built app
+# Install serve globally
 RUN npm install -g serve
 
-# Copy the build output to the container
+# Copy the built application from the previous stage
 COPY --from=build /app/build /app/build
 
-# Expose port 3001
+# Expose the desired port
 EXPOSE 3001
 
-# Start the app using `serve`
+# Start the application using serve
 CMD ["serve", "-s", "/app/build", "-l", "3001"]
