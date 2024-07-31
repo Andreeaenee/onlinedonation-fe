@@ -40,4 +40,4 @@ jobs:
             echo "REACT_APP_API_PORT_FE=${{ secrets.REACT_APP_API_PORT_FE }}" >> .env
             echo "PORT=${{ secrets.PORT }}" >> .env
             cd ..
-            docker-compose up -d --build
+            sudo docker-compose up -d --build
