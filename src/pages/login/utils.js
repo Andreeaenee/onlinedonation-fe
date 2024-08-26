@@ -1,1 +1,1 @@
-export const organisationList = ['Ong', 'Restaurant']
+export const organisationList = ['ONG', 'Restaurant']

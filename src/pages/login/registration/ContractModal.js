@@ -29,7 +29,7 @@ const ContractModal = ({ open, handleClose, onComplete, email }) => {
         <DocusealForm
           src="http://85.120.206.58/d/tLzheb3mxuvfMk"
           email={email}
-          //logo={process.env.REACT_APP_API_PORT_FE + 'logo-nameless.png'}
+          logo={process.env.REACT_APP_API_PORT_FE + 'logo-nameless.png'}
           onComplete={(data) => {
             onComplete(data);
             handleClose();
