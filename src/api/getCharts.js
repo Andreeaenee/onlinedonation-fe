@@ -12,3 +12,15 @@ export async function getChartStatusData(id) {
     throw error
   }
 }
+
+export async function getTodaysDonations() {
+  try {
+    const response = await axiosFetch({
+      url: process.env.REACT_APP_API_PORT + 'donations/chartCount',
+    })
+    return response.responseData
+  } catch (error) {
+    console.log('Error: ', error)
+    throw error
+  }
+}

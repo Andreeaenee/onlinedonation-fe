@@ -33,3 +33,11 @@ export const SidebarButtons = [
 ]
 
 export const UsersHeaders = ['Id', 'Name', 'Email', 'Phone', 'Type']
+
+export const calculateTotalDonations = (donations) => {
+  let total = 0
+  donations.forEach((donation) => {
+    total += donation.value
+  })
+  return total
+}
