@@ -10,7 +10,6 @@ import {
   Select,
   MenuItem,
 } from '@mui/material'
-import { LoginPoster } from '../../../assets/photos'
 import { White400, PersianPink } from '../../../constants/colors'
 import LoginStyles from '../LoginStyles'
 import { useTheme } from '@mui/material/styles'
@@ -106,72 +105,64 @@ const Registration = () => {
 
   return (
     <WrapperPage>
-      <Box sx={classes.loginContainer}>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            {!isMobile && <LoginPoster width={'400px'} height={'550px'} />}
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={classes.signinContainer}>
-              <Typography sx={{ ...classes.header, marginBottom: '25px' }}>
-                Sign up to HopeShare
-              </Typography>
-              <form>
-                <Box sx={classes.form}>
-                  <Typography sx={classes.label}>
-                    Choose Organisation:
-                  </Typography>
-                  <Select
-                    value={organisation}
-                    onChange={handleOrganisationChange}
-                    displayEmpty
-                    variant="outlined"
-                    fullWidth
-                    sx={{ ...classes.field, marginBottom: '10px' }}
-                  >
-                    <MenuItem value="" disabled>
-                      Select an organisation
-                    </MenuItem>
-                    {organisationList.map((organisation, index) => (
-                      <MenuItem value={organisation} key={index}>
-                        {organisation}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <Typography sx={classes.label}>Email Address:</Typography>
-                  <TextField
-                    type="text"
-                    name="Email Address"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={(event) => setEmail(event.target.value)}
-                    value={email}
-                    height="35px"
-                    required
-                    // error={error}
-                    sx={classes.field}
-                  />
-                </Box>
-                <Box sx={classes.passwordBox}>
-                  <Typography sx={classes.label}>Password:</Typography>
-
-                  <TextField
-                    type="password"
-                    name="Password"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={(event) => setPassword(event.target.value)}
-                    value={password}
-                    height="35px"
-                    required
-                    // error={error}
-                    sx={classes.field}
-                  />
-                </Box>
+      <Box sx={classes.box}>
+        <Box sx={classes.loginContainer}>
+          <Typography sx={{ ...classes.header, marginBottom: '25px' }}>
+            Sign up to HopeShare
+          </Typography>
+          <form>
+            <Box sx={classes.form}>
+              <Typography sx={classes.label}>Choose Organisation:</Typography>
+              <Select
+                value={organisation}
+                onChange={handleOrganisationChange}
+                displayEmpty
+                variant="outlined"
+                fullWidth
+                sx={{ ...classes.field, marginBottom: '10px' }}
+              >
+                <MenuItem value="" disabled>
+                  Select an organisation
+                </MenuItem>
+                {organisationList.map((organisation, index) => (
+                  <MenuItem value={organisation} key={index}>
+                    {organisation}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Typography sx={classes.label}>Email Address:</Typography>
+              <TextField
+                type="text"
+                name="Email Address"
+                variant="outlined"
+                color="secondary"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+                height="35px"
+                required
+                // error={error}
+                sx={classes.field}
+              />
+              <Box sx={classes.passwordBox}>
+                <Typography sx={classes.label}>Password:</Typography>
+                <TextField
+                  type="password"
+                  name="Password"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
+                  height="35px"
+                  required
+                  // error={error}
+                  sx={classes.field}
+                />
+              </Box>
+              <Box sx={classes.signInButton}>
                 <MainButton
                   buttonText="Sign up"
                   onClick={handleUserCredentialsSubmit}
-                  width={'45%'}
+                  width={'100%'}
                   height={'35px'}
                   fontSize={14}
                   lineHeight={24}
@@ -183,10 +174,10 @@ const Registration = () => {
                   mobileStyles={{ height: '20px', marginTop: '15px' }}
                   mobileStylesText={{ fontSize: 12 }}
                 />
-              </form>
+              </Box>
             </Box>
-          </Grid>
-        </Grid>
+          </form>
+        </Box>
       </Box>
       {errorSnackbar && (
         <CustomizedSnackbars

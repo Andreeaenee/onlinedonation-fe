@@ -1,3 +1,4 @@
+import { Opacity } from '@mui/icons-material'
 import {
   Black800,
   Wenge,
@@ -10,22 +11,33 @@ import {
 import { FormField } from '../../utils/FormField'
 
 const LoginStyles = (theme) => ({
+  box: {
+    height: '80vh',
+    backgroundImage: 'url("/FruitsBanner.png")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
   loginContainer: {
-    display: 'flex',
+    display: 'box',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '1000px',
+    width: '600px',
     height: '550px',
-    borderTop: '1px dashed #e0e0e0',
-    borderBottom: '1px dashed #e0e0e0',
-    borderRight: '1px dashed #e0e0e0',
+    border: '1px solid #e0e0e0',
     margin: 'auto',
     marginTop: '50px',
+    borderRadius: '15px',
+    backgroundColor: White100,
   },
   signupBox: {
     display: 'flex',
-    justifyContent: 'right',
+    justifyContent: 'center',
+    width: '100%',
   },
   notAMember: {
     fontSize: '16px',
@@ -42,14 +54,9 @@ const LoginStyles = (theme) => ({
     padding: '10px',
     color: '#A160FF',
   },
-  signinContainer: {
-    height: '90%',
-    width: '100%',
-    marginTop: '20px',
-  },
   header: {
-    textAlign: 'left',
-    marginTop: '100px',
+    textAlign: 'center',
+    margin: '70px 0 10px 0',
     fontSize: '24px',
     fontWeight: 700,
     lineHeight: 1.25,
@@ -60,11 +67,19 @@ const LoginStyles = (theme) => ({
     width: '90%',
     height: '35px',
     backgroundColor: '#447CEC',
-    marginTop: '10px',
+    margin: '10px 0 0 30px',
     borderRadius: '5px',
     '&:hover': {
       backgroundColor: '#2864DD',
     },
+  },
+  signInButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    margin: '30px 0 0 0',
   },
   buttonComponents: {
     display: 'flex',
@@ -87,6 +102,7 @@ const LoginStyles = (theme) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
+    margin: '0 auto',
     width: '90%',
   },
   label: {
@@ -114,7 +130,7 @@ const LoginStyles = (theme) => ({
   passwordBox: {
     display: 'flex',
     flexDirection: 'column',
-    width: '90%',
+    width: '100%',
     marginTop: '20px',
   },
   forgotPassword: {

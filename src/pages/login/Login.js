@@ -3,7 +3,6 @@ import { useState } from 'react'
 import WrapperPage from '../../components/WrapperPage'
 import {
   Typography,
-  Grid,
   Box,
   Link,
   Button,
@@ -11,7 +10,6 @@ import {
   TextField,
   useMediaQuery,
 } from '@mui/material'
-import { LoginPoster } from '../../assets/photos'
 import { White400, Black100, PersianPink } from '../../constants/colors'
 import { GoogleIcon } from '../../assets/icons'
 import LoginStyles from './LoginStyles'
@@ -84,7 +82,7 @@ const Login = () => {
       case `The registration process isn't complete yet. Wait for the admin approval`:
         return `The registration process isn't complete yet. Wait for the admin approval.`
       default:
-        return  'Error posting user credentials.'
+        return 'Error posting user credentials.'
     }
   }
 
@@ -96,51 +94,39 @@ const Login = () => {
 
   return (
     <WrapperPage>
-      <Box sx={classes.loginContainer}>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            {!isMobile && <LoginPoster width={'400px'} height={'550px'} />}
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={classes.signupBox}>
-              <Typography sx={classes.notAMember}>Not a member? </Typography>
-              <Link href="/login/register" sx={classes.signupButton}>
-                Sign up now
-              </Link>
-            </Box>
-            <Box sx={classes.signinContainer}>
-              <Typography sx={classes.header}>Sign in to HopeShare</Typography>
-              <Button sx={classes.button} onClick={loginWithGoogle}>
-                <Box sx={classes.buttonComponents}>
-                  <GoogleIcon width={'14px'} height={'14px'} />
-                  <Typography sx={classes.whiteTypo}>
-                    Sign in with Google
-                  </Typography>
-                </Box>
-              </Button>
-              <Box sx={classes.dividerBox}>
-                <Divider sx={{ flexGrow: 1 }} />
-                <Typography sx={{ margin: '0 10px', color: Black100 }}>
-                  Or
+      <Box sx={classes.box}>
+        <Box sx={classes.loginContainer}>
+            <Typography sx={classes.header}>Sign in to HopeShare</Typography>
+            <Button sx={classes.button} onClick={loginWithGoogle}>
+              <Box sx={classes.buttonComponents}>
+                <GoogleIcon width={'14px'} height={'14px'} />
+                <Typography sx={classes.whiteTypo}>
+                  Sign in with Google
                 </Typography>
-                <Divider sx={{ flexGrow: 1 }} />
               </Box>
-              <form onKeyPress={handleKeyPress}>
-                <Box sx={classes.form}>
-                  <Typography sx={classes.label}>Email Address:</Typography>
-                  <TextField
-                    type="text"
-                    name="Email Address"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={(event) => setEmail(event.target.value)}
-                    value={email}
-                    height="35px"
-                    required
-                    // error={error}
-                    sx={classes.field}
-                  />
-                </Box>
+            </Button>
+            <Box sx={classes.dividerBox}>
+              <Divider sx={{ flexGrow: 1 }} />
+              <Typography sx={{ margin: '0 10px', color: Black100 }}>
+                Or
+              </Typography>
+              <Divider sx={{ flexGrow: 1 }} />
+            </Box>
+            <form onKeyPress={handleKeyPress}>
+              <Box sx={classes.form}>
+                <Typography sx={classes.label}>Email Address:</Typography>
+                <TextField
+                  type="text"
+                  name="Email Address"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(event) => setEmail(event.target.value)}
+                  value={email}
+                  height="35px"
+                  required
+                  // error={error}
+                  sx={classes.field}
+                />
                 <Box sx={classes.passwordBox}>
                   <Box
                     sx={{ display: 'flex', justifyContent: 'space-between' }}
@@ -167,34 +153,43 @@ const Login = () => {
                     sx={classes.field}
                   />
                 </Box>
-                <MainButton
-                  buttonText="Sign in"
-                  onClick={handleLogInSubmit}
-                  width={'45%'}
-                  height={'35px'}
-                  fontSize={14}
-                  lineHeight={24}
-                  marginTop={'20px'}
-                  borderRadius={'7px'}
-                  backgroundColor={'#D83F6D'}
-                  backgroundColorHover={PersianPink}
-                  textColor={White400}
-                  mobileStyles={{ height: '20px', marginTop: '15px' }}
-                  mobileStylesText={{ fontSize: 12 }}
-                />
-              </form>
-            </Box>
-          </Grid>
-        </Grid>
+                <Box sx={classes.signInButton}>
+                  <MainButton
+                    buttonText="Sign in"
+                    onClick={handleLogInSubmit}
+                    width={'100%'}
+                    height={'35px'}
+                    fontSize={14}
+                    lineHeight={24}
+                    borderRadius={'7px'}
+                    backgroundColor={'#D83F6D'}
+                    backgroundColorHover={PersianPink}
+                    textColor={White400}
+                    mobileStyles={{ height: '20px', marginTop: '15px' }}
+                    mobileStylesText={{ fontSize: 12 }}
+                  />
+                </Box>
+
+                <Box sx={classes.signupBox}>
+                  <Typography sx={classes.notAMember}>
+                    Not a member?{' '}
+                  </Typography>
+                  <Link href="/login/register" sx={classes.signupButton}>
+                    Sign up now
+                  </Link>
+                </Box>
+              </Box>
+            </form>
+        </Box>
+        {errorSnackbar && (
+          <CustomizedSnackbars
+            openSnackBar={openSnackBar}
+            setOpenSnackBar={handleOpenSnackBar}
+            message={errorSnackbar}
+            severity="error"
+          />
+        )}
       </Box>
-      {errorSnackbar && (
-        <CustomizedSnackbars
-          openSnackBar={openSnackBar}
-          setOpenSnackBar={handleOpenSnackBar}
-          message={errorSnackbar}
-          severity="error"
-        />
-      )}
     </WrapperPage>
   )
 }

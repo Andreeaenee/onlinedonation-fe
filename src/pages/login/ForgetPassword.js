@@ -90,109 +90,113 @@ const ForgetPassword = () => {
   }
 
   return (
-    <Box
-      sx={{
-        ...classes.loginContainer,
-        ...classes.forgotPasswordContainer,
-      }}
-    >
-      <Typography sx={{ ...classes.typoFont20, textAlign: 'center' }}>
-        {isEmailVerified
-          ? 'Enter the new password'
-          : "Enter your email and we'll send you a link to reset your password"}
-      </Typography>
-      <form
-        style={{
-          ...classes.form,
-          alignItems: 'center',
-          marginTop: '20px',
-          width: '100%',
+    <Box sx={classes.box}>
+      <Box
+        sx={{
+          ...classes.loginContainer,
+          ...classes.forgotPasswordContainer,
         }}
       >
-        <Box sx={{ ...classes.fieldContainer, alignContent: 'center' }}>
-          {isEmailVerified ? (
-            <>
-              <Typography sx={classes.label}>Password:</Typography>
-              <TextField
-                type="password"
-                name="Password"
-                variant="outlined"
-                color="secondary"
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-                height="35px"
-                required
-                error={error}
-                sx={classes.field}
-              />
-              <Typography sx={classes.label}>Confirm Password:</Typography>
-              <TextField
-                type="password"
-                name="Confirm Password"
-                variant="outlined"
-                color="secondary"
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                value={confirmPassword}
-                height="35px"
-                required
-                error={error}
-                sx={classes.field}
-              />
-            </>
-          ) : (
-            <>
-              <Typography sx={classes.label}>Email Address:</Typography>
-              <TextField
-                type="text"
-                name="Email Address"
-                variant="outlined"
-                color="secondary"
-                onChange={(event) => setEmail(event.target.value)}
-                value={email}
-                height="35px"
-                required
-                error={error}
-                sx={classes.field}
-              />
-            </>
-          )}
-        </Box>
-        <Box sx={{ alignContent: 'center' }}>
-          <MainButton
-            buttonText={isEmailVerified ? 'Reset Pass' : 'Send Link'}
-            onClick={
-              isEmailVerified ? handleResetPassword : handleForgotPasswordSubmit
-            }
-            width={'230px'}
-            height={'35px'}
-            fontSize={14}
-            lineHeight={24}
-            marginTop={'20px'}
-            borderRadius={'7px'}
-            backgroundColor={'#D83F6D'}
-            backgroundColorHover={PersianPink}
-            textColor={White400}
-            mobileStyles={{ height: '20px', marginTop: '15px' }}
-            mobileStylesText={{ fontSize: 12 }}
+        <Typography sx={{ ...classes.typoFont20, textAlign: 'center' }}>
+          {isEmailVerified
+            ? 'Enter the new password'
+            : "Enter your email and we'll send you a link to reset your password"}
+        </Typography>
+        <form
+          style={{
+            ...classes.form,
+            alignItems: 'center',
+            marginTop: '20px',
+            width: '100%',
+          }}
+        >
+          <Box sx={{ ...classes.fieldContainer, alignContent: 'center' }}>
+            {isEmailVerified ? (
+              <>
+                <Typography sx={classes.label}>Password:</Typography>
+                <TextField
+                  type="password"
+                  name="Password"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
+                  height="35px"
+                  required
+                  error={error}
+                  sx={classes.field}
+                />
+                <Typography sx={classes.label}>Confirm Password:</Typography>
+                <TextField
+                  type="password"
+                  name="Confirm Password"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  value={confirmPassword}
+                  height="35px"
+                  required
+                  error={error}
+                  sx={classes.field}
+                />
+              </>
+            ) : (
+              <>
+                <Typography sx={classes.label}>Email Address:</Typography>
+                <TextField
+                  type="text"
+                  name="Email Address"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(event) => setEmail(event.target.value)}
+                  value={email}
+                  height="35px"
+                  required
+                  error={error}
+                  sx={classes.field}
+                />
+              </>
+            )}
+          </Box>
+          <Box sx={{ alignContent: 'center' }}>
+            <MainButton
+              buttonText={isEmailVerified ? 'Reset Pass' : 'Send Link'}
+              onClick={
+                isEmailVerified
+                  ? handleResetPassword
+                  : handleForgotPasswordSubmit
+              }
+              width={'230px'}
+              height={'35px'}
+              fontSize={14}
+              lineHeight={24}
+              marginTop={'20px'}
+              borderRadius={'7px'}
+              backgroundColor={'#D83F6D'}
+              backgroundColorHover={PersianPink}
+              textColor={White400}
+              mobileStyles={{ height: '20px', marginTop: '15px' }}
+              mobileStylesText={{ fontSize: 12 }}
+            />
+          </Box>
+        </form>
+        {errorSnackbar && (
+          <CustomizedSnackbars
+            openSnackBar={openSnackBar}
+            setOpenSnackBar={handleOpenSnackBar}
+            message={errorSnackbar}
+            severity="error"
           />
-        </Box>
-      </form>
-      {errorSnackbar && (
-        <CustomizedSnackbars
-          openSnackBar={openSnackBar}
-          setOpenSnackBar={handleOpenSnackBar}
-          message={errorSnackbar}
-          severity="error"
-        />
-      )}
-      {successSnackbar && (
-        <CustomizedSnackbars
-          openSnackBar={openSnackBar}
-          setOpenSnackBar={handleOpenSnackBar}
-          message={successSnackbar}
-          severity="success"
-        />
-      )}
+        )}
+        {successSnackbar && (
+          <CustomizedSnackbars
+            openSnackBar={openSnackBar}
+            setOpenSnackBar={handleOpenSnackBar}
+            message={successSnackbar}
+            severity="success"
+          />
+        )}
+      </Box>
     </Box>
   )
 }
