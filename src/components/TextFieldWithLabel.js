@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Typography, TextField } from '@mui/material'
 import { FormField } from '../utils/FormField'
+import { useTranslation } from 'react-i18next'
 
 const TextFieldWithLabel = ({
   label,
@@ -12,10 +13,10 @@ const TextFieldWithLabel = ({
   isMobile,
   checked,
 }) => {
-  let textFieldStyles = { ...classes.textFieldContainer } // Default styles
+  let textFieldStyles = { ...classes.textFieldContainer }
+  const { t } = useTranslation()
 
-  // Applying additional styles specifically for 'Contact Number' based on isMobile and checked
-  if (label === 'Contact Number' && !isMobile && !checked) {
+  if (label === t('contactNumber') && !isMobile && !checked) {
     textFieldStyles = {
       ...textFieldStyles,
       marginTop: '75px', // Adjust based on your requirement

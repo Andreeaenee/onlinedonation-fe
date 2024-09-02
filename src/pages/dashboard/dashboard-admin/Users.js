@@ -8,18 +8,18 @@ import {
   Typography,
   useMediaQuery,
   Badge,
-  Grid,
-  Button,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { getUsers } from '../../../api/getUsers'
 import CustomTable from '../../../components/table/CustomTable'
 import { UsersHeaders } from '../utils'
 import SearchField from '../../../components/SearchField'
-import { FilterIcon, SortIcon } from '../../../assets/icons'
+// import { FilterIcon, SortIcon } from '../../../assets/icons'
 import DonationsRestPageStyles from '../donations/DonationsStyles'
+import { useTranslation } from 'react-i18next'
 
 const Users = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = DonationsRestPageStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -106,7 +106,7 @@ const Users = () => {
 
   return (
     <MainLayout>
-      <Header title={'Users'} />
+      <Header title={t('users')} />
 
       <Box
         sx={{
@@ -174,7 +174,7 @@ const Users = () => {
                 color="secondary"
                 variant="dot"
               >
-                Requests
+                {t('requests')}
               </Badge>
             }
           />
@@ -191,7 +191,7 @@ const Users = () => {
         {activeTab === 1 &&
           (userRequests.length === 0 ? (
             <Box sx={{ marginTop: '20px', marginLeft: '10px' }}>
-              <Typography variant="h6">No requests found</Typography>
+              <Typography variant="h6">{t('noRequests')}</Typography>
             </Box>
           ) : (
             <Box sx={{ marginTop: '20px' }}>

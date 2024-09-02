@@ -7,10 +7,12 @@ import RestaurantLogo from '../../assets/photos/cardPhoto/restaurantLogo.png';
 import dayjs from 'dayjs';
 import { truncateString } from '../../utils/StringUtils';
 import { getUserById } from '../../api/getUsers';
+import { useTranslation } from 'react-i18next';
 
 const DonationCard = ({ donation }) => {
   const theme = useTheme();
   const classes = DonationCardStyles(theme);
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const date = dayjs(donation.date).format('DD.MM.YYYY');
   const [restaurantData, setRestaurantData] = useState({});
@@ -46,7 +48,7 @@ const DonationCard = ({ donation }) => {
             {truncateString(donation.description, 100)}
           </Typography>
           <Typography sx={classes.date}>
-            Date: <span style={{ fontWeight: 300 }}>{date}</span>
+            {t('date')} <span style={{ fontWeight: 300 }}>{date}</span>
           </Typography>
         </Card>
       </ButtonBase>

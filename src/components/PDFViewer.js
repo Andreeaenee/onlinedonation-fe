@@ -18,7 +18,7 @@ const PDFViewer = ({ pdfUrl }) => {
   return (
     <div style={{ overflowY: 'scroll', height: '80vh' }}>
       <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-        {Array.from(new Array(numPages), (el, index) => (
+        {Array.from(new Array(numPages), (index) => (
           <Page key={`page_${index + 1}`} pageNumber={index + 1} />
         ))}
       </Document>

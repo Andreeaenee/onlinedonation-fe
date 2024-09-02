@@ -17,6 +17,7 @@ import CountCard from '../../components/countCards/CountCard'
 import ReviewCarousel from '../../components/reviews/ReviewCarousel'
 import OrganisationKeyPoint from './OrganisationKeyPoint'
 import SponsorLogo from './SponsorLogo'
+import { useTranslation } from 'react-i18next'
 
 const cards = [
   {
@@ -49,24 +50,8 @@ const cards = [
   },
 ]
 
-const reviews = [
-  {
-    review:
-      'Recomand cu căldură această aplicație tuturor restaurantelor și organizațiilor non-guvernamentale care doresc să facă o diferență în comunitatea lor și să contribuie la un viitor mai sustenabil. Este o soluție simplă, eficientă și extrem de necesară.',
-    name: 'Sebastian-Aurelian Ștefănigă',
-    avatar: UvtLogo,
-    date: '12.12.2021',
-  },
-  {
-    review:
-      'Utilizăm această aplicație de câteva luni și suntem extrem de mulțumiți de rezultatele obținute. Ne-a permis să accesăm rapid și eficient donațiile de mâncare de la restaurantele locale, pe care le-am distribuit persoanelor aflate în nevoie.',
-    name: 'Ora lui Robert',
-    avatar: OraluiRobert,
-    date: '12.12.2021',
-  },
-]
-
 const AboutUs = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = styles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -76,19 +61,33 @@ const AboutUs = () => {
     setActiveTab(newValue)
   }
 
+  const reviews = [
+    {
+      review: t('reviewStefaniga'),
+      name: 'Sebastian-Aurelian Ștefănigă',
+      avatar: UvtLogo,
+      date: '12.08.2024',
+    },
+    {
+      review: t('reviewOraLuiRobert'),
+      name: 'Ora lui Robert',
+      avatar: OraluiRobert,
+      date: '23.12.2024',
+    },
+  ]
+
   return (
     <WrapperPage>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', maxHeight: '600px' }}>
         <Box sx={classes.typoBox}>
           <Typography sx={classes.title}>
-            Inspiring a new generation <br />
-            by <span style={{ color: Peach }}>Fighting</span> against waste
+            {t('aboutUsText')}{' '}
+            <span style={{ color: Peach }}>{t('aboutUsText2')}</span>{' '}
+            {t('aboutUsText3')}
           </Typography>
-          <Typography sx={classes.smallText}>
-            Fighting Hunger. Giving Hope.
-          </Typography>
+          <Typography sx={classes.smallText}>{t('aboutUsText4')}</Typography>
           <MainButton
-            buttonText={'Join Us'}
+            buttonText={t('joinUs')}
             width={'325px'}
             height={'45px'}
             marginTop={'50px'}
@@ -99,9 +98,9 @@ const AboutUs = () => {
             mobileStylesText={{ fontSize: 12 }}
           />
         </Box>
-        <MainSaladPhoto height={'95%'} />
+        <MainSaladPhoto height={'100%'} />
       </Box>
-      <Typography sx={classes.mainText}>Sponsors</Typography>
+      <Typography sx={classes.mainText}>{t('sponsors')}</Typography>
       <Grid container spacing={5} justifyContent="center" marginBottom={'30px'}>
         <SponsorLogo src={UvtLogo} alt="Uvt Logo" />
         <SponsorLogo src={TazzLogo} alt="Tazz Logo" />
@@ -109,19 +108,19 @@ const AboutUs = () => {
       </Grid>
       <Grid container spacing={5} justifyContent="center">
         <OrganisationKeyPoint
-          title={'Restaurants'}
+          title={t('restaurants')}
           icon={<Restaurants width={isMobile ? '25px' : '35px'} />}
-          text1={'Donate surplus food'}
-          text2={'Promotion of daily specials or charity menus'}
-          text3={'Involvement in charity events or thematic campaigns'}
+          text1={t('restText1')}
+          text2={t('restText2')}
+          text3={t('restText3')}
         />
         <Box sx={classes.verticalHr} />
         <OrganisationKeyPoint
-          title={'NGOs'}
+          title={t('ngos')}
           icon={<ONGs width={isMobile ? '25px' : '35px'} />}
-          text1={'Claiming and collecting food donations'}
-          text2={'Publishing campaigns to meet specific needs'}
-          text3={'Collaboration with restaurants for special events'}
+          text1={t('ngoText1')}
+          text2={t('ngoText2')}
+          text3={t('ngoText3')}
         />
       </Grid>
       <Box sx={{ marginTop: '20px' }}>
@@ -138,14 +137,14 @@ const AboutUs = () => {
               ...classes.tabStyles,
               backgroundColor: activeTab === 0 ? White100 : 'transparent',
             }}
-            label="Participating Restaurants"
+            label={t('participatingRestaurants')}
           />
           <Tab
             style={{
               ...classes.tabStyles,
               backgroundColor: activeTab === 1 ? White100 : 'transparent',
             }}
-            label="Participating NGOs"
+            label={t('participatingNGOs')}
           />
         </Tabs>
       </Box>
@@ -155,8 +154,8 @@ const AboutUs = () => {
             ...card,
             key: card.id || index,
           }))}
-          page={'About Us'}
-          type={'MainCard'}
+          page={t('aboutUs')}
+          // type={'MainCard'}
         />
       )}
       <Box
@@ -169,23 +168,21 @@ const AboutUs = () => {
           flexDirection: 'column',
         }}
       >
-        <Typography sx={classes.mainText}>
-          Reasons why we Love HOPESHARE
-        </Typography>
+        <Typography sx={classes.mainText}>{t('reasonsHopeShare')}</Typography>
         <CountCard
-          title={'Humans Impacted'}
+          title={t('humanImpacted')}
           bgColor={'#B9E3D9'}
           number={1000000}
           icon={<Humans />}
         />
         <CountCard
-          title={'Saved Food Waste'}
+          title={t('savedFoodWaste')}
           bgColor={'#A7E3B4'}
           number={1000000}
           icon={<Food />}
         />
         <CountCard
-          title={'Contributors'}
+          title={t('contributors')}
           bgColor={'#82B16B'}
           number={2000}
           icon={<Hands />}

@@ -8,10 +8,9 @@ import {
   useMediaQuery,
   List,
   ListItem,
-  Menu,
-  MenuItem,
+  Divider,
 } from '@mui/material'
-import { Logo, LogoutIcon } from '../../assets/icons/index'
+import { Logo} from '../../assets/icons/index'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
@@ -20,10 +19,14 @@ import { Menu as MenuIcon } from '@mui/icons-material'
 import NavbBarStyles from './NavbarStyles'
 import { MOBILE_BREAKPOINT } from '../../constants/constants'
 import { getItem, setItem } from '../../utils/LocalStorageUtils'
-import { buttons } from './utils'
 import { deleteCookie } from '../../utils/CookieManager'
+import LanguageSwitcher from '../LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
+import { generateButtons } from './utils'
 
 const Navbar = () => {
+  const { t } = useTranslation()
+  const buttons = generateButtons(t)
   const [activeButton, setActiveButton] = useState()
   const isMobile = useMediaQuery(MOBILE_BREAKPOINT)
   const [isDrawerOpen, setDrawerOpen] = useState(false)
@@ -37,7 +40,7 @@ const Navbar = () => {
   useEffect(() => {
     const matchingButton =
       location.pathname === '/'
-        ? buttons.findIndex((button) => button.label === 'About Us') + 1
+        ? buttons.findIndex((button) => button.label === t('aboutUsPage')) + 1
         : buttons.findIndex((button) =>
             location.pathname.includes(button.path)
           ) + 1
@@ -177,6 +180,12 @@ const Navbar = () => {
               >
                 <Logo width={'100px'} height={'100px'} />
               </Link>
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ mx: 2, height: '50px', marginTop: '15%' }}
+              />
+              <LanguageSwitcher />
             </Box>
             <Box sx={NavbBarStyles.buttonsBox}>{renderButtons(false)}</Box>
           </>

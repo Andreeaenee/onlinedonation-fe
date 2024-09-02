@@ -10,10 +10,12 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from '../../assets/icons'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
   const theme = useTheme()
   const classes = FooterStyle(theme)
+  const { t } = useTranslation()
 
   return (
     <>
@@ -26,7 +28,7 @@ const Footer = () => {
           height: '400px',
         }}
       >
-        <Typography sx={classes.mainText}>Follow us on social media</Typography>
+        <Typography sx={classes.mainText}>{t('footerSocials')}</Typography>
         <Box
           sx={{
             display: 'flex',
@@ -43,7 +45,7 @@ const Footer = () => {
           <TwitterIcon />
         </Box>
         <Typography sx={classes.smallText}>
-          © 2024 - All rights reserved. Created by Ene Andreea &{' '}
+          {t('footer')} Ene Andreea &{' '}
           <Link href="https://oraluirobert.com/">Ora lui Robert</Link>
         </Typography>
       </Box>

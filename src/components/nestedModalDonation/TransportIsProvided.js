@@ -7,8 +7,10 @@ import { FormField } from '../../utils/FormField'
 import { updateDonationDataClaim } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
 import { getUserId } from '../../api/login/utils'
+import { useTranslation } from 'react-i18next'
 
 const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
+  const { t } = useTranslation()
   const ong_id = getUserId()
   const [address, setAddress] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
@@ -74,18 +76,18 @@ const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
           padding: '0px',
         }}
       >
-        Transportation is provided by the restaurant
+        {t('transportationProvided')}
       </Typography>
       <form>
         {textField({
-          label: 'Adress',
+          label: t('address'),
           textValue: address,
           onChangeAction: (e) => setAddress(e.target.value),
           helperText: 'Type the address where the food will be delivered',
         })}
       </form>
       <MainButton
-        buttonText={'Confirm'}
+        buttonText={t('confirm')}
         width={'80%'}
         marginLeft={'10%'}
         margin={'20px 0px 20px 0px'}
@@ -98,7 +100,7 @@ const TransportIsProvidedModal = ({ classes, theme, onClose, donation }) => {
       <CustomizedSnackbars
         openSnackBar={openSnackBar}
         setOpenSnackBar={setOpenSnackBar}
-        message="The donation has been claimed successfully!"
+        message={t('dclaimsuccess')}
         severity="success"
       ></CustomizedSnackbars>
     </Box>

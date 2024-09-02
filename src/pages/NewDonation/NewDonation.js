@@ -24,9 +24,11 @@ import { FormField } from '../../utils/FormField'
 import './styles.css'
 import { White100, PersianPink, MountbattenPink } from '../../constants/colors'
 import { getUserId } from '../../api/login/utils'
+import { useTranslation } from 'react-i18next'
 
 const NewDonation = () => {
-  const userId = getUserId();
+  const { t } = useTranslation()
+  const userId = getUserId()
   const theme = useTheme()
   const classes = NewDonationStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -60,8 +62,7 @@ const NewDonation = () => {
       description: !description || description.length > 500,
       from: !from,
       to: !to || to < from,
-      contactNumber:
-        !contactNumber || contactNumber.length !== 10,
+      contactNumber: !contactNumber || contactNumber.length !== 10,
       image: !image,
       pickupPoint: checked ? false : !pickupPoint,
     }
@@ -97,8 +98,7 @@ const NewDonation = () => {
     const response = await postDonationData(formData)
     if (response === 201) {
       handleOpenSnackBar()
-    }
-    else {
+    } else {
       console.log('Error posting donation')
     }
     setChecked(false)
@@ -156,11 +156,11 @@ const NewDonation = () => {
           style={{ ...classes.formBox, width: isMobile ? '90%' : '60%' }}
           onSubmit={handleSubmit}
         >
-          <Typography sx={classes.title}>Create a Donation</Typography>
+          <Typography sx={classes.title}>{t('createDonation')}</Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextFieldWithLabel
-                label="Title"
+                label={t('title')}
                 textValue={title}
                 onChangeAction={(e) => setTitle(e.target.value)}
                 error={errors.title}
@@ -169,7 +169,7 @@ const NewDonation = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextFieldWithLabel
-                label="Quantity/menu"
+                label={t('quantity/menu')}
                 textValue={quantity}
                 onChangeAction={(e) => setQuantity(e.target.value)}
                 error={errors.quantity}
@@ -180,7 +180,7 @@ const NewDonation = () => {
           <label htmlFor="upload-input" style={classes.labelPhoto}>
             <div style={{ ...classes.uploadPhoto, ...classes.divPhoto }}>
               <UploadIcon width={'20px'} height={'20px'} />
-              <span style={classes.spanPhoto}>Upload Image</span>
+              <span style={classes.spanPhoto}>{t('uploadImage')}</span>
             </div>
           </label>
           <input
@@ -206,7 +206,7 @@ const NewDonation = () => {
             </div>
           )}
 
-          <Typography sx={classes.fieldTypo}>Description:</Typography>
+          <Typography sx={classes.fieldTypo}>{t('description')}:</Typography>
           <TextField
             multiline
             rows={4}
@@ -225,13 +225,15 @@ const NewDonation = () => {
               ...FormField.field,
             }}
           />
-          <Typography sx={classes.fieldTypo}>Available time slot:</Typography>
+          <Typography sx={classes.fieldTypo}>
+            {t('availableTimeSlot')}:
+          </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Box>{hoursPicker('From', from, setFrom)}</Box>
+              <Box>{hoursPicker(t('from'), from, setFrom)}</Box>
 
               {isMobile ? (
-                <Box>{hoursPicker('To', to, setTo)}</Box>
+                <Box>{hoursPicker(t('to'), to, setTo)}</Box>
               ) : (
                 <>
                   <FormControlLabel
@@ -244,11 +246,11 @@ const NewDonation = () => {
                         color="secondary"
                       />
                     }
-                    label="Transport Provided?"
+                    label={t('transportProvided')}
                   />
                   {!checked && (
                     <TextFieldWithLabel
-                      label="Pickup Point"
+                      label={t('pickUpPoint')}
                       textValue={pickupPoint}
                       onChangeAction={(e) => setPickupPoint(e.target.value)}
                       error={errors.pickupPoint}
@@ -271,11 +273,11 @@ const NewDonation = () => {
                         color="secondary"
                       />
                     }
-                    label="Transport Provided?"
+                    label={t('transportProvided')}
                   />
                   {!checked && (
                     <TextFieldWithLabel
-                      label="Pickup Point"
+                      label={t('pickUpPoint')}
                       textValue={pickupPoint}
                       onChangeAction={(e) => setPickupPoint(e.target.value)}
                       error={errors.pickupPoint}
@@ -284,10 +286,10 @@ const NewDonation = () => {
                   )}
                 </>
               ) : (
-                <Box>{hoursPicker('To', to, setTo)}</Box>
+                <Box>{hoursPicker(t('to'), to, setTo)}</Box>
               )}
               <TextFieldWithLabel
-                label="Contact Number"
+                label={t('contactNumber')}
                 textValue={contactNumber}
                 onChangeAction={(e) => setContactNumber(e.target.value)}
                 error={errors.contactNumber}
@@ -298,7 +300,7 @@ const NewDonation = () => {
             </Grid>
           </Grid>
           <MainButton
-            buttonText="Post Donation"
+            buttonText={t('postDonation')}
             onClick={handleSubmit}
             width={'90%'}
             height={'50px'}
@@ -318,13 +320,13 @@ const NewDonation = () => {
       <CustomizedSnackbars
         openSnackBar={openSnackBar}
         setOpenSnackBar={setOpenSnackBar}
-        message="The donation has been successfully posted!"
+        message={t('dCreateSuccess')}
         severity="success"
       ></CustomizedSnackbars>
       <CustomizedSnackbars
         openSnackBar={error_complete_fileds}
         setOpenSnackBar={setError_complete_fileds}
-        message="Please fill in all required fields correctly."
+        message={t('errorValideFields')}
         severity="error"
       ></CustomizedSnackbars>
     </WrapperPage>

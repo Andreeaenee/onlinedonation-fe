@@ -1,7 +1,9 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 const Unauthorized = () => {
+  const { t } = useTranslation()
   return (
     <Box
       sx={{
@@ -22,7 +24,7 @@ const Unauthorized = () => {
           color: '#d32f2f',
         }}
       >
-        Unauthorized
+        {t('unauthorized')}
       </Typography>
       <Typography
         variant="body1"
@@ -32,7 +34,7 @@ const Unauthorized = () => {
           color: '#555',
         }}
       >
-        You do not have permission to view this page.
+        {t('unauthorizedText')}
       </Typography>
     </Box>
   )

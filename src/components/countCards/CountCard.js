@@ -3,10 +3,13 @@ import { Card, Typography, Box } from '@mui/material'
 import CountUp from 'react-countup'
 import { useTheme } from '@mui/material/styles'
 import CountCardStyles from './CountCardStyles'
+import { useTranslation } from 'react-i18next'
 
 const CountCard = ({ title, bgColor, icon, number }) => {
   const theme = useTheme()
   const classes = CountCardStyles(theme)
+  const { t } = useTranslation();
+
   return (
     <Card
       sx={{
@@ -17,9 +20,9 @@ const CountCard = ({ title, bgColor, icon, number }) => {
       <Typography sx={classes.title}>{title}</Typography>
       <Typography sx={classes.number}>
         <CountUp end={number} duration={3} separator=" " />{' '}
-        {title === 'Humans Impacted'
+        {title === t('humanImpacted')
           ? 'm'
-          : title === 'Saved Food Waste'
+          : title === t('savedFoodWaste')
           ? 't'
           : ''}
       </Typography>

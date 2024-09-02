@@ -4,14 +4,16 @@ import { useTheme } from '@mui/material/styles'
 import DonationCardStyles from './DonationCardStyle'
 import DonationCard from './DonationCardSquare'
 import DonationCardRow from './DonationCardRows'
+import { useTranslation } from 'react-i18next'
 
 const ListDonationCard = ({ donations, page }) => {
   const theme = useTheme()
   const classes = DonationCardStyles(theme)
+  const { t } = useTranslation()
   if (!donations || !Array.isArray(donations)) {
     return (
       <Typography sx={classes.mainText}>
-        No donations posted yet. Be the first to donate!
+        {t('noDPosted')}
       </Typography>
     )
   }

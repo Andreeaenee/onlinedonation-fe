@@ -2,8 +2,10 @@ import React from 'react'
 import { Avatar, Typography, Box, Grid } from '@mui/material'
 import ReviewStyles from './ReviewStyle'
 import { useTheme } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 
 const Review = ({ avatar, name, review, date }) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = ReviewStyles(theme)
   return (
@@ -24,7 +26,9 @@ const Review = ({ avatar, name, review, date }) => {
           <Typography sx={classes.name}>{name}</Typography>
         </Grid>
         <Grid item xs={4} sm={6} textAlign="right">
-          <Typography sx={classes.date}>Date: {date}</Typography>
+          <Typography sx={classes.date}>
+            {t('date')}: {date}
+          </Typography>
         </Grid>
       </Grid>
       <Typography sx={classes.review}>{review}</Typography>

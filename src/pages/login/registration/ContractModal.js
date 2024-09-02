@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Modal, Button } from '@mui/material';
-import { DocusealForm } from '@docuseal/react';
+import React from 'react'
+import { Box, Modal, Button } from '@mui/material'
+import { DocusealForm } from '@docuseal/react'
+import { t } from 'i18next'
 
 const ContractModal = ({ open, handleClose, onComplete, email }) => {
   return (
@@ -31,19 +32,19 @@ const ContractModal = ({ open, handleClose, onComplete, email }) => {
           email={email}
           logo={process.env.REACT_APP_API_PORT_FE + 'logo-nameless.png'}
           onComplete={(data) => {
-            onComplete(data);
-            handleClose();
+            onComplete(data)
+            handleClose()
           }}
           allowToResubmit="true"
         />
         <Box mt={2} display="flex" justifyContent="flex-end">
           <Button onClick={handleClose} color="primary">
-            Close
+            {t('close')}
           </Button>
         </Box>
       </Box>
     </Modal>
-  );
-};
+  )
+}
 
-export default ContractModal;
+export default ContractModal

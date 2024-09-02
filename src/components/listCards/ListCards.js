@@ -3,18 +3,26 @@ import { Box } from '@mui/material'
 import MainCard from '../card/MainCard'
 import { useTheme } from '@mui/material/styles'
 import ListCardStyles from './ListCardStyles'
+import { useTranslation } from 'react-i18next'
 
 const ListCards = ({ cards, page }) => {
   const theme = useTheme()
   const classes = ListCardStyles(theme)
+  const { t } = useTranslation()
 
   return (
-    <Box sx={page === 'Platform' ? classes.cardsBoxPlatform : classes.cardsBox}>
+    <Box
+      sx={
+        page === t('platformPage') ? classes.cardsBoxPlatform : classes.cardsBox
+      }
+    >
       {cards.length !== 0 &&
         cards.map((card) => (
           <Box
             key={card.id}
-            sx={page === 'Platform' ? classes.cardPlatform : classes.card}
+            sx={
+              page === t('platformPage') ? classes.cardPlatform : classes.card
+            }
           >
             <MainCard
               page={page}

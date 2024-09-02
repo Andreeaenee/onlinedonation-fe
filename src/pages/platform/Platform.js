@@ -1,7 +1,6 @@
 import React from 'react'
 import WrapperPage from '../../components/WrapperPage'
-import { Typography, Box, Grid, Button, useMediaQuery } from '@mui/material'
-import { FilterIcon, SortIcon } from '../../assets/icons'
+import { Typography, Box } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import '../../styles.css'
 import PlatformStyles from './PlatformStyles'
@@ -11,11 +10,12 @@ import ListDonationCard from '../../components/donationCard/ListDonationCard'
 import { useEffect, useState } from 'react'
 import { fetchDonationsData } from '../../api/getDonations'
 import { getUsersToday } from '../../api/getUsers'
+import { useTranslation } from 'react-i18next'
 
 const Platform = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = PlatformStyles(theme)
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [restaurants, setRestaurants] = useState([])
@@ -41,6 +41,7 @@ const Platform = () => {
         console.error('Error fetching data:', error)
       })
   }, [])
+
   const handleSearch = (input) => {
     if (input.length >= 3) {
       const filtered = data.filter((donation) =>
@@ -91,20 +92,20 @@ const Platform = () => {
       </Box>
       {restaurants.length === 0 ? (
         <Typography sx={classes.mainText}>
-          There are no restaurants donating today
+          {t('noRestaurantsDonatingToday')}
         </Typography>
       ) : (
         <>
           <Typography sx={classes.mainText}>
-            Restaurants that are donating today
+            {t('restThatAreDonatingToday')}
           </Typography>
-          <ListCards cards={restaurants} page={'Platform'} />
+          <ListCards cards={restaurants} page={t('platformPage')} />
         </>
       )}
-      <Typography sx={classes.mainText}>Donations</Typography>
+      <Typography sx={classes.mainText}>{t('donations')}</Typography>
       {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
-          There are no donations yet
+          {t('noDPosted')}
         </Typography>
       )}
       <ListDonationCard donations={filteredData} />

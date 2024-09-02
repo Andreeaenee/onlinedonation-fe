@@ -8,8 +8,10 @@ import { White400, PersianPink } from '../../constants/colors'
 import CustomizedSnackbars from '../../components/SnackBar'
 import { forgetPassword, resetPassword } from '../../api/getUsers'
 import { setItem, getItem } from '../../utils/LocalStorageUtils'
+import { useTranslation } from 'react-i18next'
 
 const ForgetPassword = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = LoginStyles(theme)
   const [email, setEmail] = useState('')
@@ -42,13 +44,13 @@ const ForgetPassword = () => {
     let email = getItem('email')
     try {
       if (!password || !confirmPassword) {
-        throw new Error('Please fill in all fields.')
+        throw new Error(t('errorFillAllFields'))
       }
       if (!validatePassword(password)) {
-        throw new Error('Password must be at least 8 characters long.')
+        throw new Error(t('errorValidPassword'))
       }
       if (password !== confirmPassword) {
-        throw new Error('Passwords do not match.')
+        throw new Error(t('errorPasswordMatch'))
       }
       const response = await resetPassword({ password, email })
       if (response.statusCode === 200) {
@@ -65,10 +67,10 @@ const ForgetPassword = () => {
   const handleForgotPasswordSubmit = async () => {
     try {
       if (!email) {
-        throw new Error('Please fill in all fields.')
+        throw new Error(t('errorFillAllFields'))
       }
       if (!validateEmail(email)) {
-        throw new Error('Please enter a valid email address.')
+        throw new Error(t('errorValidEmail'))
       }
       let storedEmail = getItem('email')
       if (!storedEmail) {
@@ -77,7 +79,7 @@ const ForgetPassword = () => {
       const response = await forgetPassword({ email })
       console.log('Response', response)
       if (response === 200) {
-        setSuccessSnackbar('Email sent successfully. Please check your inbox.')
+        setSuccessSnackbar(t('emailSentsuccess'))
         handleOpenSnackBar()
       }
     } catch (error) {
@@ -99,8 +101,8 @@ const ForgetPassword = () => {
       >
         <Typography sx={{ ...classes.typoFont20, textAlign: 'center' }}>
           {isEmailVerified
-            ? 'Enter the new password'
-            : "Enter your email and we'll send you a link to reset your password"}
+            ? t('enterNewPassword')
+            : t('enterEmailForReset')}
         </Typography>
         <form
           style={{
@@ -113,7 +115,7 @@ const ForgetPassword = () => {
           <Box sx={{ ...classes.fieldContainer, alignContent: 'center' }}>
             {isEmailVerified ? (
               <>
-                <Typography sx={classes.label}>Password:</Typography>
+                <Typography sx={classes.label}>{t('password')}:</Typography>
                 <TextField
                   type="password"
                   name="Password"
@@ -126,7 +128,7 @@ const ForgetPassword = () => {
                   error={error}
                   sx={classes.field}
                 />
-                <Typography sx={classes.label}>Confirm Password:</Typography>
+                <Typography sx={classes.label}>{t('confirmPassword')}:</Typography>
                 <TextField
                   type="password"
                   name="Confirm Password"
@@ -142,7 +144,7 @@ const ForgetPassword = () => {
               </>
             ) : (
               <>
-                <Typography sx={classes.label}>Email Address:</Typography>
+                <Typography sx={classes.label}>{t('email')}:</Typography>
                 <TextField
                   type="text"
                   name="Email Address"
@@ -160,7 +162,7 @@ const ForgetPassword = () => {
           </Box>
           <Box sx={{ alignContent: 'center' }}>
             <MainButton
-              buttonText={isEmailVerified ? 'Reset Pass' : 'Send Link'}
+              buttonText={isEmailVerified ? t('resetPassword') : t('sendLink')}
               onClick={
                 isEmailVerified
                   ? handleResetPassword

@@ -5,27 +5,27 @@ import {
   UsersIcon,
 } from '../../assets/icons'
 
-export const SidebarButtons = [
+export const SidebarButtons = (t) => [
   {
-    name: 'Dashboard',
+    name: t('dashboardPage'),
     icon: <DashboardIcon width={'25px'} height={'25px'} />,
     path: '/dashboard',
     role: [1, 2, 3],
   },
   {
-    name: 'Donations',
+    name: t('donations'),
     icon: <DonationPostIcon width={'25px'} height={'25px'} />,
     path: '/dashboard/donations',
     role: [1, 2, 3],
   },
   {
-    name: 'Users',
+    name: t('users'),
     icon: <UsersIcon width={'25px'} height={'25px'} />,
     path: '/dashboard/users',
     role: [3],
   },
   {
-    name: 'User Profile',
+    name: t('userProfile'),
     icon: <ProfileIcon width={'25px'} height={'25px'} />,
     path: '/dashboard/user-profile',
     role: [1, 2, 3],

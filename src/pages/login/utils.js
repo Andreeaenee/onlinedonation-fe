@@ -1,1 +1,1 @@
-export const organisationList = ['ONG', 'Restaurant']
+export const organisationList = (t) => [t('ngo'), t('restaurant')]

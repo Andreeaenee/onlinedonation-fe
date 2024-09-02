@@ -23,8 +23,10 @@ import { getItem } from '../../../utils/LocalStorageUtils'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
 import CustomizedSnackbars from '../../../components/SnackBar'
+import { useTranslation } from 'react-i18next'
 
 const UserProfileEditMode = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const userId = params.userId
   const [user, setUser] = useState(null)
@@ -120,7 +122,7 @@ const UserProfileEditMode = () => {
   if (!user) {
     return (
       <MainLayout>
-        <Header title="User Profile" />
+        <Header title={t('userProfile')} />
         <Typography sx={{ textAlign: 'center', mt: 4 }}>Loading...</Typography>
       </MainLayout>
     )
@@ -145,7 +147,7 @@ const UserProfileEditMode = () => {
 
   return (
     <MainLayout>
-      <Header title="User Profile - Edit Mode" />
+      <Header title={t('userProfile')} />
       <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
         <Card sx={{ width: '100%', borderRadius: 2, boxShadow: 3 }}>
           <CardHeader
@@ -159,7 +161,7 @@ const UserProfileEditMode = () => {
               <Box sx={{ display: 'flex', gap: '15px' }}>
                 <TextField
                   name="name"
-                  label="Name"
+                  label={t('firstName') + t('lastName')}
                   value={formData.name || ''}
                   onChange={handleInputChange}
                   sx={{ flexGrow: 1 }}
@@ -198,13 +200,13 @@ const UserProfileEditMode = () => {
               gutterBottom
               sx={{ borderBottom: 1, borderColor: 'divider' }}
             >
-              Contact Information
+              {t('contactInformation')}
             </Typography>
             <List>
               <ListItem>
                 <TextField
                   name="email"
-                  label="Email"
+                  label={t('email')}
                   value={formData.email || ''}
                   onChange={handleInputChange}
                   fullWidth
@@ -213,7 +215,7 @@ const UserProfileEditMode = () => {
               <ListItem>
                 <TextField
                   name="phone"
-                  label="Phone"
+                  label={t('phone')}
                   value={formData.phone || ''}
                   onChange={handleInputChange}
                   fullWidth
@@ -222,7 +224,7 @@ const UserProfileEditMode = () => {
               <ListItem>
                 <TextField
                   name="address"
-                  label="Address"
+                  label={t('address')}
                   value={formData.address || ''}
                   onChange={handleInputChange}
                   fullWidth
@@ -244,7 +246,7 @@ const UserProfileEditMode = () => {
               gutterBottom
               sx={{ borderBottom: 1, borderColor: 'divider' }}
             >
-              Additional Information
+              {t('additionalInfo')}
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -252,7 +254,7 @@ const UserProfileEditMode = () => {
                   <ListItem>
                     <TextField
                       name="description"
-                      label="Description"
+                      label={t('description')}
                       value={formData.description || ''}
                       onChange={handleInputChange}
                       multiline
@@ -279,7 +281,7 @@ const UserProfileEditMode = () => {
                       }}
                       sx={{ mt: 1 }}
                     >
-                      View Document
+                      {t('viewDocument')}
                     </Button>
                   </ListItem>
                   <ListItem>
@@ -292,7 +294,7 @@ const UserProfileEditMode = () => {
                       }}
                       sx={{ mt: 1 }}
                     >
-                      View Contract
+                      {t('viewContract')}
                     </Button>
                   </ListItem>
                 </List>
@@ -322,7 +324,7 @@ const UserProfileEditMode = () => {
                         component="label"
                         sx={{ mt: 1 }}
                       >
-                        Change Logo
+                        {t('changeLogo')}
                         <input
                           type="file"
                           hidden
@@ -336,7 +338,7 @@ const UserProfileEditMode = () => {
                       component="label"
                       sx={{ mt: 1 }}
                     >
-                      Upload Logo
+                      {t('uploadLogo')}
                       <input
                         type="file"
                         hidden
@@ -355,7 +357,7 @@ const UserProfileEditMode = () => {
                 onClick={handleCancelClick}
                 sx={{ mr: 2 }}
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                 variant="contained"
@@ -363,7 +365,7 @@ const UserProfileEditMode = () => {
                 startIcon={<SaveIcon />}
                 onClick={handleSaveClick}
               >
-                Save
+                {t('save')}
               </Button>
             </Box>
           </CardContent>
@@ -373,7 +375,7 @@ const UserProfileEditMode = () => {
         <CustomizedSnackbars
           openSnackBar={openSnackBar}
           setOpenSnackBar={handleOpenSnackBar}
-          message={'User updated successfully!'}
+          message={t('userUpdated')}
           severity="success"
         />
       )}

@@ -1,15 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import WrapperPage from '../../../components/WrapperPage'
-import {
-  Typography,
-  Grid,
-  Box,
-  TextField,
-  useMediaQuery,
-  Select,
-  MenuItem,
-} from '@mui/material'
+import { Typography, Box, TextField, Select, MenuItem } from '@mui/material'
 import { White400, PersianPink } from '../../../constants/colors'
 import LoginStyles from '../LoginStyles'
 import { useTheme } from '@mui/material/styles'
@@ -17,11 +9,12 @@ import MainButton from '../../../components/MainButton'
 import { organisationList } from '../utils'
 import CustomizedSnackbars from '../../../components/SnackBar'
 import { postUserCredentials } from '../../../api/getUsers'
+import { useTranslation } from 'react-i18next'
 
 const Registration = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = LoginStyles(theme)
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [organisation, setOrganisation] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -67,13 +60,13 @@ const Registration = () => {
   const handleUserCredentialsSubmit = async () => {
     try {
       if (!organisation || !email || !password) {
-        throw new Error('Please fill in all fields.')
+        throw new Error(t('errorFillAllFields'))
       }
       if (!validateEmail(email)) {
-        throw new Error('Please enter a valid email address.')
+        throw new Error(t('errorValidEmail'))
       }
       if (!validatePassword(password)) {
-        throw new Error('Password must be at least 8 characters long.')
+        throw new Error(t('errorValidPassword'))
       }
 
       const formData = new FormData()
@@ -84,9 +77,7 @@ const Registration = () => {
       const response = await postUserCredentials(formData)
 
       if (response === 201) {
-        setSuccessSnackbar(
-          'User created successfully. Please verify your email.'
-        )
+        setSuccessSnackbar(t('userCreated'))
         handleOpenSnackBar()
       } else {
         throw new Error('Unexpected response from server.')
@@ -94,7 +85,7 @@ const Registration = () => {
     } catch (error) {
       let errorMessage
       if (error.response && error.response.status === 400) {
-        errorMessage = 'Email already exists. Please try another email.'
+        errorMessage = t('errorEmailExists')
       } else {
         errorMessage = error.message || 'Error posting user credentials.'
       }
@@ -108,11 +99,13 @@ const Registration = () => {
       <Box sx={classes.box}>
         <Box sx={classes.loginContainer}>
           <Typography sx={{ ...classes.header, marginBottom: '25px' }}>
-            Sign up to HopeShare
+            {t('signUp')}
           </Typography>
           <form>
             <Box sx={classes.form}>
-              <Typography sx={classes.label}>Choose Organisation:</Typography>
+              <Typography sx={classes.label}>
+                {t('chooseOrganization')}
+              </Typography>
               <Select
                 value={organisation}
                 onChange={handleOrganisationChange}
@@ -122,15 +115,15 @@ const Registration = () => {
                 sx={{ ...classes.field, marginBottom: '10px' }}
               >
                 <MenuItem value="" disabled>
-                  Select an organisation
+                  {t('selectOrganization')}
                 </MenuItem>
-                {organisationList.map((organisation, index) => (
+                {organisationList(t).map((organisation, index) => (
                   <MenuItem value={organisation} key={index}>
                     {organisation}
                   </MenuItem>
                 ))}
               </Select>
-              <Typography sx={classes.label}>Email Address:</Typography>
+              <Typography sx={classes.label}>{t('email')}:</Typography>
               <TextField
                 type="text"
                 name="Email Address"
@@ -144,7 +137,7 @@ const Registration = () => {
                 sx={classes.field}
               />
               <Box sx={classes.passwordBox}>
-                <Typography sx={classes.label}>Password:</Typography>
+                <Typography sx={classes.label}>{t('password')} : </Typography>
                 <TextField
                   type="password"
                   name="Password"
@@ -160,7 +153,7 @@ const Registration = () => {
               </Box>
               <Box sx={classes.signInButton}>
                 <MainButton
-                  buttonText="Sign up"
+                  buttonText={t('signUp')}
                   onClick={handleUserCredentialsSubmit}
                   width={'100%'}
                   height={'35px'}

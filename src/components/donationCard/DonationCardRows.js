@@ -20,10 +20,12 @@ import { deleteDonationData } from '../../api/getDonations'
 import CustomizedSnackbars from '../SnackBar'
 import { useTheme } from '@mui/material/styles'
 import DonationCardStyles from './DonationCardStyle'
+import { useTranslation } from 'react-i18next'
 
 const DonationCardRow = ({ donation }) => {
   const theme = useTheme()
   const classes = DonationCardStyles(theme)
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [openSnackBar, setOpenSnackBar] = useState(false)
@@ -67,9 +69,8 @@ const DonationCardRow = ({ donation }) => {
     event.stopPropagation()
     deleteDonationData(donation.donation_id)
       .then((response) => {
-        console.log('Donation deleted:', response)
         if (response === 200) {
-          setSnackbarMessage('Donation deleted successfully!')
+          setSnackbarMessage(t('ddeletesuccess'))
           handleOpenSnackBar()
           setTimeout(() => {
             window.location.reload()
@@ -96,7 +97,7 @@ const DonationCardRow = ({ donation }) => {
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={2}>
               <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>
-                {donation.restaurant_name || 'Restaurant Name'}
+                {donation.restaurant_name || t('restName')}
               </Typography>
             </Grid>
             <Grid item xs={2}>
@@ -146,7 +147,7 @@ const DonationCardRow = ({ donation }) => {
                   <ListItemIcon>
                     <EditIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText>Edit</ListItemText>
+                  <ListItemText>{t('edit')}</ListItemText>
                 </MenuItem>
                 <MenuItem
                   onClick={(event) => {
@@ -156,7 +157,7 @@ const DonationCardRow = ({ donation }) => {
                   <ListItemIcon>
                     <DeleteIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText>Delete</ListItemText>
+                  <ListItemText>{t('delete')}</ListItemText>
                 </MenuItem>
               </Menu>
             </Grid>

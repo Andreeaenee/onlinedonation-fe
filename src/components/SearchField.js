@@ -3,6 +3,7 @@ import { TextField, InputAdornment, styled, useMediaQuery } from '@mui/material'
 import { MountbattenPink } from '../constants/colors'
 import { SearchIcon } from '../assets/icons'
 import { useTheme } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 
 const StyledTextField = styled(TextField)(
   ({ theme, isDonationsDashboard }) => ({
@@ -23,20 +24,21 @@ const StyledTextField = styled(TextField)(
         borderColor: MountbattenPink,
       },
       '& input': {
-        padding:  isDonationsDashboard ? '6px 0 0px' : '15px 0 0px',
+        padding: isDonationsDashboard ? '6px 0 0px' : '15px 0 0px',
       },
     },
   })
 )
 
 const SearchField = ({ isDonationsDashboard, handleSearch }) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <StyledTextField
       variant="outlined"
-      placeholder="Search..."
+      placeholder={t('search')}
       sx={{
         marginTop: isMobile || isDonationsDashboard ? '30px' : '50px',
       }}
@@ -53,11 +55,11 @@ const SearchField = ({ isDonationsDashboard, handleSearch }) => {
               padding: '8px',
             }}
           >
-            <SearchIcon style={{ marginTop: '20%'}}/>
+            <SearchIcon style={{ marginTop: '20%' }} />
           </InputAdornment>
         ),
       }}
-      onChange={(e) => handleSearch(e.target.value)} 
+      onChange={(e) => handleSearch(e.target.value)}
       isDonationsDashboard={isDonationsDashboard}
     />
   )

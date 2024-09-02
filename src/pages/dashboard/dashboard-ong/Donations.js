@@ -10,8 +10,10 @@ import DonationsRestPageStyles from '../donations/DonationsStyles'
 import { fetchDonationsData } from '../../../api/getDonations'
 import ListDonationCard from '../../../components/donationCard/ListDonationCard'
 import { getUserId } from '../../../api/login/utils'
+import { useTranslation } from 'react-i18next'
 
 const DonationsOng = () => {
+  const { t } = useTranslation()
   const userId = getUserId()
   const theme = useTheme()
   const classes = DonationsRestPageStyles(theme)
@@ -43,15 +45,15 @@ const DonationsOng = () => {
 
   return (
     <MainLayout>
-      <Header title="Donations management" />
+      <Header title={t('donationsManagement')} />
       <Box
         sx={{
           display: isMobile ? 'null' : 'flex',
           justifyContent: isMobile ? 'null' : 'space-between',
         }}
       >
-       <Box sx={{ display: 'flex', margin: '20px', marginLeft: '10px' }}>
-      {/* <Grid container spacing={5} sx={classes.filterGrid}>
+        <Box sx={{ display: 'flex', margin: '20px', marginLeft: '10px' }}>
+          {/* <Grid container spacing={5} sx={classes.filterGrid}>
             <Grid
               item
               xs={6}
@@ -93,7 +95,7 @@ const DonationsOng = () => {
       </Box>
       {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
-          There are no donations yet
+          {t('noDPosted')}
         </Typography>
       )}
       <ListDonationCard donations={filteredData} />

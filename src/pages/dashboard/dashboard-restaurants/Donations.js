@@ -11,6 +11,7 @@ import MainButton from '../../../components/MainButton'
 import { fetchDonationsData } from '../../../api/getDonations'
 import ListDonationCard from '../../../components/donationCard/ListDonationCard'
 import { getUserId } from '../../../api/login/utils'
+import { t } from 'i18next'
 
 const DonationsRestaurant = () => {
   const userId = getUserId()
@@ -43,7 +44,7 @@ const DonationsRestaurant = () => {
   }
   return (
     <MainLayout>
-      <Header title="Donations management" />
+      <Header title={t('donationsManagement')} />
       <Box
         sx={{
           display: isMobile ? 'null' : 'flex',
@@ -92,7 +93,7 @@ const DonationsRestaurant = () => {
         </Box>
         {!isMobile && (
           <MainButton
-            buttonText={'Post a Donation'}
+            buttonText={t('postDonation')}
             width={'225px'}
             height={'45px'}
             fontSize={18}
@@ -102,7 +103,7 @@ const DonationsRestaurant = () => {
         )}
         {isMobile && (
           <MainButton
-            buttonText={'Post a Donation'}
+            buttonText={t('postDonation')}
             width={'94%'}
             height={'40px'}
             fontSize={14}
@@ -114,7 +115,7 @@ const DonationsRestaurant = () => {
       </Box>
       {filteredData.length === 0 && (
         <Typography sx={{ ...classes.mainText, textAlign: 'center' }}>
-          There are no donations yet
+          {t('noDPosted')}
         </Typography>
       )}
       <ListDonationCard donations={filteredData} page={'donations-admin'}/>

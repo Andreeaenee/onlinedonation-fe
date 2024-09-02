@@ -15,7 +15,7 @@ const styles = (theme) => ({
   },
   smallText: {
     margin: '10px 200px 0 55px',
-    fontSize: '26px',
+    fontSize: '22px',
     fontWeight: 550,
     lineHeight: '45px',
     color: Wenge,
@@ -26,8 +26,10 @@ const styles = (theme) => ({
     },
   },
   typoBox: {
+    maxWidth: '53%',
     [theme.breakpoints.down('md')]: {
       padding: '10px',
+      maxWidth: '95%',
     },
   },
   mainText: {

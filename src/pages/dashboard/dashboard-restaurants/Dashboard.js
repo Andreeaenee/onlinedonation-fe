@@ -6,8 +6,10 @@ import { getChartStatusData } from '../../../api/getCharts'
 import { Box, Typography } from '@mui/material'
 import { White400 } from '../../../constants/colors'
 import StatusPieChart from '../../../components/charts/StatusPieChart'
+import { useTranslation } from 'react-i18next'
 
 const DashboardRestaurants = () => {
+  const { t } = useTranslation()
   const userId = getUserId()
   const [chartData, setChartData] = useState([])
   useEffect(() => {
@@ -29,30 +31,30 @@ const DashboardRestaurants = () => {
   }
   return (
     <MainLayout>
-      <Header title={'Dashboard'} />
+      <Header title={t('dashboardPage')} />
       {chartData.length !== 0 && (
         <Box
           sx={{
             width: '50%',
-            height: '35%', 
+            height: '35%',
             backgroundColor: White400,
             borderRadius: '10px',
             marginTop: '30px',
             marginLeft: '10px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-            padding: '20px', 
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            padding: '20px',
           }}
         >
           <Typography
             sx={{
               textAlign: 'left',
-              marginTop: '10px', 
-              fontSize: '24px', 
-              fontWeight: 'bold', 
-              color: '#333', 
+              marginTop: '10px',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: '#333',
             }}
           >
-            Donations Status Chart
+            {t('donationStatusChart')}
           </Typography>
           {chartData.length !== 0 && <StatusPieChart data={chartData} />}
         </Box>

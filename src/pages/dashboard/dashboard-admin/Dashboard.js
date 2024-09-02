@@ -7,8 +7,10 @@ import { Box, Typography, useTheme } from '@mui/material'
 import StatusPieChart from '../../../components/charts/StatusPieChart'
 import styles from './styles'
 import { calculateTotalDonations } from '../utils'
+import { useTranslation } from 'react-i18next'
 
 const DashboardAdmin = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const classes = styles(theme)
   const userId = getUserId()
@@ -50,12 +52,13 @@ const DashboardAdmin = () => {
 
   return (
     <MainLayout>
-      <Header title={'Dashboard'} />
+      <Header title={t('dashboardPage')} />
       <Box sx={classes.chartBody}>
         {todaysDonations.length !== 0 && (
           <Box sx={classes.chartCard}>
             <Typography sx={classes.chartTitle}>
-              Today's Donations: {calculateTotalDonations(todaysDonations)}
+              {t('todaysDonations')} :{' '}
+              {calculateTotalDonations(todaysDonations)}
             </Typography>
             <StatusPieChart data={todaysDonations} />
           </Box>
@@ -63,7 +66,7 @@ const DashboardAdmin = () => {
         {statusChartData.length !== 0 && (
           <Box sx={classes.chartCard}>
             <Typography sx={classes.chartTitle}>
-              Donations Status Chart
+              {t('donationStatusChart')}
             </Typography>
             <StatusPieChart data={statusChartData} />
           </Box>

@@ -32,8 +32,10 @@ import dayjs from 'dayjs'
 import { getUserId, getUserRole } from '../../api/login/utils'
 import EditIcon from '@mui/icons-material/Edit'
 import { USER_ROLES } from '../../constants/constants'
+import { useTranslation } from 'react-i18next'
 
 const ClaimDonationModal = ({ open, onClose, donation }) => {
+  const { t } = useTranslation()
   const userId = getUserId()
   const userRole = getUserRole()
   const theme = useTheme()
@@ -53,8 +55,9 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
   const [status, setStatus] = useState(donation.status_name)
   const [statusId, setStatusId] = useState(null)
   const isTransportProvided = donation.transport_provided
-  const hasAccessToEditStatus = (userRole !== USER_ROLES.GUEST) && (userRole !== USER_ROLES.ONG || status !== 'unclaimed');
-
+  const hasAccessToEditStatus =
+    userRole !== USER_ROLES.GUEST &&
+    (userRole !== USER_ROLES.ONG || status !== 'unclaimed')
 
   useEffect(() => {
     const { firstName, lastName, contactNumber, aproxTime } = formState
@@ -245,7 +248,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                     color="secondary"
                     variant="contained"
                   >
-                    Save
+                    {t('save')}
                   </Button>
                 </FormControl>
               ) : (
@@ -263,18 +266,17 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                     }}
                   >
                     <Typography variant="body2" sx={{ color: 'white' }}>
-                      Status: {status}
+                      {t('status')}:{status}
                     </Typography>
                   </Box>
-                  {hasAccessToEditStatus &&
-                   (
-                        <ButtonBase onClick={() => setIsEditingStatus(true)}>
-                          <EditIcon
-                            fontSize="medium"
-                            sx={{ ml: 1, color: Wenge }}
-                          />
-                        </ButtonBase>
-                      )}
+                  {hasAccessToEditStatus && (
+                    <ButtonBase onClick={() => setIsEditingStatus(true)}>
+                      <EditIcon
+                        fontSize="medium"
+                        sx={{ ml: 1, color: Wenge }}
+                      />
+                    </ButtonBase>
+                  )}
                 </>
               )}
             </Box>
@@ -306,7 +308,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                   height={isMobile ? '30px' : '30px'}
                 />
                 <Typography sx={classes.date}>
-                  Pickup Point:{' '}
+                  {t('pickUpPoint')}{' '}
                   <span style={{ fontWeight: 300 }}>
                     {donation.pick_up_point}
                   </span>
@@ -325,7 +327,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
         {donation.status_name === 'unclaimed' &&
           (userRole === USER_ROLES.ONG || userRole === USER_ROLES.ADMIN) && (
             <MainButton
-              buttonText="Claim this Donation"
+              buttonText={t('claim')}
               width="80%"
               marginLeft="10%"
               marginTop="20px"
@@ -351,20 +353,20 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                 padding: '0px',
               }}
             >
-              Provide the details of the person who's gonna pick up the command
+              {t('provideDriverDetails')}
             </Typography>
             <form>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={5.5}>
                   {textField({
-                    label: 'First name',
+                    label: t('firstName'),
                     name: 'firstName',
                     value: formState.firstName,
                     onChange: handleInputChange,
                     helperText: 'Type your first name',
                   })}
                   {textField({
-                    label: 'Contact number',
+                    label: t('contactNumber'),
                     name: 'contactNumber',
                     value: formState.contactNumber,
                     onChange: handleInputChange,
@@ -373,14 +375,14 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                 </Grid>
                 <Grid item xs={12} sm={5.5}>
                   {textField({
-                    label: 'Last name',
+                    label: t('lastName'),
                     name: 'lastName',
                     value: formState.lastName,
                     onChange: handleInputChange,
                     helperText: 'Type your last name',
                   })}
                   {textField({
-                    label: 'Approx. time of arrival (min)',
+                    label: t('approxTime'),
                     name: 'aproxTime',
                     value: formState.aproxTime,
                     onChange: handleInputChange,
@@ -389,7 +391,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
                 </Grid>
               </Grid>
               <MainButton
-                buttonText="Confirm"
+                buttonText={t('confirm')}
                 width="80%"
                 marginLeft="10%"
                 margin="20px 0px 20px 0px"
@@ -414,7 +416,7 @@ const ClaimDonationModal = ({ open, onClose, donation }) => {
         <CustomizedSnackbars
           openSnackBar={openSnackBar}
           setOpenSnackBar={setOpenSnackBar}
-          message="The donation has been claimed successfully!"
+          message={t('dclaimsuccess')}
           severity="success"
         />
       </Box>

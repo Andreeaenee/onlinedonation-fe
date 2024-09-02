@@ -4,10 +4,12 @@ import MainButton from '../MainButton'
 import { useTheme } from '@mui/material/styles'
 import MainCardStyles from './MainCardStyle'
 import { MountbattenPink, PersianPink } from '../../constants/colors'
+import { useTranslation } from 'react-i18next'
 
 const MainCard = ({ title, avatar, image, link, page }) => {
   const theme = useTheme()
   const classes = MainCardStyles(theme)
+  const { t } = useTranslation();
 
   return (
     <Card sx={classes.card}>
@@ -20,7 +22,7 @@ const MainCard = ({ title, avatar, image, link, page }) => {
       ></Box>
       <Typography sx={classes.title}>{title}</Typography>
       <MainButton
-        buttonText={page === 'Platform' ? 'Details' : 'Donate Now'}
+        buttonText={page === t('platformPage') ? t('details') : t('donateNow')}
         width={'150px'}
         height={'35px'}
         onClick={() => window.open(link, '/')}

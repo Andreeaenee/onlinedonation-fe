@@ -27,8 +27,10 @@ import './styles.css'
 import { White100, PersianPink, MountbattenPink } from '../../constants/colors'
 import { getUserId } from '../../api/login/utils'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const EditDonation = () => {
+  const { t } = useTranslation()
   const userId = getUserId()
   const theme = useTheme()
   const classes = NewDonationStyles(theme)
@@ -61,28 +63,28 @@ const EditDonation = () => {
   })
 
   useEffect(() => {
-    const fetchDonationData = async () => {
-      const response = await fetchDonationById(donationId)
-      if (response) {
-        setForm({
-          title: response.name,
-          quantity: response.quantity,
-          description: response.description,
-          checked: response.transport_provided,
-          from: dayjs(response.start_date).toDate(),
-          to: dayjs(response.end_date).toDate(),
-          pickupPoint: response.pick_up_point,
-          contactNumber: response.phone,
-          image: null,
-        })
-        if (response.imageUrl) {
-          setImagePreview(response.imageUrl)
-        }
-      }
-    }
-
     fetchDonationData()
   }, [donationId])
+
+  const fetchDonationData = async () => {
+    const response = await fetchDonationById(donationId)
+    if (response) {
+      setForm({
+        title: response.name,
+        quantity: response.quantity,
+        description: response.description,
+        checked: response.transport_provided,
+        from: dayjs(response.start_date).toDate(),
+        to: dayjs(response.end_date).toDate(),
+        pickupPoint: response.pick_up_point,
+        contactNumber: response.phone,
+        image: null,
+      })
+      if (response.imageUrl) {
+        setImagePreview(response.imageUrl)
+      }
+    }
+  }
 
   const validateForm = () => {
     const newErrors = {
@@ -216,11 +218,11 @@ const EditDonation = () => {
           style={{ ...classes.formBox, width: isMobile ? '90%' : '60%' }}
           onSubmit={handleSubmit}
         >
-          <Typography sx={classes.title}>Edit Donation</Typography>
+          <Typography sx={classes.title}>{t('editDonation')}</Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextFieldWithLabel
-                label="Title"
+                label={t('title')}
                 textValue={form.title}
                 onChangeAction={(e) =>
                   setForm({ ...form, title: e.target.value })
@@ -231,7 +233,7 @@ const EditDonation = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextFieldWithLabel
-                label="Quantity/menu"
+                label={t('quantity/menu')}
                 textValue={
                   form.quantity !== null ? form.quantity.toString() : ''
                 }
@@ -258,12 +260,12 @@ const EditDonation = () => {
                 sx={{ maxWidth: 200, maxHeight: 200, mt: 2 }}
               />
               <Button variant="contained" component="label" sx={{ mt: 1 }}>
-                Change Image
+                {t('changeImage')}
                 <input type="file" hidden onChange={handleImageUpload} />
               </Button>
             </Box>
           )}
-          <Typography sx={classes.fieldTypo}>Description:</Typography>
+          <Typography sx={classes.fieldTypo}>{t('description')}:</Typography>
           <TextField
             multiline
             rows={4}
@@ -282,17 +284,19 @@ const EditDonation = () => {
               ...FormField.field,
             }}
           />
-          <Typography sx={classes.fieldTypo}>Available time slot:</Typography>
+          <Typography sx={classes.fieldTypo}>
+            {t('availableTimeSlot')}:
+          </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Box>
-                {hoursPicker('From', form.from, (newFrom) =>
+                {hoursPicker(t('from'), form.from, (newFrom) =>
                   setForm({ ...form, from: newFrom })
                 )}
               </Box>
               {isMobile ? (
                 <Box>
-                  {hoursPicker('To', form.to, (newTo) =>
+                  {hoursPicker(t('to'), form.to, (newTo) =>
                     setForm({ ...form, to: newTo })
                   )}
                 </Box>
@@ -309,11 +313,11 @@ const EditDonation = () => {
                         color="secondary"
                       />
                     }
-                    label="Transport Provided?"
+                    label={t('transportProvided')}
                   />
                   {!form.checked && (
                     <TextFieldWithLabel
-                      label="Pickup Point"
+                      label={t('pickUpPoint')}
                       textValue={form.pickupPoint}
                       onChangeAction={(e) =>
                         setForm({ ...form, pickupPoint: e.target.value })
@@ -339,11 +343,11 @@ const EditDonation = () => {
                         color="secondary"
                       />
                     }
-                    label="Transport Provided?"
+                    label={t('transportProvided')}
                   />
                   {!form.checked && (
                     <TextFieldWithLabel
-                      label="Pickup Point"
+                      label={t('pickUpPoint')}
                       textValue={form.pickupPoint}
                       onChangeAction={(e) =>
                         setForm({ ...form, pickupPoint: e.target.value })
@@ -355,13 +359,13 @@ const EditDonation = () => {
                 </>
               ) : (
                 <Box>
-                  {hoursPicker('To', form.to, (newTo) =>
+                  {hoursPicker(t('to'), form.to, (newTo) =>
                     setForm({ ...form, to: newTo })
                   )}
                 </Box>
               )}
               <TextFieldWithLabel
-                label="Contact Number"
+                label={t('contactNumber')}
                 textValue={form.contactNumber}
                 onChangeAction={(e) =>
                   setForm({ ...form, contactNumber: e.target.value })
@@ -374,7 +378,7 @@ const EditDonation = () => {
             </Grid>
           </Grid>
           <MainButton
-            buttonText="Update Donation"
+            buttonText={t('updateDonation')}
             onClick={handleSubmit}
             width="90%"
             height="50px"
@@ -395,7 +399,7 @@ const EditDonation = () => {
         <CustomizedSnackbars
           openSnackBar={openSnackBar}
           setOpenSnackBar={setOpenSnackBar}
-          message="The donation has been successfully updated!"
+          message={t('dUpdateSuccess')}
           severity="success"
         />
       )}
@@ -403,7 +407,7 @@ const EditDonation = () => {
         <CustomizedSnackbars
           openSnackBar={errorCompleteFields}
           setOpenSnackBar={setErrorCompleteFields}
-          message="Please fill in all required fields correctly."
+          message={t('errorValideFields')}
           severity="error"
         />
       )}

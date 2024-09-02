@@ -6,8 +6,10 @@ import { getChartStatusData } from '../../../api/getCharts'
 import { Box, Typography } from '@mui/material'
 import { White400 } from '../../../constants/colors'
 import StatusPieChart from '../../../components/charts/StatusPieChart'
+import { useTranslation } from 'react-i18next'
 
 const DashboardOng = () => {
+  const { t } = useTranslation()
   const userId = getUserId()
   const [chartData, setChartData] = useState([])
   useEffect(() => {
@@ -29,7 +31,7 @@ const DashboardOng = () => {
   }
   return (
     <MainLayout>
-      <Header title={'Dashboard'} />
+      <Header title={t('dashboardPage')} />
       {chartData.length !== 0 && (
         <Box
           sx={{
@@ -52,7 +54,7 @@ const DashboardOng = () => {
               color: '#333', // Darker text color for better readability
             }}
           >
-            Donations Status Chart
+            {t('donationStatusChart')}
           </Typography>
           <StatusPieChart data={chartData} />
         </Box>

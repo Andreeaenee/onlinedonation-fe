@@ -26,8 +26,10 @@ import MainButton from '../../../components/MainButton'
 import EditIcon from '@mui/icons-material/Edit'
 import PDFViewer from '../../../components/PDFViewer'
 import { Delete } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 
 const UserProfilePage = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const userId = params.userId || getUserId()
   const userRole = getUserRole()
@@ -54,7 +56,7 @@ const UserProfilePage = () => {
   if (!user) {
     return (
       <MainLayout>
-        <Header title="User Profile" />
+        <Header title={t('userProfile')} />
         <Typography sx={{ textAlign: 'center', mt: 4 }}>Loading...</Typography>
       </MainLayout>
     )
@@ -124,7 +126,7 @@ const UserProfilePage = () => {
 
   return (
     <MainLayout>
-      <Header title="User Profile" />
+      <Header title={t('userProfile')} />
       <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
         <Card sx={{ width: '100%', borderRadius: 2, boxShadow: 3 }}>
           <CardHeader
@@ -148,7 +150,7 @@ const UserProfilePage = () => {
                   <Box sx={{ display: 'flex', gap: 1, marginTop: '3%' }}>
                     <MainButton
                       backgroundColor={'green'}
-                      buttonText={'Accept'}
+                      buttonText={t('accept')}
                       width={'150px'}
                       height={'35px'}
                       fontSize={16}
@@ -156,7 +158,7 @@ const UserProfilePage = () => {
                     />
                     <MainButton
                       backgroundColor={'red'}
-                      buttonText={'Cancel'}
+                      buttonText={t('reject')}
                       width={'150px'}
                       height={'35px'}
                       fontSize={16}
@@ -216,18 +218,21 @@ const UserProfilePage = () => {
               gutterBottom
               sx={{ borderBottom: 1, borderColor: 'divider' }}
             >
-              Contact Information
+              {t('contactInfo')}
             </Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Email" secondary={user.email} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Phone" secondary={user.phone || 'N/A'} />
+                <ListItemText primary={t('email')} secondary={user.email} />
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary="Address"
+                  primary={t('phone')}
+                  secondary={user.phone || 'N/A'}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText
+                  primary={t('address')}
                   secondary={user.address || 'N/A'}
                 />
               </ListItem>
@@ -241,14 +246,14 @@ const UserProfilePage = () => {
               gutterBottom
               sx={{ borderBottom: 1, borderColor: 'divider' }}
             >
-              Additional Information
+              {t('additionalInfo')}
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <List>
                   <ListItem>
                     <ListItemText
-                      primary="Description"
+                      primary={t('description')}
                       secondary={user.description || 'N/A'}
                     />
                   </ListItem>
@@ -265,7 +270,7 @@ const UserProfilePage = () => {
                           onClick={handleDocumentClick}
                           sx={{ mt: 1 }}
                         >
-                          View Document
+                          {t('viewDocument')}
                         </Button>
                       }
                     />
@@ -280,7 +285,7 @@ const UserProfilePage = () => {
                           onClick={handleContractClick}
                           sx={{ mt: 1 }}
                         >
-                          View Contract
+                          {t('viewContract')}
                         </Button>
                       }
                     />
@@ -306,7 +311,7 @@ const UserProfilePage = () => {
                     sx={{ maxWidth: 200, maxHeight: 200 }}
                   />
                 ) : (
-                  <Typography variant="body2">No Logo Available</Typography>
+                  <Typography variant="body2">{t('noLogo')}</Typography>
                 )}
               </Grid>
             </Grid>

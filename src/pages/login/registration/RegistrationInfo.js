@@ -17,8 +17,10 @@ import { registerUser } from '../../../api/getUsers'
 import { useNavigate, useParams } from 'react-router-dom'
 import ContractModal from './ContractModal'
 import { getUserById } from '../../../api/getUsers'
+import { useTranslation } from 'react-i18next'
 
 const RegistrationInfo = () => {
+  const { t } = useTranslation()
   const { userId } = useParams()
   const nav = useNavigate()
   const theme = useTheme()
@@ -108,15 +110,15 @@ const RegistrationInfo = () => {
 
     const hasErrors = Object.values(newErrors).some((error) => error)
     if (hasErrors) {
-      setErrorSnackbar('Please fill out all fields correctly.')
+      setErrorSnackbar(t('errorValidFields'))
       handleOpenSnackBar()
       return
     } else if (!validatePhone(formData.phone)) {
-      setErrorSnackbar('Please enter a valid phone number.')
+      setErrorSnackbar(t('errorValidPhone'))
       handleOpenSnackBar()
       return
     } else if (!validateLink(formData.link)) {
-      setErrorSnackbar('Please enter a valid link.')
+      setErrorSnackbar(t('errorValidLink'))
       handleOpenSnackBar()
       return
     }
@@ -136,14 +138,12 @@ const RegistrationInfo = () => {
     try {
       const response = await registerUser(form)
       if (response === 200) {
-        setErrorSnackbar('Registration successful.')
+        setErrorSnackbar(t('registrationSuccess'))
         handleOpenSnackBar()
         nav('/login')
       }
     } catch (error) {
-      setErrorSnackbar(
-        'An error occurred during registration. Please try again.'
-      )
+      setErrorSnackbar(t('errorRegistration'))
       handleOpenSnackBar()
     }
   }
@@ -190,7 +190,7 @@ const RegistrationInfo = () => {
           <>
             <UploadIcon width={'20px'} height={'20px'} color={Wenge} />
             <Typography sx={{ color: Wenge, marginLeft: '5px' }}>
-              Click to upload
+              {t('upload')}
             </Typography>
           </>
         )}
@@ -219,7 +219,7 @@ const RegistrationInfo = () => {
               marginLeft: '10px',
             }}
           >
-            Upload PDF
+            {t('uploadPdf')}
           </span>
         </div>
       </label>
@@ -257,11 +257,11 @@ const RegistrationInfo = () => {
         <Box sx={classes.regBox}>
           <Box sx={classes.regBox1}>
             <Box sx={classes.regBox2}>
-              <Typography sx={classes.regTitle}>
-                Profile Informations
+              <Typography sx={classes.regTitle}>{t('profileInfo')}</Typography>
+              {textFieldInputs(t('name') + ':', 'name', errors.name)}
+              <Typography sx={classes.labelR}>
+                {t('description') + ':'}
               </Typography>
-              {textFieldInputs('Name:', 'name', errors.name)}
-              <Typography sx={classes.labelR}>Description:</Typography>
               <TextField
                 multiline
                 rows={4}
@@ -276,15 +276,15 @@ const RegistrationInfo = () => {
                   ...FormField.field,
                 }}
               />
-              {textFieldInputs('Address:', 'address', errors.address)}
-              {textFieldInputs('Phone:', 'phone', errors.phone)}
-              {textFieldInputs('Link to your website:', 'link', errors.link)}
+              {textFieldInputs(t('address') + ':', 'address', errors.address)}
+              {textFieldInputs(t('phone') + ':', 'phone', errors.phone)}
+              {textFieldInputs(t('link') + ':', 'link', errors.link)}
             </Box>
 
             <Box sx={classes.regBox3}>
               {renderFileUpload('Logo', 'logo', formData.logo)}
               {renderFileUpload(
-                'Cover Photo',
+                t('coverImage'),
                 'coverPhoto',
                 formData.coverPhoto
               )}
@@ -319,14 +319,14 @@ const RegistrationInfo = () => {
             <Box sx={classes.regBox5}>
               <Box sx={{ width: '70%' }}>
                 {renderDocumentUpload(
-                  'Document confirming the organisation as SRL',
+                  t('documentSRL'),
                   'documentSRL',
                   formData.documentSRL
                 )}
                 {textFieldInputs('CIF:', 'cif', errors.cif)}
-                <Typography sx={classes.labelR}>Contract</Typography>
+                <Typography sx={classes.labelR}>Contract:</Typography>
                 <MainButton
-                  buttonText="Sign Contract"
+                  buttonText={t('signContract')}
                   onClick={handleOpenModal}
                   width={'55%'}
                   height={'36px'}
@@ -349,7 +349,7 @@ const RegistrationInfo = () => {
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'right' }}>
           <MainButton
-            buttonText="Complete Registration"
+            buttonText={t('completeRegistration')}
             onClick={handleLogInSubmit}
             width={'15%'}
             height={'35px'}
@@ -366,7 +366,14 @@ const RegistrationInfo = () => {
         </Box>
       </form>
 
-      <ContractModal open={openModal} handleClose={handleCloseModal} onComplete={(data) => setFormData({ ...formData, contract: data.download_url })} email={email}/>
+      <ContractModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        onComplete={(data) =>
+          setFormData({ ...formData, contract: data.download_url })
+        }
+        email={email}
+      />
 
       {errorSnackbar && (
         <CustomizedSnackbars
