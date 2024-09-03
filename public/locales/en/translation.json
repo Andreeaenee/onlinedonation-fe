@@ -20,6 +20,7 @@
   "viewContract": "View Contract",
   "changeLogo": "Change Logo",
   "changeImage": "Change Image",
+  "changePassword": "Change Password",
   "uploadLogo": "Upload Logo",
   "uploadPdf": "Upload PDF",
   "uploadImage": "Upload Image",
@@ -142,5 +143,6 @@
   "availableTimeSlot": "Available Time Slot",
   "from": "From",
   "to": "To",
-  "transportProvided": "Transport Provided?"
+  "transportProvided": "Transport Provided?",
+  "newPassword": "New Password"
 }

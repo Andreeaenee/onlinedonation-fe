@@ -3,7 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import MainLayout from '../MainLayout'
 import Header from '../Header'
 import { getUserId, getUserRole } from '../../../api/login/utils'
-import { getUserById, updateUser, deleteUser } from '../../../api/getUsers'
+import {
+  getUserById,
+  updateUser,
+  deleteUser,
+  resetPassword,
+} from '../../../api/getUsers'
 import {
   Box,
   Typography,
@@ -27,6 +32,9 @@ import EditIcon from '@mui/icons-material/Edit'
 import PDFViewer from '../../../components/PDFViewer'
 import { Delete } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import IconButton from '@mui/material/IconButton'
+import ChangePasswordModal from './ChangePasswordModal'
+import CustomizedSnackbars from '../../../components/SnackBar'
 
 const UserProfilePage = () => {
   const { t } = useTranslation()
@@ -38,6 +46,8 @@ const UserProfilePage = () => {
   const navigate = useNavigate()
   const [showPdfViewer, setShowPdfViewer] = useState(false)
   const [pdfUrl, setPdfUrl] = useState('')
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [openSnackBar, setOpenSnackBar] = useState(false)
 
   useEffect(() => {
     fetchUser(userId)
@@ -52,6 +62,8 @@ const UserProfilePage = () => {
         console.error('Error fetching user data:', error)
       })
   }
+  const handlePasswordModalOpen = () => setShowPasswordModal(true)
+  const handlePasswordModalClose = () => setShowPasswordModal(false)
 
   if (!user) {
     return (
@@ -122,6 +134,31 @@ const UserProfilePage = () => {
 
   const handleClose = () => {
     setShowPdfViewer(false)
+  }
+
+  const handleOpenSnackBar = () => {
+    setOpenSnackBar(true)
+    setTimeout(() => {
+      setOpenSnackBar(false)
+    }, 3000)
+  }
+  console.log('User:', user)
+
+  const handlePasswordSave = async (passwordData) => {
+    console.log('Password data:', passwordData, user.email)
+    try {
+      const response = await resetPassword({
+        email: user.email,
+        password: passwordData,
+      })
+      console.log('Response:', response)
+      if (response.status === 200) {
+        handleOpenSnackBar()
+      }
+    } catch (error) {
+      console.error('Error updating password:', error)
+    }
+    handlePasswordModalClose()
   }
 
   return (
@@ -239,8 +276,18 @@ const UserProfilePage = () => {
               <ListItem>
                 <ListItemText primary="Link" secondary={user.link || 'N/A'} />
               </ListItem>
+              <ListItem>
+                <ListItemText primary={t('password')} secondary="********" />
+                {userRole !== 3  && (
+                <IconButton onClick={handlePasswordModalOpen}>
+                  <EditIcon />
+                </IconButton>
+              )}
+              </ListItem>
             </List>
+
             <Divider sx={{ my: 2 }} />
+
             <Typography
               variant="h6"
               gutterBottom
@@ -339,6 +386,19 @@ const UserProfilePage = () => {
           <PDFViewer pdfUrl={pdfUrl} />
         </Box>
       </Modal>
+      <ChangePasswordModal
+        open={showPasswordModal}
+        onClose={handlePasswordModalClose}
+        onSave={handlePasswordSave}
+      />
+      {openSnackBar && (
+        <CustomizedSnackbars
+          openSnackBar={openSnackBar}
+          setOpenSnackBar={setOpenSnackBar}
+          message={t('userUpdated')}
+          severity="success"
+        />
+      )}
     </MainLayout>
   )
 }

@@ -65,43 +65,42 @@ const UserProfileEditMode = () => {
     setLogoPreview(URL.createObjectURL(file))
     setIsLogoFileFormat('true')
   }
+
   const handleSaveClick = async () => {
     try {
+      const fieldsToUpdate = [
+        'name',
+        'address',
+        'phone',
+        'link',
+        'cif',
+        'description',
+      ]
+
+      if (formData.newPassword) {
+        fieldsToUpdate.push('newPassword')
+      }
+
+      const updatedData = {}
+
+      fieldsToUpdate.forEach((field) => {
+        if (formData[field] !== undefined) {
+          updatedData[field] = formData[field]
+        }
+      })
+
       if (isLogoFileFormat) {
         const form = new FormData()
-        form.append('logo_id', formData.logo_id)
-        form.append('name', formData.name)
-        form.append('address', formData.address)
-        form.append('phone', formData.phone)
-        form.append('link', formData.link)
-        form.append('cif', formData.cif)
-        form.append('description', formData.description)
-        const response = await updateUserProfile(userId, formData, true)
-        if (response === 200) {
-          handleOpenSnackBar()
-        }
-      } else {
-        const fieldsToUpdate = [
-          'name',
-          'address',
-          'phone',
-          'link',
-          'cif',
-          'description',
-        ]
-        const updatedData = {}
-
         fieldsToUpdate.forEach((field) => {
-          if (formData[field] !== undefined) {
-            updatedData[field] = formData[field]
-          }
+          form.append(field, formData[field])
         })
-        const response = await updateUserProfile(userId, updatedData, false)
-        if (response === 200) {
-          handleOpenSnackBar()
-        }
+        await updateUserProfile(userId, form, true)
+      } else {
+        await updateUserProfile(userId, updatedData, false)
       }
+
       await fetchUser(userId)
+      handleOpenSnackBar()
     } catch (error) {
       console.error('Error updating user data:', error)
     }
@@ -119,14 +118,6 @@ const UserProfileEditMode = () => {
     setLogoPreview(user.logoUrl)
   }
 
-  if (!user) {
-    return (
-      <MainLayout>
-        <Header title={t('userProfile')} />
-        <Typography sx={{ textAlign: 'center', mt: 4 }}>Loading...</Typography>
-      </MainLayout>
-    )
-  }
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -143,6 +134,15 @@ const UserProfileEditMode = () => {
       default:
         return 'gray'
     }
+  }
+
+  if (!user) {
+    return (
+      <MainLayout>
+        <Header title={t('userProfile')} />
+        <Typography sx={{ textAlign: 'center', mt: 4 }}>Loading...</Typography>
+      </MainLayout>
+    )
   }
 
   return (
@@ -210,6 +210,7 @@ const UserProfileEditMode = () => {
                   value={formData.email || ''}
                   onChange={handleInputChange}
                   fullWidth
+                  disabled
                 />
               </ListItem>
               <ListItem>

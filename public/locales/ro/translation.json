@@ -20,6 +20,7 @@
     "viewContract" : "Vizualizează Contract",
     "changeLogo" : "Schimbă Logo",
     "changeImage": "Schimbă Imagine",
+    "changePassword": "Schimbă Parola",
     "uploadLogo" : "Încarcă Logo",
     "uploadPdf" : "Încarcă PDF",
     "uploadImage": "Încarcă Imagine",
@@ -142,5 +143,6 @@
     "availableTimeSlot": "Interval orar disponibil",
     "from" : "De la",
     "to" : "Până la",
-    "transportProvided": "Transport Asigurat?"
+    "transportProvided": "Transport Asigurat?",
+    "newPassword": "Parolă Nouă"
 }
