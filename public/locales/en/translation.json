@@ -113,6 +113,8 @@
   "regProcessNotCompleted": "Registration process not completed. Please complete the registration process",
   "invalidCredentials": "Invalid credentials. Please try again",
   "waitApproval": "Your account is not approved yet. Please wait for approval",
+  "acordModal": "By completing this form, you express your consent for your personal data to be processed by the Ora lui Robert Association, in compliance with the provisions of Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC.",
+  "agreeTerms": "I agree with the Terms and Conditions",
 
   "edit": "Edit",
   "delete": "Delete",

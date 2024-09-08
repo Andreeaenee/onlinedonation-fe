@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ContractModal from './ContractModal'
 import { getUserById } from '../../../api/getUsers'
 import { useTranslation } from 'react-i18next'
+import AcordModal from './AcordModal'
 
 const RegistrationInfo = () => {
   const { t } = useTranslation()
@@ -55,6 +56,8 @@ const RegistrationInfo = () => {
   })
 
   const [openModal, setOpenModal] = useState(false)
+  const [acordModal, setAcordModal] = useState(false)
+  const [agreedToTerms, setAgreedToTerms] = useState(false)
 
   useEffect(() => {
     getUserById(userId)
@@ -110,7 +113,7 @@ const RegistrationInfo = () => {
 
     const hasErrors = Object.values(newErrors).some((error) => error)
     if (hasErrors) {
-      setErrorSnackbar(t('errorValidFields'))
+      setErrorSnackbar(t('errorValideFields'))
       handleOpenSnackBar()
       return
     } else if (!validatePhone(formData.phone)) {
@@ -120,6 +123,10 @@ const RegistrationInfo = () => {
     } else if (!validateLink(formData.link)) {
       setErrorSnackbar(t('errorValidLink'))
       handleOpenSnackBar()
+      return
+    }
+    if (!agreedToTerms) {
+      setAcordModal(true)
       return
     }
 
@@ -146,6 +153,11 @@ const RegistrationInfo = () => {
       setErrorSnackbar(t('errorRegistration'))
       handleOpenSnackBar()
     }
+  }
+  const handleAcordConfirm = () => {
+    setAgreedToTerms(true)
+    setAcordModal(false)
+    handleLogInSubmit()
   }
 
   const textFieldInputs = (label, field, error) => (
@@ -365,7 +377,11 @@ const RegistrationInfo = () => {
           />
         </Box>
       </form>
-
+      <AcordModal
+        open={acordModal}
+        handleClose={() => setAcordModal(false)}
+        onComplete={handleAcordConfirm}
+      />
       <ContractModal
         open={openModal}
         handleClose={handleCloseModal}
