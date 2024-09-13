@@ -10,7 +10,7 @@ import {
   ListItem,
   Divider,
 } from '@mui/material'
-import { Logo} from '../../assets/icons/index'
+import { Logo, LogoIcon} from '../../assets/icons/index'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Black400, Black800 } from '../../constants/colors'
 import { ThemeProvider } from '@emotion/react'
@@ -148,7 +148,7 @@ const Navbar = () => {
                 to="/about-us"
                 style={{ textDecoration: 'none', cursor: 'pointer' }}
               >
-                <Logo width={'75px'} height={'75px'} />
+                <LogoIcon width={'75px'} height={'75px'} />
               </Link>
             </Box>
             <Box sx={NavbBarStyles.buttonsBox}>
@@ -178,7 +178,7 @@ const Navbar = () => {
                 to="/about-us"
                 style={{ textDecoration: 'none', cursor: 'pointer' }}
               >
-                <Logo width={'100px'} height={'100px'} />
+                <LogoIcon width={'100px'} height={'100px'} />
               </Link>
               <Divider
                 orientation="vertical"

@@ -25,7 +25,9 @@ import { ReactComponent as CheckCircleIcon } from './check-circle.svg'
 import { ReactComponent as LogoutIcon } from './logout-icon.svg'
 import { ReactComponent as CurbeIcon } from './curbe.svg'
 import {ReactComponent as UsersIcon} from './users-icon.svg'
+import {ReactComponent as LogoIcon} from './Logo_with_separated_layers.svg'
 
+export { LogoIcon }
 export { Logo }
 export { Restaurants }
 export { ONGs }
